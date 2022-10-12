@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form Data</title>
+    <style>
+        table,tr,td{
+        border: 2px solid blue;
+       align-content: center;
+        text-align: center;
+        border-collapse: collapse;
+        padding: 1px;
+        margin: 2px;
+
+    }
+    </style>
+</head>
+<body>
+    
+    <div>
+        <form action="" method="post">
+            <table>
+                <tr>
+                    <td><label for="last_name">Last Name</label></td>
+                    <td><input type="text" name="last_name" value="Venkat" placeholder="enter last name"></td>
+                </tr>
+                <tr>
+                    <td><label for="first_name">First Name</label></td>
+                    <td><input type="text" name="first_name" value="Kokkanti" placeholder="enter First name"></td>
+                </tr>
+                <tr>
+                    <td><label for="address">Address</label></td>
+                    <td><textarea name="address" id="" cols="50" rows="4" placeholder="Krishanpuram Madanapalli Road,
+                        Rayachoty" aria-valuetext="Krishanpuram Madanapalli Road,
+                        Rayachoty"></textarea></td>
+                </tr>
+                <tr>
+                    <td><label for="City">City</label></td>
+                    <td><input type="text" value="Rayachoty"> State <input type="text" value="AP"></td>
+                </tr>
+                <tr>
+                    <td><label for="PostalCode">PostalCode</label></td>
+                    <td><input type="number" name="PostalCode" value="516269" placeholder="Enter postal code"></td>
+                </tr>
+    
+                 <tr>
+                     <td>Country</td>
+                     <td>
+                        <select id="countries" >
+                            <option value="India">India</option>
+                            <option value="US">US</option>
+                            <option value="UK">UK</option>
+                        </select>
+                     </td>
+                 </tr>
+    
+                 <tr>
+                     <td>Phone(Country code, Area code, number)</td>
+                     <td><input type="text" value="+91" style="border-radius: 2px;">
+                        <input type="number" value="518" style="border-radius: 2px;">
+                        <input type="number" value="91978989" style="border-radius: 2px;">
+                    </td>
+                 </tr>
+                 <tr>
+                    <td><label for="email">Email</label></td>
+                    <td><input type="email" name="email" value="Venkat12@gmail.com" placeholder="enter last name"></td>
+                </tr>
+                <tr>
+                    <td><label for="BirthDate">BirthDate</label></td>
+                    <td>Month :<input type="text" name="BirthDate" value="Jan" placeholder="enter last name">
+                        Day :<input type="text" name="BirthDate" value="08" placeholder="enter last name">
+                        year(4 digit) :<input type="text" name="BirthDate" value="1987" placeholder="enter last name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td>
+                       <select id="Gender" >
+                           <option value="Male">Male</option>
+                           <option value="Female">Female</option>
+                       </select>
+                    </td>
+                </tr>
+    
+                <tr>
+                    <td>Starting Date</td>
+                    <td><input type="radio"> Spring 2004 <input type="radio" value=""> Summar 2006</td>
+                </tr>
+    
+                <tr>
+                    <td>Comments/Questions</td>
+                    <td><textarea name="" id="" cols="30" rows="2" placeholder="Please write Comments here"></textarea></td>
+                </tr>
+                <tr style="text-align: center; background-color: rosybrown;">
+                    <td colspan="2">
+                        <button type="submit" style="background-color: sandybrown;">Submit</button> <button type="reset" style="background-color: sandybrown">Clear</button>
+                    </td>
+                    
+                </tr>
+            </table>
+    
+        </form>
+    </div>
+</body>
+</html>

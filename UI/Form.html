@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UserForm</title>
+
+    <style>
+        img{
+            size: 10px;
+        }
+table,th,tr,td{
+        border: 3px solid blue;
+       align-content: center;
+        text-align: center;
+        border-collapse: collapse;
+        padding: 10px;
+        margin: 9px;
+
+    }
+    tr,td{
+        background-color: pink;
+    }
+    table{  
+        border-spacing: 3px;
+    }
+    </style>
+
+    <script src="./userform.js"></script>
+</head>
+<body>
+    <div style="border-color: blue;border-radius: 2px; border-width: 2px;border-style: dotted;"> 
+        <h1 style="text-align: center;">This is my Header Name Area</h1>
+    </div>
+<br>
+    <div style="border-color: blue;border-radius: 2px; border-width: 2px;border-style: dotted;"> 
+        <div style="text-align: center;">
+            <h2>Enter User Details</h2>
+          <label for="name">Name:</label>
+          <input id="name" type="text" placeholder="Enter your name ">
+          <br>
+          <br>
+          <label for="age">Age:</label>
+          <input id="age" type="number" placeholder="Enter your name ">
+          <br>
+          <br>
+          <label for="email">Mail:</label>
+          <input id="email" type="email" placeholder="Enter your mail ">
+          <br>
+          <br>
+          <label for="phone">Phone:</label>
+          <input id="phone" type="text" placeholder="Enter your Phone ">
+          <br>
+          <br>
+
+            <label for="gender">Gender:</label>
+            <input type="radio" value="Male"  id="Male">Male
+            <input type="radio" value="Male"  id="Female">Female
+            <br>
+            <button type="submit" value="Submit">Submit</button>
+
+        </div>
+    </div>
+
+
+    <div style="text-align: center; border: orange; border-style: double; border-radius: 2px; border-width: 2px;">
+
+        <table>
+            <tr>
+                <th>Emp-Id</th>
+                <th>Name</th>
+                <th>Dept</th>
+                <th>Location</th>
+                <th>Phone</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Chinna</td>
+                <td>Admin</td>
+                <td>Bengalore</td>
+                <td>38094308</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Venkat</td>
+                <td>IT</td>
+                <td>Bengalore</td>
+                <td>380994308</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Suman</td>
+                <td>It</td>
+                <td>Bengalore</td>
+                <td>3899094308</td>
+            </tr>
+        </table>
+
+    </div>
+
+
+    <div style="border-color: red; padding: auto;">
+
+        <ul>
+            <li>Apple</li>
+            <li>banana</li>
+            <li>Jam</li>
+            <li>Kiwi</li>
+        </ul>
+        <ol>
+            <li>Mutton</li>
+            <li>Chicken</li>
+            <li>Eggs</li>
+        </ol>
+
+
+        <select id="food" onchange="onChange()" >
+            <option value="Pizza">Pizz</option>
+            <option value="Chicken">Chicken</option>
+            <option value="Mutton">Mutton</option>
+        </select>
+
+        <p id ="demo"></p>
+
+        <input type="text" id="focus" onfocus="onFocusEvent(this.id)" placeholder="Enter a value"/>
+
+
+        <img src="/lion.jfif" alt="">
+
+
+
+
+        <input type="text" onblur="onBluerEvent()" id="blur" placeholder="enter data">
+
+        <a href="https://www.flipkart.com/?affid=siteplug&affExtParam1=bbd6cd8458b9e1be658ebf07e62bc6c9">Click here</a>
+    </div>
+
+</body>
+</html>
