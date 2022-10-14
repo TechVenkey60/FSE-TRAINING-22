@@ -3,10 +3,7 @@ package com.employee.test.controller;
 import com.employee.test.entity.Employee;
 import com.employee.test.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +29,10 @@ public class EmployeeController {
     @GetMapping("/getEmployees")
     public List<Employee> fetchAllEmployee(){
         return employeeService.getAllEmployees();
+    }
+
+    @GetMapping("/getEmployee/{employeeId}")
+    public Employee fetchAllEmployeeById(@PathVariable Integer employeeId){
+        return employeeService.getEmployeeById(employeeId).get();
     }
 }
