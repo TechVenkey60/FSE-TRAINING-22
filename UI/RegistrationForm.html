@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regisration Form </title>
+    <link rel="stylesheet" href="design.css">
+    <script src="./validation.js"></script>
+    
+</head>
+<body>
+    <div class="container">
+        <header>Registration</header>
+
+        <form action="file:///D:/workspace/FSE-TRAINING-22/UI/ThankYou.html" method="post">
+            <div class="form">
+                <div class="details personal">
+                    <span class="title">Personal Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label for="fullName">Full Name</label>
+                            <input  class ="zoom" name= "fullName" id= "fullName" type="text" placeholder="Enter your name" required onchange="getDataForName(this.id)">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="birthDate">Date of Birth</label>
+                            <input  class ="zoom" name ="birthDate" id="birthDate"  type="text" placeholder="Enter birth date" required onchange="getDataForBirthDate(this.id)">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="email">Email</label>
+                            <input  class ="zoom" name = "email" id="email" type="email" placeholder="Enter your email" required onchange="getDataForMail(this.id)">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="phone">Mobile Number</label>
+                            <input  class ="zoom" name = "phone" id="phone" type="number" placeholder="Enter mobile number" required onchange="getDataForPhone(this.id)">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="gender">Gender</label>
+                            <input  class ="zoom"  name = "gender" id= "gender" type="text" placeholder="Enter your Gender" required onchange="getDataForGender(this.id)">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="Occupation">Occupation</label>
+                            <input  class ="zoom"  name = "Occupation" id="Occupation" type="text" placeholder="Enter your ccupation" required onchange="getDataForOccupation(this.id)">
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+
+                <div class="details">
+                    <span class="title">Identity Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label for="id-type">ID Type</label>
+                            <input  class ="zoom" name = "id-type" id="id-type" type="text" placeholder="Enter ID type" required onchange="getDataForIdType(this.id)">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="id-number">Id Number</label>
+                            <input  class ="zoom" name = "id-number" id="id-number" type="number" placeholder="Enter ID number" required onchange="getDataForIdNumber(this.id)">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="issuedAuthority">Issued Authority</label>
+                            <input  class ="zoom" name = "issuedAuthority" id="issuedAuthority" type="text" placeholder="Enter issued authority" required onchange="getDataForAuthority(this.id)">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="issuedState">Issued State</label>
+                            <input  class ="zoom" name = "issuedState" id ="issuedState" type="text" placeholder="Enter issued state" required onchange="getDataForIssuedState(this.id)">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="issuedDate">Issued Date</label>
+                            <input name = "issuedDate"  class ="zoom" id="issuedDate" type="text" placeholder="Enter your issued date" required onchange="getDataForIssuedDate(this.id)">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input name = "expiryDate" id= "expiryDate"  class ="zoom" type="text" placeholder="Enter expiry date" required onchange="getDataForExpiryDate(this.id)">
+                        </div>
+                    </div>
+
+                    <button class="nextBtn">
+                        <span class="btnText">Next <span>&#8594;</span></span>
+                    </button>
+                </div> 
+            </div>
+
+           
+        </form>
+    </div>
+</body>
+</html>
