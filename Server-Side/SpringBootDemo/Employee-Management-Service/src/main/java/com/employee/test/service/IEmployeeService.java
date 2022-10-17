@@ -9,4 +9,6 @@ public interface IEmployeeService {
     Employee saveEmployee(Employee employee);
     List<Employee> getAllEmployees();
     Optional<Employee> getEmployeeById(Integer employeeId);
+    void deleteEmployeeById(Integer employeeId)throws Exception;
+    Employee updateEmployee(Employee employee,Integer employeeId);
 }
