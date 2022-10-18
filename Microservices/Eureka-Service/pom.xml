@@ -8,39 +8,27 @@
 		<version>2.7.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.employee.ms</groupId>
-	<artifactId>MircoService-Employee-Management-Service</artifactId>
+	<groupId>com.eserver.test</groupId>
+	<artifactId>Eureka-Service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>MircoService-Employee-Management-Service</name>
-	<description>Implementation of Employee-Management-Service</description>
+	<name>Eureka-Service</name>
+	<description>Implementation of Eureka-Service</description>
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2021.0.4</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
 	</dependencies>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -52,6 +40,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
 	<build>
 		<plugins>
 			<plugin>

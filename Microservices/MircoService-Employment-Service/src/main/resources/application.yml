@@ -1,2 +1,7 @@
 server:
   port: 9981
+
+
+spring:
+  application:
+    name: Employment-Records-Service
