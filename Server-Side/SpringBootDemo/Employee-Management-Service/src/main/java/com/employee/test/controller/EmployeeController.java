@@ -2,6 +2,8 @@ package com.employee.test.controller;
 
 import com.employee.test.entity.Employee;
 import com.employee.test.service.IEmployeeService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ public class EmployeeController {
         return  "Welcome to Employee Management Service";
     }
 
+    @Operation(summary = "Create Employee Details")
     @PostMapping("/saveEmployee")
     public Employee createEmployee(@RequestBody Employee employee){
         var employeeData = employeeService.saveEmployee(employee);
