@@ -1,6 +1,7 @@
 package com.ht.library.books.service;
 
 import com.ht.library.books.entity.Book;
+import com.ht.library.books.model.BookStatusUpdate;
 import com.ht.library.books.model.LibraryBooksResponse;
 
 public interface ILibraryManagementService {
@@ -10,5 +11,5 @@ public interface ILibraryManagementService {
     Book getBookById(Integer bookId);
     LibraryBooksResponse getAllLibraryBooks();
     String removeBookById(Integer bookId);
-    String updateBookAvailabilityStatus(Integer bookId);
+    String updateBookAvailabilityStatus(BookStatusUpdate bookStatusUpdate,Integer bookId);
 }

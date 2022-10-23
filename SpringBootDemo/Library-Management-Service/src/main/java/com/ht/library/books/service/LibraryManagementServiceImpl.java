@@ -2,6 +2,7 @@ package com.ht.library.books.service;
 
 import com.ht.library.books.entity.Book;
 import com.ht.library.books.handlers.DataNotFoundException;
+import com.ht.library.books.model.BookStatusUpdate;
 import com.ht.library.books.model.LibraryBooksResponse;
 import com.ht.library.books.repository.LibraryManagementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class LibraryManagementServiceImpl implements ILibraryManagementService {
 
     @Override
     public Book createBook(Book book) {
-        book.setStatus(validateAndUpdateBookStatus(book.getHasBorrowed()));
+        book.setStatus(validateAndUpdateBookStatus(book.getIsBookBorrowed()));
         var persistedBook = libraryManagementRepository.save(book);
         //created message
         return persistedBook;
@@ -60,8 +61,13 @@ public class LibraryManagementServiceImpl implements ILibraryManagementService {
     }
 
     @Override
-    public String updateBookAvailabilityStatus(Integer bookId) {
-        return null;
+    public String updateBookAvailabilityStatus(BookStatusUpdate bookStatusUpdate,
+                                               Integer bookId) {
+        Book book = validateAndGetBook(bookId);
+        book.setIsBookBorrowed(Boolean.parseBoolean(bookStatusUpdate.getIsBookBorrowed()));
+        String bookStatus = validateAndUpdateBookStatus(Boolean.parseBoolean(bookStatusUpdate.getIsBookBorrowed()));
+        book.setStatus(bookStatus);
+        return String.format("%s Book is %s",book.getBookName(),bookStatus);
     }
 
 
@@ -71,8 +77,8 @@ public class LibraryManagementServiceImpl implements ILibraryManagementService {
         existedBook.setAuthor(book.getAuthor());
         existedBook.setPrice(book.getPrice());
         existedBook.setGenre(book.getGenre());
-        existedBook.setHasBorrowed(book.getHasBorrowed());
-        existedBook.setStatus(validateAndUpdateBookStatus(book.getHasBorrowed()));
+        existedBook.setIsBookBorrowed(book.getIsBookBorrowed());
+        existedBook.setStatus(validateAndUpdateBookStatus(book.getIsBookBorrowed()));
     }
 
     private Book validateAndGetBook(Integer bookId) {

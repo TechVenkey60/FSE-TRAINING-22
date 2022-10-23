@@ -14,19 +14,19 @@ public class Book {
     private String author;
     private String genre;
     private Double price;
-    private Boolean hasBorrowed;
+    private Boolean isBookBorrowed;
     private String status;
 
     public Book() {
     }
 
-    public Book(Integer bookId, String bookName, String author, String genre, Double price, Boolean hasBorrowed) {
+    public Book(Integer bookId, String bookName, String author, String genre, Double price, Boolean isBookBorrowed) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.author = author;
         this.genre = genre;
         this.price = price;
-        this.hasBorrowed = hasBorrowed;
+        this.isBookBorrowed = isBookBorrowed;
     }
 
     public Integer getBookId() {
@@ -69,12 +69,12 @@ public class Book {
         this.price = price;
     }
 
-    public Boolean getHasBorrowed() {
-        return hasBorrowed;
+    public Boolean getIsBookBorrowed() {
+        return isBookBorrowed;
     }
 
-    public void setHasBorrowed(Boolean hasBorrowed) {
-        this.hasBorrowed = hasBorrowed;
+    public void setIsBookBorrowed(Boolean isBookBorrowed) {
+        this.isBookBorrowed = isBookBorrowed;
     }
 
     public String getStatus() {
