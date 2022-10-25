@@ -11,7 +11,7 @@ spring:
   jpa:
     hibernate:
       naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     format-sql: true
     properties:
@@ -20,3 +20,5 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
+  resources:
+    static-locations: classpath:/webapp/

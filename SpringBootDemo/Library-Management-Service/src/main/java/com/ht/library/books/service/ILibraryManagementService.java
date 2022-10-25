@@ -11,5 +11,5 @@ public interface ILibraryManagementService {
     Book getBookById(Integer bookId);
     LibraryBooksResponse getAllLibraryBooks();
     String removeBookById(Integer bookId);
-    String updateBookAvailabilityStatus(BookStatusUpdate bookStatusUpdate,Integer bookId);
+    Book updateBookAvailabilityStatus(BookStatusUpdate bookStatusUpdate,Integer bookId);
 }

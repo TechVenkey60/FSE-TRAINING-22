@@ -7,6 +7,7 @@ import com.ht.library.books.model.LibraryBooksResponse;
 import com.ht.library.books.repository.LibraryManagementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.ht.library.books.util.LibraryAppConstants.*;
 import static java.util.stream.Collectors.counting;
@@ -18,6 +19,7 @@ public class LibraryManagementServiceImpl implements ILibraryManagementService {
     @Autowired
     private LibraryManagementRepository libraryManagementRepository;
 
+    @Transactional
     @Override
     public Book createBook(Book book) {
         book.setStatus(validateAndUpdateBookStatus(book.getIsBookBorrowed()));
@@ -26,6 +28,7 @@ public class LibraryManagementServiceImpl implements ILibraryManagementService {
         return persistedBook;
     }
 
+    @Transactional
     @Override
     public Book updateBookById(Book book, Integer bookId) {
         var existedBook = validateAndGetBook(bookId);
@@ -36,6 +39,7 @@ public class LibraryManagementServiceImpl implements ILibraryManagementService {
     }
 
 
+    @Transactional
     @Override
     public Book getBookById(Integer bookId) {
         return validateAndGetBook(bookId);
@@ -48,26 +52,30 @@ public class LibraryManagementServiceImpl implements ILibraryManagementService {
         var booksAvailability = libraryBooks.stream()
                     .collect(groupingBy(Book::getStatus,counting()));
 
-        var borrowedBooks = String.format(BORROWED_BOOKS_STATUS,booksAvailability.getOrDefault(BORROWED,0L) );
-        var availableBooks = String.format(AVAILABLE_BOOKS_STATUS,booksAvailability.getOrDefault(AVAILABLE,0L));
+        var borrowedBooks = booksAvailability.getOrDefault(BORROWED,0L);
+        var availableBooks = booksAvailability.getOrDefault(AVAILABLE,0L);
 
-        return new LibraryBooksResponse(libraryBooks,borrowedBooks,availableBooks);
+        return new LibraryBooksResponse(libraryBooks,libraryBooks.size(),borrowedBooks,availableBooks);
     }
 
+    @Transactional
     @Override
     public String removeBookById(Integer bookId) {
         libraryManagementRepository.delete(validateAndGetBook(bookId));
         return BOOK_DELETED;
     }
 
+    @Transactional
     @Override
-    public String updateBookAvailabilityStatus(BookStatusUpdate bookStatusUpdate,
+    public Book updateBookAvailabilityStatus(BookStatusUpdate bookStatusUpdate,
                                                Integer bookId) {
         Book book = validateAndGetBook(bookId);
         book.setIsBookBorrowed(Boolean.parseBoolean(bookStatusUpdate.getIsBookBorrowed()));
         String bookStatus = validateAndUpdateBookStatus(Boolean.parseBoolean(bookStatusUpdate.getIsBookBorrowed()));
         book.setStatus(bookStatus);
-        return String.format("%s Book is %s",book.getBookName(),bookStatus);
+        var updatedBook = libraryManagementRepository.save(book);
+        System.out.println(String.format("%s Book is %s",book.getBookName(),bookStatus));
+        return updatedBook;
     }
 
 

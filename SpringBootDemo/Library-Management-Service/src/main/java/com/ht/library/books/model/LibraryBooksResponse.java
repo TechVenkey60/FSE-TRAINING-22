@@ -6,14 +6,16 @@ import java.util.List;
 public class LibraryBooksResponse {
 
     private List<Book> libraryBooks;
-    private String borrowedBooksInfo;
-    private String availableBooksInfo;
+    private int totalLibraryBooks;
+    private long borrowedBooksInfo;
+    private long availableBooksInfo;
 
     public LibraryBooksResponse() {
     }
 
-    public LibraryBooksResponse(List<Book> libraryBooks, String borrowedBooksInfo, String availableBooksInfo) {
+    public LibraryBooksResponse(List<Book> libraryBooks, int totalLibraryBooks, long borrowedBooksInfo, long availableBooksInfo) {
         this.libraryBooks = libraryBooks;
+        this.totalLibraryBooks = totalLibraryBooks;
         this.borrowedBooksInfo = borrowedBooksInfo;
         this.availableBooksInfo = availableBooksInfo;
     }
@@ -22,23 +24,15 @@ public class LibraryBooksResponse {
         return libraryBooks;
     }
 
-    public void setLibraryBooks(List<Book> libraryBooks) {
-        this.libraryBooks = libraryBooks;
+    public int getTotalLibraryBooks() {
+        return totalLibraryBooks;
     }
 
-    public String getBorrowedBooksInfo() {
+    public long getBorrowedBooksInfo() {
         return borrowedBooksInfo;
     }
 
-    public void setBorrowedBooksInfo(String borrowedBooksInfo) {
-        this.borrowedBooksInfo = borrowedBooksInfo;
-    }
-
-    public String getAvailableBooksInfo() {
+    public long getAvailableBooksInfo() {
         return availableBooksInfo;
-    }
-
-    public void setAvailableBooksInfo(String availableBooksInfo) {
-        this.availableBooksInfo = availableBooksInfo;
     }
 }

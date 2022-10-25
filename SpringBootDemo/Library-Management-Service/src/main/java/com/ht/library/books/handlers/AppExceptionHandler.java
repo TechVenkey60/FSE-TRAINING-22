@@ -39,8 +39,6 @@ public class AppExceptionHandler {
                 .collect(toMap(FieldError::getField,FieldError::getDefaultMessage));
     }
 
-    //MissingPathVariableException
-
     @ExceptionHandler(MissingPathVariableException.class)
     public ResponseEntity<ErrorResponse> handleMissingPathVariableException(MissingPathVariableException exception){
         var errorResponse = new ErrorResponse(500,exception.getMessage());
