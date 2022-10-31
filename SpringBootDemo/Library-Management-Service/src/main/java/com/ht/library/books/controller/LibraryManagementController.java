@@ -38,12 +38,14 @@ public class LibraryManagementController {
         return new ResponseEntity<>(libraryManagementService.updateBookById(book, bookId), HttpStatus.OK);
     }
 
+    @CrossOrigin("http://localhost:4200")
     @GetMapping("/read/{bookId}")
     public ResponseEntity<Book> fetchBookById(@PathVariable Integer bookId) {
         //validation
         return new ResponseEntity<>(libraryManagementService.getBookById(bookId), HttpStatus.OK);
     }
 
+    @CrossOrigin("http://localhost:4200")
     @GetMapping("/allBooks")
     public ResponseEntity<LibraryBooksResponse> getAllBooks() {
         return new ResponseEntity<>(libraryManagementService.getAllLibraryBooks(), HttpStatus.OK);

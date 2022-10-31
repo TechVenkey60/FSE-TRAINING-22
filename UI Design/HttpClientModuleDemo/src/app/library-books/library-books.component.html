@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Books</title>
+</head>
+<body>
+
+    <div class="container" style="padding: 20px; margin-top: 10px;">
+           <label for="bookId">Enter Book Id</label>
+           <input type="text" [(ngModel)]="bookId">
+            <input type="submit" (click)="getBook()">
+    </div>
+    
+    <div class="container bg-light">
+      <header class="text-success mp-4" style="text-align: center;">Library Books Information</header>
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Book Id</th>
+                <th scope="col">BookName</th>
+                <th scope="col">Author</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Price</th>
+                <th scope="col">Is Book-Borrowd</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><!--*ngFor="let libraryBook of libraryBooks"-->
+                <td>{{libraryBook.bookId}}</td>
+                <td>{{libraryBook.bookName}}</td>
+                <td>{{libraryBook.author}}</td>
+                <td>{{libraryBook.genre}}</td>
+                <td>{{libraryBook.price}}</td>
+                <td>{{libraryBook.isBookBorrowed}}</td>
+                <td>{{libraryBook.status}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</body>
+</html>

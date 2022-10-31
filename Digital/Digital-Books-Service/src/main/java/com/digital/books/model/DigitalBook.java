@@ -1,10 +1,6 @@
 package com.digital.books.model;
 
-import org.springframework.lang.NonNull;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -15,15 +11,9 @@ public class DigitalBook {
     @GeneratedValue
     private Integer bookId;
     private Integer authorId;
-    @NotNull(message = "Logo url must not be empty/blank. Please provide proper input.")
-    @NotBlank(message = "Logo url must not be empty/blank. Please provide proper input.")
     private String logo;
-    @NotNull(message = "Title must not be empty/blank. Please provide proper input.")
-    @NotBlank(message = "Title must not be empty/blank. Please provide proper input.")
     private String title;
     private String category;
-    @NotNull(message = "Author must not be empty/blank. Please provide proper input.")
-    @NotBlank(message = "Author must not be empty/blank. Please provide proper input.")
     private String author;
     private Double price;
     private String publisher;
@@ -32,6 +22,9 @@ public class DigitalBook {
     private String chapter;
     private Boolean active;
     private String block;
+    private String emailId;
+    private Integer subscriptionId;
+    private String hasSubscription;
 
     public DigitalBook() {
     }
@@ -145,5 +138,29 @@ public class DigitalBook {
 
     public void setBlock(String block) {
         this.block = block;
+    }
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
+
+    public Integer getSubscriptionId() {
+        return subscriptionId;
+    }
+
+    public void setSubscriptionId(Integer subscriptionId) {
+        this.subscriptionId = subscriptionId;
+    }
+
+    public String getHasSubscription() {
+        return hasSubscription;
+    }
+
+    public void setHasSubscription(String hasSubscription) {
+        this.hasSubscription = hasSubscription;
     }
 }

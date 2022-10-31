@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static java.util.Objects.isNull;
 
 @Service
@@ -51,6 +53,15 @@ public class DigitalBookServiceImpl implements IDigitalBookService {
             return String.format("DigitalBook Id %d blocked by authorId: %d",bookId,authorId);
         }
         return String.format("DigitalBook Id: %d unblocked by authorId: %d",bookId,authorId);
+    }
+
+    @Override
+    public List<DigitalBook> fetchBooks(String category,
+                                        String title,
+                                        String author,
+                                        String publisher,
+                                        Double price) {
+        return null;
     }
 
     private DigitalBook validateAuthorIdAndBookId(Integer authorId, Integer bookId) {

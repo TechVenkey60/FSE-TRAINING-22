@@ -18,7 +18,7 @@ public class DigitalBooksController {
     @Autowired
     private IDigitalBookService digitalBookService;
 
-    @PostMapping("/{authorId}/books")
+    @PostMapping("/author/{authorId}/books")
     public ResponseEntity<DigitalBook> saveDigitalBook(@PathVariable Integer authorId,
                                                        @RequestBody @Valid DigitalBook digitalBook) {
 
@@ -28,7 +28,7 @@ public class DigitalBooksController {
     }
 
 
-    @PutMapping("/{authorId}/books/{bookId}")
+    @PutMapping("/author/{authorId}/books/{bookId}")
     public ResponseEntity<DigitalBook> updateDigitalBook(@PathVariable Integer authorId,
                                                          @PathVariable Integer bookId,
                                                          @RequestBody DigitalBook digitalBook) {
@@ -40,7 +40,7 @@ public class DigitalBooksController {
     }
 
 
-    @PostMapping("/{authorId}/books/{bookId}")
+    @PostMapping("/author/{authorId}/books/{bookId}")
     public ResponseEntity<String> updateDigitalBooksVisibility(@RequestParam(defaultValue = "no") String block,
                                                                @PathVariable Integer authorId,
                                                                @PathVariable Integer bookId) {
@@ -53,6 +53,20 @@ public class DigitalBooksController {
         var response = digitalBookService.updateBookVisibility(authorId, bookId, block);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchBooks(@RequestParam String category,
+                                         @RequestParam String title,
+                                         @RequestParam String author,
+                                         @RequestParam String publisher,
+                                         @RequestParam Double price){
+
+
+        return  new ResponseEntity<>(digitalBookService.fetchBooks(category,title,author,publisher,price),HttpStatus.OK);
+    }
+
+
+
 
     private void validateInputData(Integer fieldValue, String fieldName) {
         if (isNull(fieldValue) || !fieldValue.toString().matches("[0-9]+")) {

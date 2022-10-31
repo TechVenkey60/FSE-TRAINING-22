@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="text-center title">
+                        <h3>SignUp</h3>
+                        <h6>Please enter your details !!</h6>
+                    </div>
+                    <form [formGroup]="signUpForm" (ngSubmit)="signUpUser()">
+                        <div class="mb-3 mt-3">
+                            <label for="userName" class="form-label">Username:</label>
+                            <input formControlName="userName" type="text" class="form-control" id="userName" placeholder="Enter user name" name="userName" required>
+                          </div>
+                          <div class="mb-3 mt-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input formControlName="email" type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+                          </div>
+                        <div class= "mb-3 mt-3">
+                            <label for="role" class="form-label">Select Role</label>
+                            <select class="form-select" aria-label="Default select example" formControlName="role" required>
+                                <option value="reader">Reader</option>
+                                <option value="author">Author</option>
+                              </select>
+                          </div>
+                          <div class="mb-3">
+                            <label for="pwd" class="form-label">Password:</label>
+                            <input formControlName="password" type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+                          </div>
+                          <div class="d-grid button">
+                            <button type="button" class="btn btn-primary">Signup</button>
+                          </div>
+                    </form>
+
+                    <a routerLink="/login">Already have an account? Click to SignIn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

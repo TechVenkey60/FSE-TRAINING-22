@@ -1,0 +1,11 @@
+{
+    "UserDetails":[
+        {
+            "firstName":"Venkat",
+            "lastName": "Kokkanti",
+            "email": "venkey89@gmail.com",
+            "gender": "male",
+            "phone": "0909080090"
+        }
+    ]
+}

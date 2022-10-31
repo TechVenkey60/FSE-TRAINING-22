@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regisration Form </title>
+
+    
+</head>
+<body>
+    <div class="container">
+        <header>Registration</header>
+
+        <form action="file:///D:/workspace/FSE-TRAINING-22/UI/ThankYou.html" method="post">
+            <div class="form">
+                <div class="details personal">
+                    <span class="title">Personal Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label for="fullName">Full Name</label>
+                            <input [(ngModel)] =userInfo.firstName class ="zoom" name= "fullName" id= "fullName" type="text" placeholder="Enter your name" required >
+                        </div>
+
+                        <div class="input-field">
+                            <label for="birthDate">Date of Birth</label>
+                            <input  [(ngModel)] =userInfo.lastName class ="zoom" name ="birthDate" id="birthDate"  type="text" placeholder="Enter birth date" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label for="email">Email</label>
+                            <input [(ngModel)] =userInfo.email class ="zoom" name = "email" id="email" type="email" placeholder="Enter your email" required >
+                        </div>
+
+                        <div class="input-field">
+                            <label for="phone">Mobile Number</label>
+                            <input  [(ngModel)] =userInfo.phone class ="zoom" name = "phone" id="phone" type="number" placeholder="Enter mobile number" required >
+                        </div>
+
+                        <div class="input-field">
+                            <label for="gender">Gender</label>
+                            <input [(ngModel)] =userInfo.gender class ="zoom"  name = "gender" id= "gender" type="text" placeholder="Enter your Gender" required >
+                        </div>
+
+                        <div class="input-field">
+                            <label for="Occupation">Occupation</label>
+                            <input [(ngModel)] =userDetails.Occupation class ="zoom"  name = "Occupation" id="Occupation" type="text" placeholder="Enter your ccupation" required>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+
+                <div class="details">
+                    <span class="title">Identity Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label for="id-type">ID Type</label>
+                            <input [(ngModel)] =userDetails.idType class ="zoom" name = "id-type" id="id-type" type="text" placeholder="Enter ID type" required >
+                        </div>
+
+                        <div class="input-field">
+                            <label for="id-number">Id Number</label>
+                            <input [(ngModel)] =userDetails.idNumber class ="zoom" name = "id-number" id="id-number" type="number" placeholder="Enter ID number" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label for="issuedAuthority">Issued Authority</label>
+                            <input [(ngModel)] =userDetails.authority class ="zoom" name = "issuedAuthority" id="issuedAuthority" type="text" placeholder="Enter issued authority" required >
+                        </div>
+
+                        <div class="input-field">
+                            <label for="issuedState">Issued State</label>
+                            <input [(ngModel)] =userDetails.issuedState class ="zoom" name = "issuedState" id ="issuedState" type="text" placeholder="Enter issued state" required >
+                        </div>
+
+                        <div class="input-field">
+                            <label for="issuedDate">Issued Date</label>
+                            <input [(ngModel)] =userDetails.issuedDate name = "issuedDate"  class ="zoom" id="issuedDate" type="text" placeholder="Enter your issued date" required >
+                        </div>
+
+                        <div class="input-field">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input [(ngModel)] =userDetails.expiryDate name = "expiryDate" id= "expiryDate"  class ="zoom" type="text" placeholder="Enter expiry date" required >
+                        </div>
+                    </div>
+
+                    <button  (click)="saveUser()" class="nextBtn">
+                        <span class="btnText">Next <span>&#8594;</span></span>
+                    </button>
+                </div> 
+            </div>
+
+           
+        </form>
+    </div>
+</body>
+</html>

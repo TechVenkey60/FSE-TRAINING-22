@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=h, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="header" style="padding: 20px;">
+          <header style="text-align: center;" class="text-success">Customer Order Details</header>
+  </div>
+  <div class="container bg-light" *ngIf="products.length > 0">
+    <table class="table table-hover" style="text-align: center;">
+      <thead>
+        <tr>
+          <th>orderId</th>
+          <th>Product Name</th>
+          <th>Brand</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{product.orderId}}</td>
+          <td>{{product.name}}</td>
+          <td>{{product.brand}}</td>
+          <td>{{product.Price}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

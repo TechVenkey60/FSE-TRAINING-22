@@ -28,12 +28,6 @@ public class AppExceptionHandler {
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-//    public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception){
-//        var errorResponse = new ErrorResponse(400,exception.getMessage());
-//        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
-//    }
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String,String> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
@@ -42,6 +36,4 @@ public class AppExceptionHandler {
                 .stream()
                 .collect(toMap(FieldError::getField,FieldError::getDefaultMessage));
     }
-
-
 }

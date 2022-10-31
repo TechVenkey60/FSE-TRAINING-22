@@ -11,4 +11,5 @@ public interface DigitalBooksRepository extends JpaRepository<DigitalBook,Intege
 
     @Query("SELECT book FROM DigitalBook book WHERE book.bookId = :bookId AND book.authorId =:authorId")
     DigitalBook findBookByIdAndAuthorId(@Param("bookId") Integer bookId, @Param("authorId") Integer authorId);
+
 }

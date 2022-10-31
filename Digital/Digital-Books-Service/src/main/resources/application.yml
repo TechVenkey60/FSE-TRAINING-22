@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /api/v1/digitalbooks/author
+    context-path: /api/v1/digitalbooks
   port: 9966
 
 spring:
