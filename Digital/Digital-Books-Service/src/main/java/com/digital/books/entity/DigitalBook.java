@@ -1,4 +1,4 @@
-package com.digital.books.model;
+package com.digital.books.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,14 +22,11 @@ public class DigitalBook {
     private String chapter;
     private Boolean active;
     private String block;
-    private String emailId;
-    private Integer subscriptionId;
-    private String hasSubscription;
 
     public DigitalBook() {
     }
 
-    public DigitalBook(Integer bookId, Integer authorId,String logo, String title, String category, String author, Double price, String publisher, Date publishedDate, String chapter, Boolean active, String block) {
+    public DigitalBook(Integer bookId, Integer authorId, String logo, String title, String category, String author, Double price, String publisher, Date publishedDate, String chapter, Boolean active, String block) {
         this.bookId = bookId;
         this.authorId = authorId;
         this.logo = logo;
@@ -138,29 +135,5 @@ public class DigitalBook {
 
     public void setBlock(String block) {
         this.block = block;
-    }
-
-    public String getEmailId() {
-        return emailId;
-    }
-
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
-    }
-
-    public Integer getSubscriptionId() {
-        return subscriptionId;
-    }
-
-    public void setSubscriptionId(Integer subscriptionId) {
-        this.subscriptionId = subscriptionId;
-    }
-
-    public String getHasSubscription() {
-        return hasSubscription;
-    }
-
-    public void setHasSubscription(String hasSubscription) {
-        this.hasSubscription = hasSubscription;
     }
 }

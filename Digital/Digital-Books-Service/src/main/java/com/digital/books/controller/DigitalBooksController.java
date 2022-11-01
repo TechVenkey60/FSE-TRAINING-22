@@ -1,7 +1,8 @@
 package com.digital.books.controller;
 
+import com.digital.books.entity.DigitalBook;
 import com.digital.books.handlers.InvalidDataException;
-import com.digital.books.model.DigitalBook;
+import com.digital.books.model.SubscriptionBook;
 import com.digital.books.service.IDigitalBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,14 +56,50 @@ public class DigitalBooksController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchBooks(@RequestParam String category,
-                                         @RequestParam String title,
-                                         @RequestParam String author,
-                                         @RequestParam String publisher,
-                                         @RequestParam Double price){
-
+    public ResponseEntity<DigitalBook> searchBooks(@RequestParam String category,
+                                                   @RequestParam String title,
+                                                   @RequestParam String author,
+                                                   @RequestParam String publisher,
+                                                   @RequestParam Double price){
 
         return  new ResponseEntity<>(digitalBookService.fetchBooks(category,title,author,publisher,price),HttpStatus.OK);
+    }
+
+
+    @PostMapping("/{bookId}/subscribe")
+    public ResponseEntity<?> subscribeBook(@PathVariable Integer bookId,
+                                           @RequestBody SubscriptionBook subscriptionBook){
+
+
+        return new ResponseEntity<>(digitalBookService.subScribeDigitalBook(bookId,subscriptionBook),HttpStatus.OK);
+    }
+
+
+    @GetMapping("/readers/{emailId}/books")
+    public ResponseEntity<?> getReaderSubscribedBooks(@PathVariable String emailId){
+
+        return new ResponseEntity<>(digitalBookService.getReadersBook(emailId),HttpStatus.OK);
+    }
+
+    @GetMapping("/readers/{emailId}/books/{subscriptionId}")
+    public ResponseEntity<?> getBookBySubIdAndEmailId(@PathVariable String emailId,
+                                                      @PathVariable Integer subscriptionId){
+
+        return new ResponseEntity<>(digitalBookService.fetchBookBySubIdAndEmailId(emailId,subscriptionId),HttpStatus.OK);
+    }
+
+    @GetMapping("/readers/{emailId}/books/{subscriptionId}/read")
+    public ResponseEntity<?> readBookContentBySubIdAndEmailId(@PathVariable String emailId,
+                                                      @PathVariable Integer subscriptionId){
+
+        return new ResponseEntity<>(digitalBookService.fetchBookBySubIdAndEmailId(emailId,subscriptionId),HttpStatus.OK);
+    }
+
+    @GetMapping("/readers/{emailId}/books/{subscriptionId}/cancelSubscription")
+    public ResponseEntity<?> removeSubscriptionByEmailIdAndSubId(@PathVariable String emailId,
+                                                              @PathVariable Integer subscriptionId){
+
+        return new ResponseEntity<>(digitalBookService.cancelBookSubscription(emailId,subscriptionId),HttpStatus.OK);
     }
 
 
