@@ -19,18 +19,20 @@
                     <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
                         <div class="mb-3 mt-3">
                             <label for="email" class="form-label">Email:</label>
-                            <input formControlName ="email" type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            <input formControlName ="email" type="email" class="form-control" id="email" placeholder="Enter email" name="email" autocomplete="on">
+                            <span class="text-danger" *ngIf="loginForm.controls['email'] && loginForm.hasError('required','email')">*Email is required.</span>
                           </div>
                           <div class="mb-3">
                             <label for="pwd" class="form-label">Password:</label>
-                            <input formControlName ="password" type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
-                          </div>
+                            <input formControlName ="password" type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" autocomplete="current-password">
+                            <span class="text-danger" *ngIf="loginForm.controls['password'] && loginForm.hasError('required','password')">*Password is required.</span> 
+                        </div>
                           <div class="d-grid button">
-                            <button type="button" routerLink="/home" class="btn btn-primary">Login</button>
+                            <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Login</button>
                           </div>
-                          <br>
-                          <a routerLink="/signup">Don't have an account? Click here to Signup!</a>
                     </form>
+                  
+                        <a routerLink="/signup">Don't have an account? Click here to Signup!</a>
                 </div>
             </div>
         </div>

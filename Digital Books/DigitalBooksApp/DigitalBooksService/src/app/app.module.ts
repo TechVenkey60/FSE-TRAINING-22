@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CreateBookComponent } from './create-book/create-book.component';
 import { GetAllBooksComponent } from './get-all-books/get-all-books.component';
+import { SearchbooksComponent } from './searchbooks/searchbooks.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { GetAllBooksComponent } from './get-all-books/get-all-books.component';
     SignupComponent,
     NavbarComponent,
     CreateBookComponent,
-    GetAllBooksComponent
+    GetAllBooksComponent,
+    SearchbooksComponent
   ],
   imports: [
     BrowserModule,

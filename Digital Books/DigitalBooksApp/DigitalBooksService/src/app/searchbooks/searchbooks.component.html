@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New DigitalBook</title>
+</head>
+<body>
+  <app-navbar></app-navbar>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="text-center title">
+                        <h6>Search Book</h6>
+                    </div>
+                    <form>
+                        <div class="mb-1 mt-1">
+                            <label for="title" class="form-label">Title:</label>
+                            <input formControlName="title" type="text" class="form-control" id="title" placeholder="Enter title" name="title" required>
+                          </div>
+                          <div class="mb-1 mt-1">
+                            <label for="Category" class="form-label">Category:</label>
+                            <input formControlName="category" type="text" class="form-control" id="category" placeholder="Enter Category" name="Category" required>
+                          </div>
+                          <div class="mb-1 mt-1">
+                            <label for="autor" class="form-label">Autor:</label>
+                            <input formControlName="author" type="text" class="form-control" id="autor" placeholder="Enter autor" name="autor" required>
+                          </div>
+                          <div class="mb-1 mt-1">
+                            <label for="price" class="form-label">Price:</label>
+                            <input formControlName="price" type="text" class="form-control" id="price" placeholder="Enter" name="price" required>
+                          </div>
+                          <div class="mb-2 mt-1">
+                            <label for="publisher" class="form-label">Publisher:</label>
+                            <input formControlName="publisher" type="text" class="form-control" id="publisher" placeholder="Enter publisher" name="publisher" required>
+                          </div>
+                          <div class="mt-2 d-grid button">
+                            <button type="button" class="btn btn-success">Search</button>
+                          </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

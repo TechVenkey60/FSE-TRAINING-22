@@ -1,0 +1,28 @@
+.card{
+    border: none;
+    width: 600px;
+    height: 800px;
+    padding: 45px;
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    background: rgb(64, 124, 167);
+    background: linear-gradient(90deg,rgb(24, 68, 102) 0%,rgb(106, 89, 141)100%);
+}
+
+label{
+    color: #ffff;
+}
+.card h3, h6{
+    color: #ffff;
+}
+
+a{
+    color: #ffff;  
+    padding-top: 10px;
+}
+
+button{
+    box-sizing: 20px;
+    border-radius: 100px;
+ }

@@ -103,8 +103,6 @@ public class DigitalBooksController {
     }
 
 
-
-
     private void validateInputData(Integer fieldValue, String fieldName) {
         if (isNull(fieldValue) || !fieldValue.toString().matches("[0-9]+")) {
             throw new InvalidDataException(fieldName + " must be non-null. Allowed values are numbers[ex. 1 or 2 or 22]");
@@ -112,7 +110,7 @@ public class DigitalBooksController {
     }
 
     private void validateBlockValue(String block) {
-        if (isNull(block) || !"yes".equalsIgnoreCase(block) || !"no".equalsIgnoreCase(block)) {
+        if (isNull(block)) {
             throw new InvalidDataException("block value is invalid. Allowed values [yes or no] only.");
         }
     }
