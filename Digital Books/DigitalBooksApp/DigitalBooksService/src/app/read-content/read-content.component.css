@@ -1,0 +1,31 @@
+.container{
+    margin-top: 30px;
+    left: 40%;
+    border: cadetblue 2px lawngreen;
+    border-radius: 20px;
+    height: 280px;
+    text-align: justify;
+    width: 800px;
+}
+
+h2{
+
+    padding-top: 10px;
+    text-decoration-line: underline;
+    padding-bottom: 20px;
+}
+
+.form-group{
+    margin-left: 40px;
+    padding-bottom: 4px;
+   
+}
+
+label{
+    color: lightcoral;
+}
+
+span{
+    color: lightcyan;
+}
+

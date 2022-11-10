@@ -2,6 +2,7 @@
     border: none;
     width: 600px;
     height: 520px;
+    max-height: 1200px;
     padding: 45px;
     position: absolute;
     top: 15%;
@@ -25,4 +26,13 @@ a{
 button{
     box-sizing: 20px;
     border-radius: 100px;
+ }
+
+
+
+ .container-fluid{
+    top: 50%;
+    left: 30%;
+
+    margin-top: 850px;
  }

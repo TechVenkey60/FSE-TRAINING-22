@@ -16,23 +16,38 @@
                         <h1>Login</h1>
                         <h6>Please enter email & password !!</h6>
                     </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="isLoginFailed">
+                        <strong>{{loginFailedError}}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
                     <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
                         <div class="mb-3 mt-3">
                             <label for="email" class="form-label">Email:</label>
-                            <input formControlName ="email" type="email" class="form-control" id="email" placeholder="Enter email" name="email" autocomplete="on">
-                            <span class="text-danger" *ngIf="loginForm.controls['email'] && loginForm.hasError('required','email')">*Email is required.</span>
-                          </div>
+                            <input formControlName ="email" type="email" [ngClass] = "{'is-invalid':submitted}" class="form-control" placeholder="Enter email">
+                          
+                            <div *ngIf="submitted && loginForm.controls['email']" class="text-danger">
+                                <div *ngIf="submitted && loginForm.hasError('required','email')">
+                                    *Email is required.
+                                </div>
+                            </div>
+
+                        </div>
                           <div class="mb-3">
                             <label for="pwd" class="form-label">Password:</label>
-                            <input formControlName ="password" type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" autocomplete="current-password">
-                            <span class="text-danger" *ngIf="loginForm.controls['password'] && loginForm.hasError('required','password')">*Password is required.</span> 
+                            <input formControlName ="password" type="password" [ngClass] = "{'is-invalid':submitted}" class="form-control" placeholder="Enter password"> 
+                            <div *ngIf="submitted && loginForm.controls['password']" class="text-danger">
+                                <div *ngIf="submitted && loginForm.hasError('required','password')">
+                                    *Password is required.
+                                </div>
+                            </div>
                         </div>
                           <div class="d-grid button">
-                            <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-primary">Login</button>
                           </div>
                     </form>
                   
                         <a routerLink="/signup">Don't have an account? Click here to Signup!</a>
+                        <a routerLink="/homePage">Click here to continue as Guest User</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update DigitalBook</title>
+</head>
+<body>
+
+  <app-navbar></app-navbar>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="text-center title">
+                        <h6>Update DigitalBook</h6>
+                    </div>
+
+                    <form [formGroup]="updateFormBook" (ngSubmit)="editDigitalBook()">
+                        <div class="mb-1 mt-1">
+                            <label for="title" class="form-label">Title:</label>
+                            <input formControlName="title"  type="text" class="form-control" [(ngModel)]="bookTitile" id="bookTitle" placeholder="Enter title" name="title" required>
+                        </div>
+
+                          <div class="mb-1 mt-1">
+                            <label for="Category" class="form-label">Category:</label>
+                            <input formControlName="category" type="text" class="form-control" [(ngModel)]="bookCategory" placeholder="Enter Category" name="Category" required>
+                          </div>
+
+                          <div class="mb-1 mt-1">
+                            <label for="autor" class="form-label">Autor:</label>
+                            <input formControlName="author" type="text" class="form-control" [(ngModel)]="bookAutor" placeholder="Enter autor" name="autor" required>
+                          </div>
+
+                          <div class="mb-1 mt-1">
+                            <label for="price" class="form-label">Price:</label>
+                            <input formControlName="price" type="number" class="form-control" [(ngModel)]="bookPrice" placeholder="Enter" name="price" required>
+                          </div>
+
+                          <div class="mb-1 mt-1">
+                            <label for="publisher" class="form-label">Publisher:</label>
+                            <input formControlName="publisher" type="text" class="form-control" [(ngModel)]="bookPublisher" placeholder="Enter publisher" name="publisher" required>
+                          </div>
+
+                          <div class="mb-1 mt-1">
+                            <label for="publishedDate" class="form-label">Published Date:</label>
+                            <input formControlName="publishedDate"  type="date" class="form-control" [(ngModel)]="bookPublishedDate" placeholder="Enter publishedDate" name="publishedDate" required>
+                          </div>
+
+                          <div class="mb-1 mt-1">
+                            <label for="content" class="form-label">Chapter/Content:</label>
+                            <input formControlName="chapter" type="text"  class="form-control" [(ngModel)]="bookChapter" placeholder="Enter content" name="content" required>
+                          </div>
+
+                          <div class="mb-1 mt-1">
+                            <label for="active" class="form-label">Active:</label>
+                            <input formControlName="active" type="text" class="form-control" [(ngModel)]="bookActive" placeholder="Enter active value" name="content" required>
+                          </div>
+
+                          <div class="d-grid button">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                          </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<app-footer></app-footer>
+</html>

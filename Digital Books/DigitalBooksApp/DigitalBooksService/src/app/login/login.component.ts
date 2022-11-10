@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup,Validators,FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { observable, Observable } from 'rxjs';
+import { UserServiceService } from 'src/services/user-service.service';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  public loginForm: any = FormGroup;
-  constructor(private httpClient : HttpClient, private formBuilder : FormBuilder,
-              private router : Router) { }
+ loginForm!: FormGroup;
+ submitted = false; 
+
+ loggedInUser:any;
+ errorMessage:any;
+ loginFailedError:any;
+ isLoginFailed=false;
+
+  constructor(private formBuilder : FormBuilder,
+              private router : Router,private userService:UserServiceService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -23,21 +31,30 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser(){
-    //this.httpClient.post("",this.loginForm.value)
-    //  .subscribe(res => {
-    //    alert("User login is Sucessfull.")
-    //    this.loginForm.reset();
-    //    this.router.navigate(['home']);
-    //  })
-
-    console.log("=========================");
+    if(this.loginForm.invalid){
+      this.submitted = true;
+      return
+    }
     
-    console.log(this.loginForm.value);
+    this.userService.userSignIn(this.loginForm.value)
+    .subscribe(data => {
+      this.loggedInUser = data;
+      let value = JSON.parse(this.loggedInUser);
+      this.userService.setUserData(value);
+      this.loginForm.reset();
+      alert("User logged in successful!");
+      this.router.navigate(['/homePage']);
+    },error=>{
+      console.log("===========================");
+      this.errorMessage = JSON.parse(error.error);
+      this.loginFailedError = this.errorMessage.message;
+      this.isLoginFailed=true;
+      setTimeout(()=>{location.reload()},2000);
+      this.router.navigate(['login']);
+      console.log("===========================");
+      
+    });
 
-    alert("User login is Sucessfull.")
-        this.loginForm.reset();
-       this.router.navigate(['home']);
-    
   }
 
 }

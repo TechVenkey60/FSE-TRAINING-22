@@ -3,15 +3,13 @@ package com.digital.books.model;
 public class SubscriptionBook {
     private Integer bookId;
     private String emailId;
-    private String status;
 
     public SubscriptionBook() {
     }
 
-    public SubscriptionBook(Integer bookId, String emailId,String status) {
+    public SubscriptionBook(Integer bookId, String emailId) {
         this.bookId = bookId;
         this.emailId = emailId;
-        this.status = status;
     }
 
     public Integer getBookId() {
@@ -28,13 +26,5 @@ public class SubscriptionBook {
 
     public void setEmailId(String emailId) {
         this.emailId = emailId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

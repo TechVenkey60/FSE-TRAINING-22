@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserServiceService } from 'src/services/user-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  
+  readerAccess=false;
+  authorAccess = false;
+  user:any;
+  disabled="disabled";
+
+  constructor(private userService : UserServiceService,private router : Router) { }
 
   ngOnInit(): void {
+    this.user = this.userService.getUserData();
+    console.log(this.user);
+    
+    if(this.user == 'author'){
+        this.authorAccess=true;
+    }else if (this.user == 'reader') {
+      this.readerAccess = true;
+    }
   }
 
 }

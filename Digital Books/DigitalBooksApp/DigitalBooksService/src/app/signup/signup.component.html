@@ -16,28 +16,52 @@
                         <h3>SignUp</h3>
                         <h6>Please enter your details !!</h6>
                     </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="isSignUpFailed">
+                        <strong>{{singUpFailedError}}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
                     <form [formGroup]="signUpForm" (ngSubmit)="signUpUser()">
                         <div class="mb-3 mt-3">
-                            <label for="userName" class="form-label">Username:</label>
-                            <input formControlName="userName" type="text" class="form-control" id="userName" placeholder="Enter user name" name="userName" required>
+                            <label for="userName" class="form-label">UserName:</label>
+                            <input formControlName="userName" type="text" [ngClass]="{'is-invalid':submitted}" class="form-control" placeholder="Enter user name">
+                            <div *ngIf="submitted && signUpForm.controls['userName']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','userName')">
+                                    *Username is required.
+                                </div>
+                            </div>
                           </div>
                           <div class="mb-3 mt-3">
                             <label for="email" class="form-label">Email:</label>
-                            <input formControlName="email" type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
-                          </div>
+                            <input formControlName="email" type="email" [ngClass]="{'is-invalid':submitted}" class="form-control" placeholder="Enter email">
+                            <div *ngIf="submitted && signUpForm.controls['email']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','email')">
+                                    *Email is required.
+                                </div>
+                            </div>  
+                        </div>
                         <div class= "mb-3 mt-3">
                             <label for="role" class="form-label">Select Role</label>
-                            <select class="form-select" aria-label="Default select example" formControlName="role" required>
+                            <select class="form-select" aria-label="Default select example" formControlName="role" [ngClass]="{'is-invalid':submitted}">
                                 <option value="reader">Reader</option>
                                 <option value="author">Author</option>
                               </select>
+                              <div *ngIf="submitted && signUpForm.controls['role']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','role')">
+                                    *Role is required.
+                                </div>
+                            </div>
                           </div>
                           <div class="mb-3">
                             <label for="pwd" class="form-label">Password:</label>
-                            <input formControlName="password" type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
-                          </div>
+                            <input formControlName="password" type="password" class="form-control" [ngClass]="{'is-invalid':submitted}" placeholder="Enter password" autocomplete="current-password">
+                            <div *ngIf="submitted && signUpForm.controls['password']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','password')">
+                                    *Password is required.
+                                </div>
+                            </div>  
+                        </div>
                           <div class="d-grid button">
-                            <button type="button" class="btn btn-primary">Signup</button>
+                            <button type="submit" class="btn btn-primary">Signup</button>
                           </div>
                     </form>
 

@@ -14,21 +14,35 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" >Home</a>
+            <a class="nav-link active text-white" routerLink="/homePage" aria-current="page" >Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active text-white" routerLink="/createBook" aria-current="page" >Create Book</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active text-white" routerLink="/allBooks" aria-current="page" >All Books</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active text-white" routerLink="/searchBook" aria-current="page" >Get Book</a>
-          </li>
+      
+            <li class="nav-item">
+              <a class="nav-link active text-white" routerLink="/createBook" aria-current="page" >Create Book</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active text-white" routerLink="/authorBooks" aria-current="page">Author Books</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active text-white" routerLink="/allBooks" aria-current="page" >All Books</a>
+            </li>
+        
+          
+            <li class="nav-item">
+              <a class="nav-link active text-white" routerLink="/searchBook" aria-current="page" >Search Book</a>
+            </li>
+        
+            <li class="nav-item">
+              <a class="nav-link active text-white" routerLink="/subscribe" aria-current="page">Subscribe Book</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active text-white" routerLink="/subscribed-books" aria-current="page">Reader Subscribed Books</a>
+            </li>
         </ul>
         <div class="d-flex">
-          <!-- <button  routerLink="login" class="btn btn-dark btn-outline-success text-white me-2" type="submit">Sign</button>
-          <button  routerLink="signup" class="btn btn-dark btn-outline-danger text-white"  type="submit">SignUp</button> -->
           <button  routerLink="/login" class="btn btn-dark btn-outline-success text-white me-2" type="submit">LogOut</button>
         </div>
       </div>

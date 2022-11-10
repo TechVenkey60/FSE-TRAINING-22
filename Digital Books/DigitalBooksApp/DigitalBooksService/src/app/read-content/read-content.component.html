@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reader Content</title>
+</head>
+<body>
+    <app-navbar></app-navbar>
+
+    <div class="container-fluid">
+      <div class="title mt-2 mb-2">
+        <h3 class="text-center text-success" style="text-decoration: underline;">Book Information </h3>
+    </div>
+    </div>
+    <br/>
+    <div class="container-fluid">
+        <div class="text-center">
+          <table class="table table-striped table-hover table-borderless">
+            <tr class="p-5 bg-light">
+              <th class="text-middle">Title:</th>
+              <td class="text-start">{{showData.title | titlecase}}</td>
+            </tr>
+            <tr class="p-5 bg-light">
+              <th class="text-middle">Author:</th>
+              <td class="text-start">{{showData.author  | titlecase}}</td>
+            </tr>
+            <tr class="p-5 bg-light">
+              <th class="text-middle">Price:</th>
+              <td class="text-start">{{showData.price | currency:'INR'}}</td>
+            </tr>
+            <tr class="p-5 bg-light">
+              <th class="text-middle">Publisher:</th>
+              <td class="text-start">{{showData.publisher  | titlecase}}</td>
+            </tr>
+            <tr class="p-5 bg-light">
+              <th class="text-middle">PublishedDate:</th>
+              <td class="text-start">{{showData.publishedDate}}</td>
+            </tr>
+          </table>
+        </div>
+    </div>
+
+      <br/>
+     
+      <hr/>
+
+    <div class="container-fluid">
+        <div class="readContnet" style="text-align: justify;">
+           <p>Traditional library content is organized into a few discrete objects for indexing purposes; common examples include books, sections in books, journals, and articles in journals. In contrast, georeferenced data relate to part of a continuum of space, with a geographic footprint that characterizes each piece of data. Such footprints can be precise, for example, when a unique identifier refers to a legally defined area. Other footprints are fuzzy in nature, when the limits of the area are unclear. Imprecise footprints can arise with physical objects; the boundaries of a valley or a mountain may be vaguely defined. More often, fuzzy footprints arise when there is no clear definition of commonly used terms. Though what these expressions mean in context is generally understandable, they lack the type of clear definition required for straightforward computer processing.</p>
+           <br/>
+           <p>The concept of DLMS is used here according to the definition proposed in the DELOS Manifesto as “a generic software system that provides the appropriate software infrastructure both to produce and administer a Digital Library System incorporating the suite of functionality considered foundational for Digital Libraries and to integrate additional software offering more refined, specialized, or advanced functionality” (Candela et al., 2007b). The DELOS Manifesto makes a distinction between a digital library system (DLS) and a DLMS. A DLS offers functionality for a particular digital library, including support for end user interactions. A DLMS provides a platform for producing and administering digital collections and services by ensuring essential functionality and incorporating additional software components for more refined and advanced features (Tramboo et al., 2012). DLMS enable an instantiation and management of digital collections and services that become part of a centralized or distributed DLS.</p>
+           <p>Traditional library content is organized into a few discrete objects for indexing purposes; common examples include books, sections in books, journals, and articles in journals. In contrast, georeferenced data relate to part of a continuum of space, with a geographic footprint that characterizes each piece of data. Such footprints can be precise, for example, when a unique identifier refers to a legally defined area. Other footprints are fuzzy in nature, when the limits of the area are unclear. Imprecise footprints can arise with physical objects; the boundaries of a valley or a mountain may be vaguely defined. More often, fuzzy footprints arise when there is no clear definition of commonly used terms. Though what these expressions mean in context is generally understandable, they lack the type of clear definition required for straightforward computer processing.</p>
+           <br/>
+           <p>Traditional library content is organized into a few discrete objects for indexing purposes; common examples include books, sections in books, journals, and articles in journals. In contrast, georeferenced data relate to part of a continuum of space, with a geographic footprint that characterizes each piece of data. Such footprints can be precise, for example, when a unique identifier refers to a legally defined area. Other footprints are fuzzy in nature, when the limits of the area are unclear. Imprecise footprints can arise with physical objects; the boundaries of a valley or a mountain may be vaguely defined. More often, fuzzy footprints arise when there is no clear definition of commonly used terms. Though what these expressions mean in context is generally understandable, they lack the type of clear definition required for straightforward computer processing.</p>
+           <br/>
+           <p>Traditional library content is organized into a few discrete objects for indexing purposes; common examples include books, sections in books, journals, and articles in journals. In contrast, georeferenced data relate to part of a continuum of space, with a geographic footprint that characterizes each piece of data. Such footprints can be precise, for example, when a unique identifier refers to a legally defined area. Other footprints are fuzzy in nature, when the limits of the area are unclear. Imprecise footprints can arise with physical objects; the boundaries of a valley or a mountain may be vaguely defined. More often, fuzzy footprints arise when there is no clear definition of commonly used terms. Though what these expressions mean in context is generally understandable, they lack the type of clear definition required for straightforward computer processing.</p>
+           <br/>
+          </div>
+    </div>
+
+</body>
+<app-footer></app-footer>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reader Books</title>
+</head>
+<body>
+    <app-navbar></app-navbar>
+    <div class="container">
+        <hr/>
+        <div class="title mt-2 mb-2" style="text-decoration: underline">
+            <h3 class="text-center text-success">Reader Subscribed Books </h3>
+        </div>
+        <hr/>
+    </div>
+  
+    <div class="container" *ngIf="hasTableData">
+        <div class="text-center">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="text-primary">
+                  <tr>
+                    <th scope="col">Subscription Id</th> 
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Publisher</th>
+                    <th scope="col">Subscription Status</th>
+                    <th scope="col">Actions</th>
+                    <th scope="col">Read</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor ="let digitalBook of readerSubscribedBooks">
+                    <td>{{digitalBook.subscriptionId}}</td>
+                    <td>{{digitalBook.title | titlecase}}</td>
+                    <td>{{digitalBook.author | titlecase}}</td>
+                    <td>{{digitalBook.category | titlecase}}</td>
+                    <td>{{digitalBook.price | currency:'INR'}}</td>
+                    <td>{{digitalBook.publisher | titlecase}}</td>
+                    <td>{{digitalBook.status | titlecase}}</td>
+                    <td><button class="text-light btn btn-success btn-sm" (click)="cancelBookSubscription(digitalBook.subscriptionId,digitalBook.emailId)">Un-Subscribe</button></td>
+                    <td>
+                      <button class="text-light btn btn-success btn-sm" (click)="getBookContent(digitalBook.subscriptionId)">read</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</body>
+<app-footer></app-footer>
+</html>

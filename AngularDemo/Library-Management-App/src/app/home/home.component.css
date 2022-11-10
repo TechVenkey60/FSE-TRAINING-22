@@ -1,0 +1,21 @@
+.container{
+    height: 80px;
+    text-align: center;
+    border-radius: 25px;
+}
+
+h1{
+    text-align: center;
+    padding-top: 17px;
+    color: rgb(7, 252, 48);
+}
+
+.links{
+    margin-left: 40px;
+    margin-top: 50px;
+}
+
+p{
+    color: rgb(170, 8, 8);
+    font-size: 25px;
+}

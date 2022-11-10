@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserServiceService } from 'src/services/user-service.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,27 +14,45 @@ export class SignupComponent implements OnInit {
 
   public signUpForm !: FormGroup;
 
-  constructor(private httpClient : HttpClient, private formBuilder : FormBuilder,
+  submitted=false;
+  userData:any;
+  isSignUpFailed=false;
+  singUpFailedError:any;
+  errorMessage:any;
+
+  constructor(private userService:UserServiceService,private formBuilder : FormBuilder,
               private router : Router) { }
 
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
-      userName:[''],
-      email:[''],
-      role:[''],
-      password:['']
+      userName:['',[Validators.required]],
+      email:['',[Validators.required,Validators.email]],
+      role:['',[Validators.required]],
+      password:['',[Validators.required,Validators.minLength(8)]]
     })
   }
 
   signUpUser(){
-    this.httpClient.post<any>("",this.signUpForm.value)
-    .subscribe(response => {
-      alert("User SingUp Successfully done.");
+    if(this.signUpForm.invalid){
+      this.submitted=true;
+      return;
+    }
+
+    this.userService.userSignUp(this.signUpForm.value)
+    .subscribe(data => {
+      this.userData= data;
+      alert("User has been registered successfully!!")
       this.signUpForm.reset();
       this.router.navigate(['login']);
-    }, err =>{
-      alert("Something went wrong. Please check and provide proper values");
-    })
+    },error => {
+      console.log("===========================");
+      this.errorMessage = JSON.parse(error.error);
+      this.singUpFailedError = this.errorMessage.message;
+      this.isSignUpFailed=true;
+      setTimeout(()=>{location.reload()},3000);
+      this.router.navigate(['signup']);
+      console.log("===========================");
+    });
   }
 
 }

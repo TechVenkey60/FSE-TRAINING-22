@@ -1,0 +1,24 @@
+.container{
+    height: 80px;
+    text-align: center;
+    border-radius: 25px;
+}
+
+h1{
+    text-align: center;
+    padding-top: 17px;
+    color: black;
+    font-weight: bold;
+}
+
+p{
+    color: rgb(170, 8, 8);
+    font-size: 25px;
+}
+
+body{
+    background-image: url('../images/image1.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+}

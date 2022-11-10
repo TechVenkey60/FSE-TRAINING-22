@@ -15,34 +15,110 @@
                     <div class="text-center title">
                         <h6>Search Book</h6>
                     </div>
-                    <form>
+                    <form [formGroup]="searchFormBook" (ngSubmit)="findBook()">
                         <div class="mb-1 mt-1">
                             <label for="title" class="form-label">Title:</label>
-                            <input formControlName="title" type="text" class="form-control" id="title" placeholder="Enter title" name="title" required>
+                            <input formControlName="title" type="text" [ngClass] = "{'is-invalid':submitted}" class="form-control" id="title" placeholder="Enter title" name="title" required>
+                          
+                            <div *ngIf="submitted && searchFormBook.controls['title']" class="text-danger">
+                              <div *ngIf="submitted && searchFormBook.hasError('required','title')">
+                                *Title is required.
+                             </div>
+                           </div>
+
                           </div>
                           <div class="mb-1 mt-1">
                             <label for="Category" class="form-label">Category:</label>
-                            <input formControlName="category" type="text" class="form-control" id="category" placeholder="Enter Category" name="Category" required>
+                            <input formControlName="category" type="text" [ngClass] = "{'is-invalid':submitted}" class="form-control" id="category" placeholder="Enter Category" name="Category" required>
+                          
+                            <div *ngIf="submitted && searchFormBook.controls['category']" class="text-danger">
+                              <div *ngIf="submitted && searchFormBook.hasError('required','category')">
+                                *Category is required.
+                             </div>
+                           </div>
+
                           </div>
                           <div class="mb-1 mt-1">
                             <label for="autor" class="form-label">Autor:</label>
-                            <input formControlName="author" type="text" class="form-control" id="autor" placeholder="Enter autor" name="autor" required>
+                            <input formControlName="author" type="text" [ngClass] = "{'is-invalid':submitted}" class="form-control" id="autor" placeholder="Enter autor" name="autor" required>
+                         
+                            <div *ngIf="submitted && searchFormBook.controls['author']" class="text-danger">
+                              <div *ngIf="submitted && searchFormBook.hasError('required','author')">
+                                *Author is required.
+                             </div>
+                           </div>
+
                           </div>
                           <div class="mb-1 mt-1">
                             <label for="price" class="form-label">Price:</label>
-                            <input formControlName="price" type="text" class="form-control" id="price" placeholder="Enter" name="price" required>
+                            <input formControlName="price" type="number" [ngClass] = "{'is-invalid':submitted}" class="form-control" id="price" placeholder="Enter" name="price" required>
+                            
+                            <div *ngIf="submitted && searchFormBook.controls['price']" class="text-danger">
+                              <div *ngIf="submitted && searchFormBook.hasError('required','price')">
+                                *Price is required.
+                             </div>
+                           </div>
+                         
                           </div>
                           <div class="mb-2 mt-1">
                             <label for="publisher" class="form-label">Publisher:</label>
-                            <input formControlName="publisher" type="text" class="form-control" id="publisher" placeholder="Enter publisher" name="publisher" required>
+                            <input formControlName="publisher" type="text" [ngClass] = "{'is-invalid':submitted}" class="form-control" id="publisher" placeholder="Enter publisher" name="publisher" required>
+                           
+                            <div *ngIf="submitted && searchFormBook.controls['publisher']" class="text-danger">
+                              <div *ngIf="submitted && searchFormBook.hasError('required','publisher')">
+                                *Publisher is required.
+                             </div>
+                           </div>
+
                           </div>
+                          
                           <div class="mt-2 d-grid button">
-                            <button type="button" class="btn btn-success">Search</button>
+                            <button type="submit" class="btn btn-success">Search</button>
                           </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
+
+    
+    <div class="container-fluid">
+      <div class="title mt-2 mb-2">
+        <h3 class="text-center text-success" style="text-decoration: underline;">Search Books Information </h3>
+    </div>
+
+      <div class="text-center">
+          <table class="table table-striped table-hover table-bordered">
+              <thead class="text-primary">
+                <tr>
+                  <th scope="col">BookId</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Author</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Publisher</th>
+                  <th scope="col">publishedDate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="hasBookData">
+                  <td>{{response.bookId}}</td>
+                  <td>{{response.title}}</td>
+                  <td>{{response.author}}</td>
+                  <td>{{response.category}}</td>
+                  <td>{{response.price}}</td>
+                  <td>{{response.publisher}}</td>
+                  <td>{{response.publishedDate}}</td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+  </div>
+
 </body>
+<app-footer></app-footer>
 </html>

@@ -1,15 +1,21 @@
 package com.digital.books.entity;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import org.springframework.data.annotation.CreatedDate;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+@Entity
 public class SubscribeBook {
 
+    @Id
+    @GeneratedValue
     private Integer subscriptionId;
     private String emailId;
     private Integer bookId;
     @Temporal(TemporalType.DATE)
+    @CreatedDate
     private Date subscribedDate;
     private String status;
 
@@ -47,6 +53,7 @@ public class SubscribeBook {
     public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
+
 
     public Date getSubscribedDate() {
         return subscribedDate;

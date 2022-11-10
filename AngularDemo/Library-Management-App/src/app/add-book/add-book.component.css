@@ -1,0 +1,42 @@
+.card{
+    border: none;
+    width: 600px;
+    height: 620px;
+    padding: 45px;
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    background: rgb(125, 185, 228);
+    background: linear-gradient(90deg,rgb(60, 95, 122) 0%,rgb(125, 106, 161)100%);
+}
+
+label{
+    color: #ffff;
+}
+.card h3, h6{
+    color: #ffff;
+}
+
+a{
+    color: #ffff;  
+    padding-top: 10px;
+}
+
+button{
+    box-sizing: 20px;
+    border-radius: 100px;
+ }
+
+
+ .YesValue{
+    color: #ffff;
+    margin-right: 20px;
+ }
+
+ .NoValue{
+    color: #ffff;
+ }
+
+ .Available-Label{
+   padding-right: 10px;
+ }

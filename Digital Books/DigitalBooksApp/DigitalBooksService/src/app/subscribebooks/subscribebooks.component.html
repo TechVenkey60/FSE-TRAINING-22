@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe Book Form</title>
+</head>
+<body>
+    <app-navbar></app-navbar>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="text-center">
+                        <h6>Subscribe Book</h6>
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="isSubscribeFailed">
+                        <strong>{{subscribeErrorMessage}}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                    <form [formGroup]="subscribeForm" (ngSubmit)="subscribeBook()">
+                        <div class="mb-1 mt-3">
+                            <label for="bookId" class="form-label">BookId:</label>
+                            <input formControlName ="bookId" type="number" [ngClass] = "{'is-invalid':submitted}" class="form-control" placeholder="Enter bookId">
+                          
+                            <div *ngIf="submitted && subscribeForm.controls['bookId']" class="text-danger">
+                                <div *ngIf="submitted && subscribeForm.hasError('required','bookId')">
+                                    *BookId is required.
+                                </div>
+                            </div>
+
+                        </div>
+                          <div class="mb-1">
+                            <label for="emailId" class="form-label">Reader EmailId:</label>
+                            <input formControlName ="emailId" type="email" [ngClass] = "{'is-invalid':submitted}" [(ngModel)]="readerMail" class="form-control" placeholder="Enter reader emailId"> 
+                            <div *ngIf="submitted && subscribeForm.controls['emailId']" class="text-danger">
+                                <div *ngIf="submitted && subscribeForm.hasError('required','emailId')">
+                                    *ReaderId is required.
+                                </div>
+                            </div>
+                        </div>
+                          <div class="d-grid button">
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                          </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<app-footer></app-footer>
+</html>

@@ -1,1 +1,56 @@
-<p>add-book works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New DigitalBook</title>
+</head>
+<body>
+  <app-navbar></app-navbar>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="text-center title">
+                        <h6>Add New Book</h6>
+                    </div>
+                    <form [formGroup]="addNewBook" (ngSubmit)="createNewBook()">
+                        <div class="mb-1 mt-1">
+                            <label for="bookName" class="form-label">BookName:</label>
+                            <input formControlName="bookName" type="text" class="form-control" id="bookName" placeholder="Enter book name" name="bookName" required>
+                            <div class="text-danger" *ngIf="addNewBook.controls['bookName'] && addNewBook.hasError('required','bookName')">*BookName is required.</div>
+                          </div>
+                          <div class="mb-1 mt-1">
+                            <label for="author" class="form-label">Author:</label>
+                            <input formControlName="author" type="text" class="form-control" id="author" placeholder="Enter author" name="author" required>
+                            <div class="text-danger" *ngIf="addNewBook.controls['author'] && addNewBook.hasError('required','author')">*Author is required.</div>
+                          </div>
+                          <div class="mb-1 mt-1">
+                            <label for="genre" class="form-label">Genre:</label>
+                            <input formControlName="genre" type="text" class="form-control" id="genre" placeholder="Enter genre" name="genre" required>
+                            <div class="text-danger" *ngIf="addNewBook.controls['genre'] && addNewBook.hasError('required','genre')">*Genre is required.</div>
+                          </div>
+                          <div class="mb-1 mt-1">
+                            <label for="price" class="form-label">Price:</label>
+                            <input formControlName="price" type="number" class="form-control" id="price" placeholder="Enter price" name="price" required>
+                            <div class="text-danger" *ngIf="addNewBook.controls['price'] && addNewBook.hasError('required','price')">*Price is required.</div>
+                          </div>
+                          <div class="mb-1 mt-1">
+                            <label for="available" class="form-label Available-Label">Available : </label>
+                            <input formControlName="isBookBorrowed" type="radio" class="form-check-input" id="isBookBorrowed" placeholder="Enter book availability" name="isBookBorrowed" value="true" required> <span class="YesValue">Yes</span>
+                            <input formControlName="isBookBorrowed" type="radio" class="form-check-input" id="isBookBorrowed" placeholder="Enter book availability" name="isBookBorrowed" value="false" required> <span class="NoValue">No</span>
+                            <div class="text-danger" *ngIf="addNewBook.controls['isBookBorrowed'] && addNewBook.hasError('required','isBookBorrowed')">*Book available status is required.</div>
+                        
+                          </div>
+                           <div class="mt-2 d-grid button">
+                            <button [disabled]="!addNewBook.valid" type="submit" class="btn btn-success">Add Book</button>
+                          </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<app-footer></app-footer>
+</html>

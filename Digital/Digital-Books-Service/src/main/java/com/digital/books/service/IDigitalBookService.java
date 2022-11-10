@@ -7,15 +7,17 @@ import java.util.List;
 
 public interface IDigitalBookService {
 
-    DigitalBook createDigitalBook(DigitalBook digitalBook, Integer authorId);
-    DigitalBook updateDigitalBook(DigitalBook digitalBook,Integer authorId,Integer bookId);
-    String updateBookVisibility(Integer authorId,Integer bookId,String block);
+    List<DigitalBook> createDigitalBook(DigitalBook digitalBook, Integer authorId);
+    List<DigitalBook> updateDigitalBook(DigitalBook digitalBook,Integer authorId,Integer bookId);
+    List<DigitalBook> updateBookVisibility(Integer authorId,Integer bookId,String block);
     DigitalBook fetchBooks(String category, String title, String author, String publisher, Double price);
-    String subScribeDigitalBook(Integer bookId, SubscriptionBook subscriptionBook);
+    ReaderSubscribedBooks subScribeDigitalBook(Integer bookId, SubscriptionBook subscriptionBook);
 
     List<ReaderSubscribedBooks> getReadersBook(String emailId);
 
     ReaderSubscribedBooks fetchBookBySubIdAndEmailId(String emailId, Integer subscriptionId);
 
-    String cancelBookSubscription(String emailId, Integer subscriptionId);
+    List<ReaderSubscribedBooks> cancelBookSubscription(String emailId, Integer subscriptionId);
+
+    ReaderSubscribedBooks fetchReaderSubscribedBook(Integer subscriptionId);
 }

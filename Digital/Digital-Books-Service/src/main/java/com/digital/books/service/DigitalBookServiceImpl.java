@@ -12,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static java.util.Objects.isNull;
 
@@ -34,17 +37,18 @@ public class DigitalBookServiceImpl implements IDigitalBookService {
 
 
     @Override
-    public DigitalBook createDigitalBook(DigitalBook digitalBook,
-                                         Integer authorId) {
+    public List<DigitalBook> createDigitalBook(DigitalBook digitalBook,
+                                               Integer authorId) {
 
         digitalBook.setAuthorId(authorId);
-        var persistedBook = digitalBooksRepository.save(digitalBook);
-        return persistedBook;
+        digitalBooksRepository.save(digitalBook);
+        var books = digitalBooksRepository.findBooksByAuthorId(authorId);
+        return books;
     }
 
     @Transactional
     @Override
-    public DigitalBook updateDigitalBook(DigitalBook digitalBook,
+    public List<DigitalBook> updateDigitalBook(DigitalBook digitalBook,
                                          Integer authorId,
                                          Integer bookId) {
         System.out.println(String.format("Entered updateDigitalBook() method with DigitalBook Id: and authorId: %d", bookId, authorId));
@@ -53,21 +57,19 @@ public class DigitalBookServiceImpl implements IDigitalBookService {
         updateDigitalBookEntity(digitalBook, existedBook);
         digitalBooksRepository.saveAndFlush(existedBook);
         System.out.println(String.format("Saved  DigitalBook with Id: %d and authorId: %d", bookId, authorId));
-
-        return existedBook;
+        var books = digitalBooksRepository.findBooksByAuthorId(authorId);
+        return books;
     }
 
     @Override
-    public String updateBookVisibility(Integer authorId, Integer bookId, String block) {
+    public List<DigitalBook> updateBookVisibility(Integer authorId, Integer bookId, String block) {
         System.out.println(String.format("Entered updateBookVisibility() method with DigitalBook Id: %d and authorId: %d", bookId, authorId));
         var existedBook = validateAuthorIdAndBookId(authorId, bookId);
         existedBook.setBlock(block);
         digitalBooksRepository.saveAndFlush(existedBook);
 
-        if (YES.equalsIgnoreCase(block)) {
-            return String.format("DigitalBook Id %d blocked by authorId: %d", bookId, authorId);
-        }
-        return String.format("DigitalBook Id: %d unblocked by authorId: %d", bookId, authorId);
+        var books = digitalBooksRepository.findBooksByAuthorId(authorId);
+        return books;
     }
 
     @Override
@@ -76,23 +78,23 @@ public class DigitalBookServiceImpl implements IDigitalBookService {
                                   String author,
                                   String publisher,
                                   Double price) {
-        var digitalBooks = digitalBooksRepository.searchBook(category, title, author, publisher, price);
+        var digitalBooks = digitalBooksRepository.searchBook(category, title, author, publisher, price,"no");
         if (Objects.isNull(digitalBooks)) {
-            throw new DataNotFoundException("Not Data Found", 404);
+            throw new DataNotFoundException("Book is not available or blocked by author.", 404);
         }
         return digitalBooks;
     }
 
     @Override
-    public String subScribeDigitalBook(Integer bookId,
+    public ReaderSubscribedBooks subScribeDigitalBook(Integer bookId,
                                        SubscriptionBook subscriptionBook) {
         var persistedBook = digitalBooksRepository.findById(bookId)
-                .orElseThrow(() -> new DataNotFoundException("Not Data Found", 404));
+                .orElseThrow(() -> new DataNotFoundException("No Book Information Found", 404));
 
         var subscribeBook = new SubscribeBook();
         subscribeBook.setBookId(subscriptionBook.getBookId());
-        subscribeBook.setEmailId(subscribeBook.getEmailId());
-        subscribeBook.setStatus(subscribeBook.getStatus());
+        subscribeBook.setEmailId(subscriptionBook.getEmailId());
+        subscribeBook.setStatus("subscribed");
 
         var subscribedBook = subscriptionRepository.save(subscribeBook);
 
@@ -100,14 +102,14 @@ public class DigitalBookServiceImpl implements IDigitalBookService {
 
         mapDataToReaderEntity(persistedBook, subscribedBook, readerBook);
 
-        readerSubscriptionRepository.save(readerBook);
+        var readerSubscribeBook = readerSubscriptionRepository.save(readerBook);
 
-        return "Book has been subscribed";
+        return readerSubscribeBook;
     }
 
     @Override
     public List<ReaderSubscribedBooks> getReadersBook(String emailId) {
-        var response = readerSubscriptionRepository.findReaderBookByEmailId(emailId, NO);
+        var response = readerSubscriptionRepository.findReaderBookByEmailId(emailId, NO,"subscribed");
         if (response.isEmpty()) {
             throw new DataNotFoundException("Not Data Found", 404);
         }
@@ -127,8 +129,22 @@ public class DigitalBookServiceImpl implements IDigitalBookService {
     }
 
     @Override
-    public String cancelBookSubscription(String emailId, Integer subscriptionId) {
-        return null;
+    public List<ReaderSubscribedBooks> cancelBookSubscription(String emailId, Integer subscriptionId) {
+         var readerBook = readerSubscriptionRepository.loadReaderBookByEmailIdAndSubId(emailId, subscriptionId);
+         readerBook.setStatus("unsubscribed");
+         readerSubscriptionRepository.save(readerBook);
+         var allSubscribedBooks = readerSubscriptionRepository.getOnlySubscribedBooks(emailId,"subscribed");
+         return allSubscribedBooks;
+    }
+
+    @Override
+    public ReaderSubscribedBooks fetchReaderSubscribedBook(Integer subscriptionId) {
+
+        var readerBook = readerSubscriptionRepository.findBySubscriptonId(subscriptionId);
+        if(isNull(readerBook)){
+            throw new DataNotFoundException("Book Content is not available", 404);
+        }
+        return readerBook;
     }
 
     private void mapDataToReaderEntity(DigitalBook persistedBook, SubscribeBook subscribedBook, ReaderSubscribedBooks readerBook) {
@@ -164,14 +180,14 @@ public class DigitalBookServiceImpl implements IDigitalBookService {
     }
 
     private void updateDigitalBookEntity(DigitalBook digitalBook, DigitalBook existedBook) {
-        existedBook.setLogo(digitalBook.getLogo());
+
         existedBook.setTitle(digitalBook.getTitle());
         existedBook.setAuthor(digitalBook.getAuthor());
         existedBook.setPrice(digitalBook.getPrice());
         existedBook.setPublisher(digitalBook.getPublisher());
         existedBook.setActive(digitalBook.getActive());
-        existedBook.setBlock(digitalBook.getBlock());
         existedBook.setCategory(digitalBook.getCategory());
         existedBook.setChapter(digitalBook.getChapter());
+        existedBook.setPublishedDate(digitalBook.getPublishedDate());
     }
 }

@@ -10,24 +10,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.ht.library.books.util.LibraryAppConstants.PLEASE_PROVIDE_EITHER_TRUE_OR_FALSE_VALUE_ONLY;
 import static com.ht.library.books.util.ValidationUtil.validateBookStatusChange;
 import static com.ht.library.books.util.ValidationUtil.validateInput;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 public class LibraryManagementController {
 
     @Autowired
     private ILibraryManagementService libraryManagementService;
 
     @PostMapping("/add/book")
-    public ResponseEntity<Book> saveBook(@RequestBody Book book) {
+    public ResponseEntity<String> saveBook(@RequestBody Book book) {
 
         validateInput(book);
 
         var savedBook = libraryManagementService.createBook(book);
-        return new ResponseEntity<>(savedBook, HttpStatus.OK);
+        var message = "Book "+savedBook.getBookName()+" has been added successfully.";
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 
@@ -47,8 +51,8 @@ public class LibraryManagementController {
 
     @CrossOrigin("http://localhost:4200")
     @GetMapping("/allBooks")
-    public ResponseEntity<LibraryBooksResponse> getAllBooks() {
-        return new ResponseEntity<>(libraryManagementService.getAllLibraryBooks(), HttpStatus.OK);
+    public ResponseEntity<List<Book>> getAllBooks() {
+        return new ResponseEntity<>(libraryManagementService.getAllLibraryBooks().getLibraryBooks(), HttpStatus.OK);
     }
 
     @PutMapping("/borrow/{bookId}")
@@ -66,7 +70,8 @@ public class LibraryManagementController {
 
 
     @DeleteMapping("/remove/{bookId}")
-    public ResponseEntity<String> deleteBook(@PathVariable Integer bookId){
-        return new ResponseEntity<>(libraryManagementService.removeBookById(bookId),HttpStatus.OK);
+    public ResponseEntity<List<Book>> deleteBook(@PathVariable Integer bookId){
+        libraryManagementService.removeBookById(bookId);
+        return new ResponseEntity<>(libraryManagementService.getAllLibraryBooks().getLibraryBooks(),HttpStatus.OK);
     }
 }
