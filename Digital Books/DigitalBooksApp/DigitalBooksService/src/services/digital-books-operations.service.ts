@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-const BASE_URL = "http://ec2-54-199-226-55.ap-northeast-1.compute.amazonaws.com:9966/api/v1/digitalbooks/author/";
-const SUBSCRIBE_URL = "http://ec2-54-199-226-55.ap-northeast-1.compute.amazonaws.com:9966/api/v1/digitalbooks/";
-const ADD_NEW_BOOK_URL = "http://ec2-54-199-226-55.ap-northeast-1.compute.amazonaws.com:9966/api/v1/digitalbooks/author/";
-const GET_AUTHOR_BOOKS_URL = "http://ec2-54-199-226-55.ap-northeast-1.compute.amazonaws.com:9966/api/v1/digitalbooks/author/";
-const GET_BOOK_BY_AUTHOR_ID_AND_BOOK_ID = "http://ec2-54-199-226-55.ap-northeast-1.compute.amazonaws.com:9966/api/v1/digitalbooks/author/";
-const UPDATE_BOOK_BY_AUTHOR_ID_AND_BOOK_ID = "http://ec2-54-199-226-55.ap-northeast-1.compute.amazonaws.com:9966/api/v1/digitalbooks/author/";
+const BASE_URL = "http://localhost:9966/api/v1/digitalbooks/author/";
+const SUBSCRIBE_URL = "http://localhost:9966/api/v1/digitalbooks/";
+const ADD_NEW_BOOK_URL = "http://localhost:9966/api/v1/digitalbooks/author/";
+const GET_AUTHOR_BOOKS_URL = "http://localhost:9966/api/v1/digitalbooks/author/";
+const GET_BOOK_BY_AUTHOR_ID_AND_BOOK_ID = "http://localhost:9966/api/v1/digitalbooks/author/";
+const UPDATE_BOOK_BY_AUTHOR_ID_AND_BOOK_ID = "http://localhost:9966/api/v1/digitalbooks/author/";
 
 const AWS_CREATE_AUTHOR_BOOK = "http://ec2-54-199-226-55.ap-northeast-1.compute.amazonaws.com:9966/api/v1/digitalbooks/author/";
 const AWS_UPDATE_AUTHOR_BOOK = "https://xa3tf7p2qe.execute-api.ap-northeast-1.amazonaws.com/test/digital-books-service/";

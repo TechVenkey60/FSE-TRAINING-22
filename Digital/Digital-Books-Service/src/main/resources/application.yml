@@ -5,9 +5,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://userdigitalbookstore.chfcawofc3aj.ap-northeast-1.rds.amazonaws.com:3306/digitalbooks
+    url: jdbc:mysql://localhost:3306/digital-books?useSSL=false
     username: root
-    password: password
+    password: pass@word1
   jpa:
     hibernate:
       naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy

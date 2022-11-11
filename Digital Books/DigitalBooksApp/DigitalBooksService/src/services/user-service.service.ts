@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-const SIGN_IN_URL = "http://ec2-54-199-125-174.ap-northeast-1.compute.amazonaws.com:9977/api/v1/digitalbooks/sign-in";
-const SIGN_UP_URL = "http://ec2-54-199-125-174.ap-northeast-1.compute.amazonaws.com:9977/api/v1/digitalbooks/sign-up";
+const SIGN_IN_URL = "http://localhost:9977/api/v1/digitalbooks/sign-in";
+const SIGN_UP_URL = "http://localhost:9977/api/v1/digitalbooks/sign-up";
 
 const AWS_SIGN_UP_URL = "https://xa3tf7p2qe.execute-api.ap-northeast-1.amazonaws.com/dev/user-service";
 const AWS_SIGN_IN_URL = "https://xa3tf7p2qe.execute-api.ap-northeast-1.amazonaws.com/dev/user-service/user-service-login";
