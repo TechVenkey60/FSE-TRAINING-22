@@ -8,11 +8,11 @@
 		<version>2.7.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.jwt.security</groupId>
-	<artifactId>SpringJwtRoleBasedSecurityApp</artifactId>
+	<groupId>com.vrk.bank</groupId>
+	<artifactId>VRK-Bank-Management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SpringJwtRoleBasedSecurityApp</name>
-	<description>Spring Boot Jwt Role Based Security Implementation</description>
+	<name>VRK-Bank-Management</name>
+	<description>Implementation of VRK Bank Services.</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -41,18 +41,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>
