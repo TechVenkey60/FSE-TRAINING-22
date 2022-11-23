@@ -1,9 +1,11 @@
 package com.vrk.bank.portal.controller;
 
+import com.vrk.bank.portal.entity.LoanDetails;
 import com.vrk.bank.portal.entity.UserRegistration;
 import com.vrk.bank.portal.model.NewUserData;
 import com.vrk.bank.portal.model.SignIn;
 import com.vrk.bank.portal.model.UpdateAccountDetails;
+import com.vrk.bank.portal.model.UserLoanDto;
 import com.vrk.bank.portal.service.IBankService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,4 +42,10 @@ public class BankController {
         return  new ResponseEntity<>(updatedUserData,HttpStatus.OK);
     }
 
+
+    @PostMapping("/applyLoan")
+    public ResponseEntity<List<LoanDetails>> applyLoan(@RequestBody UserLoanDto userLoan){
+        var loanDetails = bankServiceImpl.applyForLoan(userLoan);
+        return new ResponseEntity<>(loanDetails,HttpStatus.OK);
+    }
 }

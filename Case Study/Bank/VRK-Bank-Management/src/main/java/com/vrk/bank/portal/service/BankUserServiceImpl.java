@@ -1,11 +1,13 @@
 package com.vrk.bank.portal.service;
 
+import com.vrk.bank.portal.entity.LoanDetails;
 import com.vrk.bank.portal.entity.UserRegistration;
 import com.vrk.bank.portal.handlers.DataNotFoundException;
 import com.vrk.bank.portal.handlers.InvalidDataException;
 import com.vrk.bank.portal.model.NewUserData;
 import com.vrk.bank.portal.model.SignIn;
 import com.vrk.bank.portal.model.UpdateAccountDetails;
+import com.vrk.bank.portal.model.UserLoanDto;
 import com.vrk.bank.portal.repository.LoanRepository;
 import com.vrk.bank.portal.repository.UserRegistryRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -31,7 +34,6 @@ public class BankUserServiceImpl implements IBankService {
     @Transactional
     @Override
     public UserRegistration createNewUserAccount(NewUserData newUserData) {
-
         log.debug(" Entered into BankUserServiceImpl::createNewUserAccount method");
 
         var existedUser = userRegistryRepository.loadUserByUserNameAndEmail(newUserData.getUserName(), newUserData.getEmail());
@@ -81,6 +83,26 @@ public class BankUserServiceImpl implements IBankService {
         return updatedUserEntity;
     }
 
+    @Transactional
+    @Override
+    public List<LoanDetails> applyForLoan(UserLoanDto userLoan) {
+        log.info("Entered Into BankUserServiceImpl::applyForLoan method");
+
+        var monthlyEmiValue = validateAndUpdateMonthlyEmi(userLoan);
+        var loanDetails = new LoanDetails();
+        loanDetails.setEmi(Math.round(monthlyEmiValue));
+        mapLoanDetailsToEntity(loanDetails, userLoan);
+
+        var issuedLoanDetails = loanRepository.save(loanDetails);
+        log.info("Loan has been applied and approved for accountNumber :" + issuedLoanDetails.getAccountNumber());
+
+        var existedLoanDetails = loanRepository.fetchByAccountNumber(userLoan.getAccountNumber());
+
+        log.info("User Applied Loan Successfully..!");
+        return existedLoanDetails;
+    }
+
+
     private void validateNewUserInput(String userName, String email, UserRegistration existedUser) {
         if (nonNull(existedUser)) {
             if (userName.equalsIgnoreCase(existedUser.getUserName())) {
@@ -116,14 +138,16 @@ public class BankUserServiceImpl implements IBankService {
         int year = localDateTime.getYear();
         int monthValue = localDateTime.getMonthValue();
         int dayOfMonth = localDateTime.getDayOfMonth();
+        int hour = localDateTime.getHour();
         int minute = localDateTime.getMinute();
         int second = localDateTime.getSecond();
 
         StringBuilder builder = new StringBuilder();
-        builder.append("3210")
+        builder.append("30")
                 .append(year)
                 .append(monthValue)
                 .append(dayOfMonth)
+                .append(hour)
                 .append(minute)
                 .append(second);
 
@@ -135,9 +159,32 @@ public class BankUserServiceImpl implements IBankService {
 
         existedUser.setFullName(accountDetails.getFullName());
         existedUser.setPassword(accountDetails.getPassword());
+        existedUser.setEmail(accountDetails.getEmail());
         existedUser.setAddress(accountDetails.getAddress());
         existedUser.setState(accountDetails.getState());
         existedUser.setCountry(accountDetails.getCountry());
         existedUser.setContactNumber(accountDetails.getContactNumber());
+    }
+
+    private Double validateAndUpdateMonthlyEmi(UserLoanDto userLoan) {
+
+        var principal = userLoan.getLoanAmount();
+        var rate = userLoan.getRoi() / (12 * 100);
+        var time = userLoan.getDurationOfLoan() * 12;
+
+        return (principal * rate * Math.pow(1 + rate, time)) / (Math.pow(1 + rate, time) - 1);
+
+    }
+
+
+    private void mapLoanDetailsToEntity(LoanDetails loanDetails,
+                                        UserLoanDto userLoan) {
+
+        loanDetails.setAccountNumber(userLoan.getAccountNumber());
+        loanDetails.setLoanType(userLoan.getLoanType());
+        loanDetails.setLoanAmount(userLoan.getLoanAmount());
+        loanDetails.setLoanAppliedDate(userLoan.getLoanAppliedDate());
+        loanDetails.setRoi(userLoan.getRoi());
+        loanDetails.setDurationOfLoan(userLoan.getDurationOfLoan());
     }
 }

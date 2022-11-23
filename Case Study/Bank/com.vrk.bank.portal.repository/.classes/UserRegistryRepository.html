@@ -1,0 +1,68 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: UserRegistryRepository</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.vrk.bank.portal.repository</a> ]
+</div>
+
+<h1>Coverage Summary for Class: UserRegistryRepository (com.vrk.bank.portal.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">UserRegistryRepository</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.vrk.bank.portal.repository;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import com.vrk.bank.portal.entity.UserRegistration;
+<i>5</i>&nbsp;import org.springframework.data.jpa.repository.JpaRepository;
+<i>6</i>&nbsp;import org.springframework.data.jpa.repository.Query;
+<i>7</i>&nbsp;import org.springframework.data.repository.query.Param;
+<i>8</i>&nbsp;import org.springframework.stereotype.Repository;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;@Repository
+<i>11</i>&nbsp;public interface UserRegistryRepository extends JpaRepository&lt;UserRegistration, Integer&gt; {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    @Query(&quot;SELECT user FROM UserRegistration user WHERE user.userName = :userName OR user.email =:email&quot;)
+<i>14</i>&nbsp;    UserRegistration loadUserByUserNameAndEmail(@Param(&quot;userName&quot;) String userName, @Param(&quot;email&quot;) String email);
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    @Query(&quot;SELECT user FROM UserRegistration user WHERE user.userName = :userName&quot;)
+<i>17</i>&nbsp;    UserRegistration loadUserByUserName(@Param(&quot;userName&quot;) String userName);
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    @Query(&quot;SELECT user FROM UserRegistration user WHERE user.accountNumber = :accountNumber&quot;)
+<i>20</i>&nbsp;    UserRegistration getUserByAccountNumber(@Param(&quot;accountNumber&quot;) String accountNumber);
+<i>21</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-11-23 12:53</div>
+</div>
+</body>
+</html>
