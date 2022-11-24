@@ -102,6 +102,14 @@ public class BankUserServiceImpl implements IBankService {
         return existedLoanDetails;
     }
 
+    @Override
+    public List<LoanDetails> getAppliedLoanDetails(String accountNumber) {
+        log.info("Entered Into BankUserServiceImpl::getAppliedLoanDetails method");
+        var existedLoanDetails = loanRepository.fetchByAccountNumber(accountNumber);
+        log.info("Returned Applied LoanDetails Successfully..!");
+        return existedLoanDetails;
+    }
+
 
     private void validateNewUserInput(String userName, String email, UserRegistration existedUser) {
         if (nonNull(existedUser)) {

@@ -10,10 +10,7 @@ import com.vrk.bank.portal.service.IBankService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,5 +44,11 @@ public class BankController {
     public ResponseEntity<List<LoanDetails>> applyLoan(@RequestBody UserLoanDto userLoan){
         var loanDetails = bankServiceImpl.applyForLoan(userLoan);
         return new ResponseEntity<>(loanDetails,HttpStatus.OK);
+    }
+
+    @GetMapping("/loans/{accountNumber}")
+    public ResponseEntity<List<LoanDetails>> getAllAppliedLoans(@PathVariable String accountNumber){
+        var allAppliedLoanDetails = bankServiceImpl.getAppliedLoanDetails(accountNumber);
+        return new ResponseEntity<>(allAppliedLoanDetails,HttpStatus.OK);
     }
 }
