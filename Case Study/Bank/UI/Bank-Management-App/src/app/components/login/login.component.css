@@ -1,14 +1,13 @@
 .card{
     border: none;
     width: 600px;
-    height: 480px;
-    max-height: 550;
+    min-height: 450px;
+    max-height: 550px;
     padding: 45px;
     position: absolute;
     top: 15%;
     left: 30%;
-    background: rgb(173, 204, 224);
-    background: linear-gradient(90deg,rgb(130, 93, 216) 0%,rgb(119, 83, 182)100%);
+    background: rgb(245, 152, 191);
 }
 
 label{

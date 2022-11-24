@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+    <app-navbar></app-navbar>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="text-center title">
+                        <h3>Register</h3>
+                        <img src="https://www.india.com/wp-content/uploads/2016/11/Banks-1.jpg" style="height: 50px; width: 100px;">
+                        <h6>Please enter your details !!</h6>
+                    </div>
+                    
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="isSignUpFailed">
+                        <strong>{{singUpFailedError}}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <form [formGroup]="signUpForm" (ngSubmit)="signUpUser()">
+                        
+                        <div class="mb-2 mt-3">
+                            <label for="fulllName" class="form-label">FullName:</label>
+                            <input formControlName="fullName" type="text" [ngClass]="{'is-invalid':submitted}" class="form-control" placeholder="Enter fulllName">
+                            <div *ngIf="submitted && signUpForm.controls['fullName']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','fullName')">
+                                    *FullName is required.
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="mb-2 mt-2">
+                            <label for="userName" class="form-label">UserName:</label>
+                            <input formControlName="userName" type="text" [ngClass]="{'is-invalid':submitted}" class="form-control" placeholder="Enter user name">
+                            <div *ngIf="submitted && signUpForm.controls['userName']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','userName')">
+                                    *Username is required.
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="mb-2 mt-2">
+                            <label for="email" class="form-label">Email:</label>
+                            <input formControlName="email" type="email" [ngClass]="{'is-invalid':submitted}" class="form-control" placeholder="Enter email">
+                            <div *ngIf="submitted && signUpForm.controls['email']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','email')">
+                                    *Email is required.
+                                </div>
+                            </div>  
+                        </div>
+
+                        <div  class= "mb-2 mt-2">
+                            <label for="password" class="form-label">Password:</label>
+                            <input formControlName="password" type="password" class="form-control" [ngClass]="{'is-invalid':submitted}" placeholder="Enter password" autocomplete="current-password">
+                            <div *ngIf="submitted && signUpForm.controls['password']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','password')">
+                                    *Password is required.
+                                </div>
+                            </div>  
+                        </div>
+
+                        <div class= "mb-2 mt-2">
+                            <label for="accountType" class="form-label">Select Account Type</label>
+                            <select class="form-select" aria-label="Default select example" formControlName="accountType" [ngClass]="{'is-invalid':submitted}">
+                                <option value="SavingAccount">Saving Account</option>
+                                <option value="CurrentAccount">Current Account</option>
+                              </select>
+                              <div *ngIf="submitted && signUpForm.controls['accountType']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','accountType')">
+                                    *AccountType is required.
+                                </div>
+                            </div>
+                          </div>
+
+
+                          <div  class= "mb-2 mt-2">
+                            <label for="dob" class="form-label">Date Of Birth:</label>
+                            <input formControlName="dob" type="date" class="form-control" [ngClass]="{'is-invalid':submitted}" placeholder="Enter Date of birth">
+                            <div *ngIf="submitted && signUpForm.controls['dob']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','dob')">
+                                    *Date of Birth is required.
+                                </div>
+                            </div>  
+                        </div>
+
+
+                        <div  class= "mb-2 mt-2">
+                            <label for="panCardNumber" class="form-label">PanCard No:</label>
+                            <input formControlName="panCardNumber" type="text" class="form-control" [ngClass]="{'is-invalid':submitted}" placeholder="Enter Pancard no">
+                            <div *ngIf="submitted && signUpForm.controls['panCardNumber']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','panCardNumber')">
+                                    *PanCard No is required.
+                                </div>
+                            </div>  
+                        </div>
+                         
+
+                        
+
+                        <div  class= "mb-2 mt-2">
+                            <label for="contactNumber" class="form-label">Mobile No:</label>
+                            <input formControlName="contactNumber" type="number" class="form-control" [ngClass]="{'is-invalid':submitted}" placeholder="Enter Mobie Number">
+                            <div *ngIf="submitted && signUpForm.controls['contactNumber']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','contactNumber')">
+                                    *Mobile No is required.
+                                </div>
+                            </div>  
+                        </div>
+                         
+
+                        
+
+                        <div  class= "mb-2 mt-2">
+                            <label for="address" class="form-label">Address:</label>
+                            <input formControlName="address" type="text" class="form-control" [ngClass]="{'is-invalid':submitted}" placeholder="Enter Address">
+                            <div *ngIf="submitted && signUpForm.controls['address']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','address')">
+                                    *Address is required.
+                                </div>
+                            </div>  
+                        </div>
+                         
+
+                        <div  class= "mb-2 mt-2">
+                            <label for="state" class="form-label">State:</label>
+                            <input formControlName="state" type="text" class="form-control" [ngClass]="{'is-invalid':submitted}" placeholder="Enter Address">
+                            <div *ngIf="submitted && signUpForm.controls['state']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','state')">
+                                    *State is required.
+                                </div>
+                            </div>  
+                        </div>
+
+                        <div  class= "mb-2 mt-2">
+                            <label for="country" class="form-label">Country:</label>
+                            <input formControlName="country" type="text" class="form-control" [ngClass]="{'is-invalid':submitted}" placeholder="Enter country">
+                            <div *ngIf="submitted && signUpForm.controls['country']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','country')">
+                                    *Country is required.
+                                </div>
+                            </div>  
+                        </div>
+
+                          <div class="d-grid button">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                          </div>
+                    </form>
+
+                    <a routerLink="/login" class="text-white">Already have an account? Click to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

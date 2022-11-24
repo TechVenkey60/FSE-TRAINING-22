@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Details</title>
+</head>
+<body>
+    <app-navbar></app-navbar>
+
+    <div class="container-fluid mt-5">
+        <h2 class="text-center text-success" style="text-decoration: underline;">Loan Details</h2>
+    </div>
+
+    <div class="container mt-3 ">
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-success rounded-pill d-flex align-items-end" data-bs-toggle="modal" data-bs-target="#myModal">
+               <span>+ </span> <strong >Apply Loan</strong> 
+              </button>
+        </div>
+      </div>
+      
+      <!-- The Modal -->
+      <div class="modal" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header bg-danger d-flex justify-content-center">
+              <h4 class="modal-title text-light ">Enter Loan Details</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+             
+                <form [formGroup]="loanForm" (ngSubmit)="applyLoan()">
+
+
+                    <div class="mb-1">
+                        <label for="accountNumber" class="form-label">Loan Amount:</label>
+                        <input formControlName ="accountNumber" type="number" [(ngModel)]="accountNumber" [ngClass] = "{'is-invalid':submitted}" class="form-control" readonly>
+                    </div>
+
+                    <div class= "mb-1">
+                        <label for="loanType" class="form-label">Select Loan Type</label>
+                        <select class="form-select" aria-label="Default select example" formControlName="loanType" [ngClass]="{'is-invalid':submitted}">
+                            <option value="Home Loan">Home Loan</option>
+                            <option value="Car Loan">Car Loan</option>
+                          </select>
+                          <div *ngIf="submitted && loanForm.controls['loanType']" class="text-danger">
+                            <div *ngIf="submitted && loanForm.hasError('required','loanType')">
+                                * Please Choose Loan Type
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-1">
+                        <label for="loanAmount" class="form-label">Loan Amount:</label>
+                        <input formControlName ="loanAmount" type="number" [ngClass] = "{'is-invalid':submitted}" class="form-control" placeholder="Enter Loan Amount">
+                      
+                        <div *ngIf="submitted && loanForm.controls['loanAmount']" class="text-danger">
+                            <div *ngIf="submitted && loanForm.hasError('required','loanAmount')">
+                                *Loan Amount is required.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-1">
+                        <label for="loanAppliedDate" class="form-label">Applied Date:</label>
+                        <input formControlName ="loanAppliedDate" type="date" [ngClass] = "{'is-invalid':submitted}" class="form-control" placeholder="Enter Date">
+                      
+                        <div *ngIf="submitted && loanForm.controls['loanAppliedDate']" class="text-danger">
+                            <div *ngIf="submitted && loanForm.hasError('required','loanAppliedDate')">
+                                * Please select date.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-1">
+                        <label for="roi" class="form-label">Rate Of Interest:</label>
+                        <input formControlName ="roi" type="number" [ngClass] = "{'is-invalid':submitted}" class="form-control" placeholder="Enter roi">
+                      
+                        <div *ngIf="submitted && loanForm.controls['roi']" class="text-danger">
+                            <div *ngIf="submitted && loanForm.hasError('required','roi')">
+                                *Rate of Interest is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-1">
+                        <label for="durationOfLoan" class="form-label">Time Duration <span>(In Years)</span>:</label>
+                        <input formControlName ="durationOfLoan" type="number" [ngClass] = "{'is-invalid':submitted}" class="form-control" placeholder="Enter Time Duration">
+                      
+                        <div *ngIf="submitted && loanForm.controls['durationOfLoan']" class="text-danger">
+                            <div *ngIf="submitted && loanForm.hasError('required','durationOfLoan')">
+                                * Time Duration is required.
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row-reverse mt-3">
+                            <button type="submit" class="btn btn-danger btn-lg me-3">Apply</button>
+                          </div>
+                    </div>
+                    
+                </form>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+
+
+
+
+  
+        <div class="text-center mt-4">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="text-primary">
+                  <tr>
+                    <th scope="col">AccountNumber</th>
+                    <th scope="col">Loan Type</th>
+                    <th scope="col">Loan Amount</th>
+                    <th scope="col">Loan-Applied-Date</th>
+                    <th scope="col">roi</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Monthly EMI</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let loanInfo of loanDetails">
+                    <td>{{ loanInfo.accountNumber }}</td>
+                    <td>{{loanInfo.loanType  | titlecase}}</td>
+                    <td>{{ loanInfo.loanAmount | currency:'INR'}}</td>
+                    <td>{{ loanInfo.loanAppliedDate}}</td>
+                    <td>{{ loanInfo.roi}}</td>
+                    <td>{{ loanInfo.durationOfLoan }}</td>
+                    <td>{{ loanInfo.emi | currency:'INR'}}</td>       
+                 </tr>
+                </tbody>
+              </table>
+        </div>
+
+        <div class="d-flex justify-content-center" *ngIf="hasTableData">
+            <strong class="text-danger text-center">No Loan Details Avaialbe..</strong>
+        </div>
+  
+
+</body>
+</html>
