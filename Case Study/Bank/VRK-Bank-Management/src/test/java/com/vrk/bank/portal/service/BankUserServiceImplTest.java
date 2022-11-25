@@ -14,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -98,6 +100,16 @@ class BankUserServiceImplTest {
         assertThrows(DataNotFoundException.class,
                 () -> bankUserService.validateAndGetUser(loginData));
 
+    }
+
+
+    @Test
+    void getAppliedLoanDetailsTest() {
+        when(loanRepository.fetchByAccountNumber(any()))
+                .thenReturn(new ArrayList<>());
+
+        var actualData = bankUserService.getAppliedLoanDetails("123445989");
+        assertNotNull(actualData);
     }
 
     private NewUserData getNewAccountUserData() {

@@ -22,8 +22,7 @@ import java.util.Date;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BankController.class)
@@ -85,6 +84,17 @@ class BankControllerTest {
         mockMvc.perform(post("/applyLoan")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(getLoanDetailsInput())))
+                .andExpect(status().isOk());
+    }
+
+    @SneakyThrows
+    @Test
+    void getAllAppliedLoansTest() {
+        when(bankServiceImpl.getAppliedLoanDetails(any()))
+                .thenReturn(new ArrayList<>());
+
+        mockMvc.perform(get("/loans/1")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
