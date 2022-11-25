@@ -7,10 +7,31 @@
     <title>Home Page</title>
 </head>
 <body>
-    <app-navbar></app-navbar>
+    
+    <nav class="navbar navbar-expand-lg bg-info">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="#">VRK Bank</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active text-white" routerLink="/home" aria-current="page" >Home</a>
+              </li>
+          
+                <li class="nav-item">
+                  <a class="nav-link active text-white" routerLink="/loanDetails" aria-current="page" >Loan Details</a>
+                </li>
 
-    <div class="container mt-5 text-center bg-light text-dark">
-        <marquee behavior=""><h1 class="pd-2" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Welcome To VR Bank Portal</h1></marquee>
+                <li class="nav-item">
+                    <a class="nav-link active text-white" routerLink="/updateAccount" aria-current="page" >Account Details</a>
+                </li>
+            
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <div class="container mt-5 text-center text-dark">
+        <marquee behavior="scroll" direction="right" scrollamount="10"><h1 class="pd-2" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Welcome To VRK Bank Portal</h1></marquee>
     </div>
 </body>
 </html>

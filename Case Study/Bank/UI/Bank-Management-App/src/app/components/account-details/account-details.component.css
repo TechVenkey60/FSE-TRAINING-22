@@ -1,0 +1,17 @@
+table{
+    border-radius: 20px;
+    background: rgb(247, 244, 244);
+    border-collapse: collapse;
+}
+
+tr th{
+    padding: 10px;
+}
+
+th td{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+h4{
+    text-decoration: underline;
+}

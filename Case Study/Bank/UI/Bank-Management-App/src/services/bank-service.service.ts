@@ -6,11 +6,13 @@ const LOGIN_URL = "http://localhost:9966/api/vrk/bank/login";
 const CREATE_NEW_USER_URL = "http://localhost:9966/api/vrk/bank/newUserAccount";
 const APPLY_FOR_LOAN ="http://localhost:9966/api/vrk/bank/applyLoan";
 const USER_LOAN_DETAILS = "http://localhost:9966/api/vrk/bank/loans/";
+const UPDATE_ACCOUNT_DETAILS = "http://localhost:9966/api/vrk/bank/update/accountDetails";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BankServiceService {
+ 
   
   user:any;
   constructor(private httpClient : HttpClient) { }
@@ -31,6 +33,10 @@ export class BankServiceService {
 
   getAppliedLoanDetails(accountNumber: any) {
     return this.httpClient.get(USER_LOAN_DETAILS+accountNumber,{responseType:'text' as 'json'});
+  }
+
+  editAccountDetails(userAccountDetails: any) {
+    return this.httpClient.put(UPDATE_ACCOUNT_DETAILS,userAccountDetails,{responseType:'text' as 'json'});
   }
 
   public storeUserData(userData:any){
