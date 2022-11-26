@@ -17,7 +17,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+    resources:
+      static-locations: classpath:/webapp/
 
 logging:
   level:

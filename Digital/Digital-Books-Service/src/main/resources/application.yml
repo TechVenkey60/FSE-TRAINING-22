@@ -22,4 +22,3 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
   resources:
     static-locations: classpath:/webapp/
-

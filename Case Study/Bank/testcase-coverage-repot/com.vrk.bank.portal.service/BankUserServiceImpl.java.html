@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankUserServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">VRK_Bank_Management$All_in_VRK_Bank_Management.exec</a> &gt; <a href="index.source.html" class="el_package">com.vrk.bank.portal.service</a> &gt; <span class="el_source">BankUserServiceImpl.java</span></div><h1>BankUserServiceImpl.java</h1><pre class="source lang-java linenums">package com.vrk.bank.portal.service;
+
+import com.vrk.bank.portal.entity.LoanDetails;
+import com.vrk.bank.portal.entity.UserRegistration;
+import com.vrk.bank.portal.handlers.DataNotFoundException;
+import com.vrk.bank.portal.handlers.InvalidDataException;
+import com.vrk.bank.portal.model.NewUserData;
+import com.vrk.bank.portal.model.SignIn;
+import com.vrk.bank.portal.model.UpdateAccountDetails;
+import com.vrk.bank.portal.model.UserLoanDto;
+import com.vrk.bank.portal.repository.LoanRepository;
+import com.vrk.bank.portal.repository.UserRegistryRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
+
+@Service
+<span class="fc" id="L26">@RequiredArgsConstructor</span>
+<span class="fc" id="L27">@Slf4j</span>
+public class BankUserServiceImpl implements IBankService {
+    public static final String APPLIED_LOAN_SUCCESSFULLY = &quot;User Applied Loan Successfully..!&quot;;
+
+    private final UserRegistryRepository userRegistryRepository;
+    private final LoanRepository loanRepository;
+
+    @Transactional
+    @Override
+    public UserRegistration createNewUserAccount(NewUserData newUserData) {
+<span class="fc" id="L37">        log.debug(&quot; Entered into BankUserServiceImpl::createNewUserAccount method&quot;);</span>
+
+<span class="fc" id="L39">        var existedUser = userRegistryRepository.loadUserByUserNameAndEmail(newUserData.getUserName(), newUserData.getEmail());</span>
+<span class="fc" id="L40">        validateNewUserInput(newUserData.getUserName(), newUserData.getEmail(), existedUser);</span>
+
+<span class="fc" id="L42">        UserRegistration userRegistration = new UserRegistration();</span>
+<span class="fc" id="L43">        mapInputDataToEntity(userRegistration, newUserData);</span>
+
+<span class="fc" id="L45">        var persistedUser = userRegistryRepository.save(userRegistration);</span>
+
+<span class="fc" id="L47">        log.debug(&quot;Existed from BankUserServiceImpl::createNewUserAccount method&quot;);</span>
+
+<span class="fc" id="L49">        return persistedUser;</span>
+    }
+
+    @Transactional
+    @Override
+    public UserRegistration validateAndGetUser(SignIn signIn) {
+
+<span class="fc" id="L56">        log.debug(&quot; Entered into BankUserServiceImpl::validateAndGetUser method&quot;);</span>
+<span class="fc" id="L57">        var existedUser = userRegistryRepository.loadUserByUserName(signIn.getUserName());</span>
+
+<span class="fc bfc" id="L59" title="All 4 branches covered.">        if (isNull(existedUser) || !signIn.getPassword().equals(existedUser.getPassword())) {</span>
+<span class="fc" id="L60">            log.error(&quot;Found InValid Credentials..&quot;);</span>
+<span class="fc" id="L61">            throw new DataNotFoundException(&quot;InValid userName/Password...&quot;, 404);</span>
+        }
+<span class="fc" id="L63">        log.debug(&quot;Returned User Details From BankUserServiceImpl::validateAndGetUser method&quot;);</span>
+<span class="fc" id="L64">        return existedUser;</span>
+    }
+
+    @Transactional
+    @Override
+    public UserRegistration updateAccountDetails(UpdateAccountDetails accountDetails) {
+<span class="fc" id="L70">        log.info(&quot;Entered into BankUserServiceImpl::updateAccountDetails method&quot;);</span>
+
+<span class="fc" id="L72">        var existedUser = userRegistryRepository.getUserByAccountNumber(accountDetails.getAccountNumber());</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (isNull(existedUser)) {</span>
+<span class="fc" id="L75">            log.error(&quot;No User Data Available.&quot;);</span>
+<span class="fc" id="L76">            throw new DataNotFoundException(&quot;User is not available&quot;, 404);</span>
+        }
+
+<span class="fc" id="L79">        mapAccountDetailsToEntity(existedUser, accountDetails);</span>
+<span class="fc" id="L80">        var updatedUserEntity = userRegistryRepository.saveAndFlush(existedUser);</span>
+
+<span class="fc" id="L82">        log.info(&quot;Updated User Account Details Successfully..!&quot;);</span>
+<span class="fc" id="L83">        return updatedUserEntity;</span>
+    }
+
+    @Transactional
+    @Override
+    public String applyForLoan(UserLoanDto userLoan) {
+<span class="fc" id="L89">        log.info(&quot;Entered Into BankUserServiceImpl::applyForLoan method&quot;);</span>
+
+<span class="fc" id="L91">        var monthlyEmiValue = validateAndUpdateMonthlyEmi(userLoan);</span>
+<span class="fc" id="L92">        var loanDetails = new LoanDetails();</span>
+<span class="fc" id="L93">        loanDetails.setEmi(Math.round(monthlyEmiValue));</span>
+<span class="fc" id="L94">        mapLoanDetailsToEntity(loanDetails, userLoan);</span>
+
+<span class="fc" id="L96">        var issuedLoanDetails = loanRepository.save(loanDetails);</span>
+<span class="fc" id="L97">        log.info(&quot;Loan has been applied and approved for accountNumber :&quot; + issuedLoanDetails.getAccountNumber());</span>
+
+<span class="fc" id="L99">        return APPLIED_LOAN_SUCCESSFULLY;</span>
+    }
+
+    @Override
+    public List&lt;LoanDetails&gt; getAppliedLoanDetails(String accountNumber) {
+<span class="fc" id="L104">        log.info(&quot;Entered Into BankUserServiceImpl::getAppliedLoanDetails method&quot;);</span>
+<span class="fc" id="L105">        var existedLoanDetails = loanRepository.fetchByAccountNumber(accountNumber);</span>
+<span class="fc" id="L106">        log.info(&quot;Returned Applied LoanDetails Successfully..!&quot;);</span>
+<span class="fc" id="L107">        return existedLoanDetails;</span>
+    }
+
+
+    private void validateNewUserInput(String userName, String email, UserRegistration existedUser) {
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (nonNull(existedUser)) {</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">            if (userName.equalsIgnoreCase(existedUser.getUserName())) {</span>
+<span class="fc" id="L114">                log.debug(&quot;UserName is already available..&quot;);</span>
+<span class="fc" id="L115">                throw new InvalidDataException(String.format(&quot;UserName: %s is already available..&quot;, userName));</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            } else if (email.equalsIgnoreCase(existedUser.getEmail())) {</span>
+<span class="fc" id="L117">                log.debug(&quot;Email is already available..&quot;);</span>
+<span class="fc" id="L118">                throw new InvalidDataException(String.format(&quot;Email: %s is already available..&quot;, email));</span>
+            }
+        }
+<span class="fc" id="L121">    }</span>
+
+    private void mapInputDataToEntity(UserRegistration userRegistration,
+                                      NewUserData newUserData) {
+
+<span class="fc" id="L126">        userRegistration.setFullName(newUserData.getFullName());</span>
+<span class="fc" id="L127">        userRegistration.setUserName(newUserData.getUserName());</span>
+<span class="fc" id="L128">        userRegistration.setPassword(newUserData.getPassword());</span>
+<span class="fc" id="L129">        userRegistration.setEmail(newUserData.getEmail());</span>
+<span class="fc" id="L130">        userRegistration.setDob(newUserData.getDob());</span>
+<span class="fc" id="L131">        userRegistration.setAccountType(newUserData.getAccountType());</span>
+<span class="fc" id="L132">        userRegistration.setPanCardNumber(newUserData.getPanCardNumber());</span>
+<span class="fc" id="L133">        userRegistration.setAddress(newUserData.getAddress());</span>
+<span class="fc" id="L134">        userRegistration.setState(newUserData.getState());</span>
+<span class="fc" id="L135">        userRegistration.setCountry(newUserData.getCountry());</span>
+<span class="fc" id="L136">        userRegistration.setContactNumber(newUserData.getContactNumber());</span>
+<span class="fc" id="L137">        userRegistration.setAccountNumber(generateNewAccountNumber());</span>
+<span class="fc" id="L138">    }</span>
+
+    private String generateNewAccountNumber() {
+<span class="fc" id="L141">        var localDateTime = LocalDateTime.now();</span>
+
+<span class="fc" id="L143">        int year = localDateTime.getYear();</span>
+<span class="fc" id="L144">        int monthValue = localDateTime.getMonthValue();</span>
+<span class="fc" id="L145">        int dayOfMonth = localDateTime.getDayOfMonth();</span>
+<span class="fc" id="L146">        int hour = localDateTime.getHour();</span>
+<span class="fc" id="L147">        int minute = localDateTime.getMinute();</span>
+<span class="fc" id="L148">        int second = localDateTime.getSecond();</span>
+
+<span class="fc" id="L150">        StringBuilder builder = new StringBuilder();</span>
+<span class="fc" id="L151">        builder.append(&quot;30&quot;)</span>
+<span class="fc" id="L152">                .append(year)</span>
+<span class="fc" id="L153">                .append(monthValue)</span>
+<span class="fc" id="L154">                .append(dayOfMonth)</span>
+<span class="fc" id="L155">                .append(hour)</span>
+<span class="fc" id="L156">                .append(minute)</span>
+<span class="fc" id="L157">                .append(second);</span>
+
+<span class="fc" id="L159">        return builder.toString();</span>
+    }
+
+    private void mapAccountDetailsToEntity(UserRegistration existedUser,
+                                           UpdateAccountDetails accountDetails) {
+
+<span class="fc" id="L165">        existedUser.setFullName(accountDetails.getFullName());</span>
+<span class="fc" id="L166">        existedUser.setPassword(accountDetails.getPassword());</span>
+<span class="fc" id="L167">        existedUser.setEmail(accountDetails.getEmail());</span>
+<span class="fc" id="L168">        existedUser.setAddress(accountDetails.getAddress());</span>
+<span class="fc" id="L169">        existedUser.setState(accountDetails.getState());</span>
+<span class="fc" id="L170">        existedUser.setCountry(accountDetails.getCountry());</span>
+<span class="fc" id="L171">        existedUser.setContactNumber(accountDetails.getContactNumber());</span>
+<span class="fc" id="L172">    }</span>
+
+    private Double validateAndUpdateMonthlyEmi(UserLoanDto userLoan) {
+
+<span class="fc" id="L176">        var principal = userLoan.getLoanAmount();</span>
+<span class="fc" id="L177">        var rate = userLoan.getRoi() / (12 * 100);</span>
+<span class="fc" id="L178">        var time = userLoan.getDurationOfLoan() * 12;</span>
+
+<span class="fc" id="L180">        return (principal * rate * Math.pow(1 + rate, time)) / (Math.pow(1 + rate, time) - 1);</span>
+
+    }
+
+
+    private void mapLoanDetailsToEntity(LoanDetails loanDetails,
+                                        UserLoanDto userLoan) {
+
+<span class="fc" id="L188">        loanDetails.setAccountNumber(userLoan.getAccountNumber());</span>
+<span class="fc" id="L189">        loanDetails.setLoanType(userLoan.getLoanType());</span>
+<span class="fc" id="L190">        loanDetails.setLoanAmount(userLoan.getLoanAmount());</span>
+<span class="fc" id="L191">        loanDetails.setLoanAppliedDate(userLoan.getLoanAppliedDate());</span>
+<span class="fc" id="L192">        loanDetails.setRoi(userLoan.getRoi());</span>
+<span class="fc" id="L193">        loanDetails.setDurationOfLoan(userLoan.getDurationOfLoan());</span>
+<span class="fc" id="L194">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

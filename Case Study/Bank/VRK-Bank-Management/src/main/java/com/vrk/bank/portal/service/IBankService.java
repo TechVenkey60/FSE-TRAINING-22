@@ -13,6 +13,6 @@ public interface IBankService {
     UserRegistration createNewUserAccount(NewUserData newUserData);
     UserRegistration validateAndGetUser(SignIn signIn);
     UserRegistration updateAccountDetails(UpdateAccountDetails accountDetails);
-    List<LoanDetails> applyForLoan(UserLoanDto userLoan);
+    String applyForLoan(UserLoanDto userLoan);
     List<LoanDetails> getAppliedLoanDetails(String accountNumber);
 }

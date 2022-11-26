@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AppExceptionHandlerTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">VRK_Bank_Management$All_in_VRK_Bank_Management.exec</a> &gt; <a href="index.source.html" class="el_package">com.vrk.bank.portal.handlers</a> &gt; <span class="el_source">AppExceptionHandlerTest.java</span></div><h1>AppExceptionHandlerTest.java</h1><pre class="source lang-java linenums">package com.vrk.bank.portal.handlers;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@ExtendWith(MockitoExtension.class)
+<span class="nc" id="L11">class AppExceptionHandlerTest {</span>
+    private static final String NO_DATA_FOUND = &quot;No Data Found&quot;;
+    private static final String INVALID_USER_NAME_PASSWORD = &quot;Invalid userName/Password..&quot;;
+
+    @InjectMocks
+    private AppExceptionHandler appExceptionHandler;
+
+    @Test
+    void handleDataNotFoundExceptioTest() {
+<span class="nc" id="L20">        var response = appExceptionHandler.handleDataNotFoundException(new DataNotFoundException(NO_DATA_FOUND,404));</span>
+<span class="nc" id="L21">        assertEquals(NO_DATA_FOUND,response.getBody().getMessage());</span>
+<span class="nc" id="L22">    }</span>
+
+    @Test
+    void handleInvalidDataExceptionTest() {
+<span class="nc" id="L26">        var response = appExceptionHandler.handleInvalidDataException(new InvalidDataException(INVALID_USER_NAME_PASSWORD));</span>
+<span class="nc" id="L27">        assertEquals(INVALID_USER_NAME_PASSWORD,response.getBody().getMessage());</span>
+<span class="nc" id="L28">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

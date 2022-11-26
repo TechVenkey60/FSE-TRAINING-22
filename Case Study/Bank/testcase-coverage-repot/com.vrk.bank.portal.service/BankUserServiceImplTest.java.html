@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankUserServiceImplTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">VRK_Bank_Management$All_in_VRK_Bank_Management.exec</a> &gt; <a href="index.source.html" class="el_package">com.vrk.bank.portal.service</a> &gt; <span class="el_source">BankUserServiceImplTest.java</span></div><h1>BankUserServiceImplTest.java</h1><pre class="source lang-java linenums">package com.vrk.bank.portal.service;
+
+import com.vrk.bank.portal.entity.LoanDetails;
+import com.vrk.bank.portal.entity.UserRegistration;
+import com.vrk.bank.portal.handlers.DataNotFoundException;
+import com.vrk.bank.portal.handlers.InvalidDataException;
+import com.vrk.bank.portal.model.NewUserData;
+import com.vrk.bank.portal.model.SignIn;
+import com.vrk.bank.portal.model.UpdateAccountDetails;
+import com.vrk.bank.portal.model.UserLoanDto;
+import com.vrk.bank.portal.repository.LoanRepository;
+import com.vrk.bank.portal.repository.UserRegistryRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+
+import static com.vrk.bank.portal.service.BankUserServiceImpl.APPLIED_LOAN_SUCCESSFULLY;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+<span class="nc" id="L29">class BankUserServiceImplTest {</span>
+
+    @InjectMocks
+    private BankUserServiceImpl bankUserService;
+    @Mock
+    private UserRegistryRepository userRegistryRepository;
+    @Mock
+    private LoanRepository loanRepository;
+
+
+    @Test
+    void createNewUserAccountTest() {
+
+<span class="nc" id="L42">        when(userRegistryRepository.loadUserByUserNameAndEmail(any(), any()))</span>
+<span class="nc" id="L43">                .thenReturn(null);</span>
+<span class="nc" id="L44">        when(userRegistryRepository.save(any()))</span>
+<span class="nc" id="L45">                .thenReturn(getRegisteredUserDetails());</span>
+
+<span class="nc" id="L47">        var expectedUserData = bankUserService.createNewUserAccount(getNewAccountUserData());</span>
+<span class="nc" id="L48">        assertEquals(expectedUserData.getEmail(), getNewAccountUserData().getEmail());</span>
+
+<span class="nc" id="L50">    }</span>
+
+    @Test
+    void createNewUserAccountTestForAvailableUserName() {
+<span class="nc" id="L54">        when(userRegistryRepository.loadUserByUserNameAndEmail(any(), any()))</span>
+<span class="nc" id="L55">                .thenReturn(getRegisteredUserDetails());</span>
+
+<span class="nc" id="L57">        var newUser = getNewAccountUserData();</span>
+<span class="nc" id="L58">        assertThrows(InvalidDataException.class,</span>
+<span class="nc" id="L59">                () -&gt; bankUserService.createNewUserAccount(newUser));</span>
+
+<span class="nc" id="L61">    }</span>
+
+    @Test
+    void createNewUserAccountTestForAvailableEmail() {
+
+<span class="nc" id="L66">        var inputData = getRegisteredUserDetails();</span>
+<span class="nc" id="L67">        inputData.setUserName(&quot;Venkatesh1234&quot;);</span>
+<span class="nc" id="L68">        when(userRegistryRepository.loadUserByUserNameAndEmail(any(), any()))</span>
+<span class="nc" id="L69">                .thenReturn(inputData);</span>
+
+<span class="nc" id="L71">        var newAccountUserData = getNewAccountUserData();</span>
+<span class="nc" id="L72">        assertThrows(InvalidDataException.class,</span>
+<span class="nc" id="L73">                () -&gt; bankUserService.createNewUserAccount(newAccountUserData));</span>
+
+<span class="nc" id="L75">    }</span>
+
+
+    @Test
+    void validateAndGetUserTest() {
+<span class="nc" id="L80">        when(userRegistryRepository.loadUserByUserName(any()))</span>
+<span class="nc" id="L81">                .thenReturn(getRegisteredUserDetails());</span>
+
+<span class="nc" id="L83">        assertNotNull(bankUserService.validateAndGetUser(getLoginData()));</span>
+<span class="nc" id="L84">    }</span>
+
+    @Test
+    void validateAndGetUserTest_WrongUserName() {
+<span class="nc" id="L88">        when(userRegistryRepository.loadUserByUserName(any()))</span>
+<span class="nc" id="L89">                .thenReturn(null);</span>
+<span class="nc" id="L90">        SignIn data = getLoginData();</span>
+<span class="nc" id="L91">        assertThrows(DataNotFoundException.class,</span>
+<span class="nc" id="L92">                () -&gt; bankUserService.validateAndGetUser(data));</span>
+<span class="nc" id="L93">    }</span>
+
+    @Test
+    void validateAndGetUserTest_WrongPassword() {
+<span class="nc" id="L97">        when(userRegistryRepository.loadUserByUserName(any()))</span>
+<span class="nc" id="L98">                .thenReturn(getRegisteredUserDetails());</span>
+
+<span class="nc" id="L100">        SignIn loginData = getLoginData();</span>
+<span class="nc" id="L101">        loginData.setPassword(&quot;1212131&quot;);</span>
+
+<span class="nc" id="L103">        assertThrows(DataNotFoundException.class,</span>
+<span class="nc" id="L104">                () -&gt; bankUserService.validateAndGetUser(loginData));</span>
+
+<span class="nc" id="L106">    }</span>
+
+
+    @Test
+    void getAppliedLoanDetailsTest() {
+<span class="nc" id="L111">        when(loanRepository.fetchByAccountNumber(any()))</span>
+<span class="nc" id="L112">                .thenReturn(new ArrayList&lt;&gt;());</span>
+
+<span class="nc" id="L114">        var actualData = bankUserService.getAppliedLoanDetails(&quot;123445989&quot;);</span>
+<span class="nc" id="L115">        assertNotNull(actualData);</span>
+<span class="nc" id="L116">    }</span>
+
+    @Test
+    void updateAccountDetailsTest() {
+<span class="nc" id="L120">        when(userRegistryRepository.getUserByAccountNumber(any()))</span>
+<span class="nc" id="L121">                .thenReturn(getRegisteredUserDetails());</span>
+
+<span class="nc" id="L123">        when(userRegistryRepository.saveAndFlush(any()))</span>
+<span class="nc" id="L124">                .thenReturn(getRegisteredUserDetails());</span>
+
+<span class="nc" id="L126">        var updatedUserData = bankUserService.updateAccountDetails(getUpdateAccountDetails());</span>
+<span class="nc" id="L127">        assertNotNull(updatedUserData);</span>
+<span class="nc" id="L128">    }</span>
+
+    @Test
+    void updateAccountDetailsTest_NoUserDataFound() {
+<span class="nc" id="L132">        when(userRegistryRepository.getUserByAccountNumber(any()))</span>
+<span class="nc" id="L133">                .thenReturn(null);</span>
+
+<span class="nc" id="L135">        var updatedUserData = getUpdateAccountDetails();</span>
+<span class="nc" id="L136">        assertThrows(DataNotFoundException.class, () -&gt; bankUserService.updateAccountDetails(updatedUserData));</span>
+<span class="nc" id="L137">    }</span>
+
+
+    @Test
+    void applyForLoanTest() {
+<span class="nc" id="L142">        when(loanRepository.save(any())).thenReturn(getLoanDetails());</span>
+<span class="nc" id="L143">        var expectedData = bankUserService.applyForLoan(getLoanDetailsInput());</span>
+<span class="nc" id="L144">        assertNotNull(expectedData);</span>
+<span class="nc" id="L145">    }</span>
+
+    private NewUserData getNewAccountUserData() {
+
+<span class="nc" id="L149">        return NewUserData.builder()</span>
+<span class="nc" id="L150">                .fullName(&quot;Venkatesh Kokkanti&quot;)</span>
+<span class="nc" id="L151">                .userName(&quot;venkat123&quot;)</span>
+<span class="nc" id="L152">                .password(&quot;password&quot;)</span>
+<span class="nc" id="L153">                .email(&quot;Venkat12@gmail.com&quot;)</span>
+<span class="nc" id="L154">                .dob(new Date(System.currentTimeMillis()))</span>
+<span class="nc" id="L155">                .accountType(&quot;Saving&quot;)</span>
+<span class="nc" id="L156">                .panCardNumber(&quot;FPMPK8869T&quot;)</span>
+<span class="nc" id="L157">                .contactNumber(&quot;9876543234&quot;)</span>
+<span class="nc" id="L158">                .address(&quot;Rayachoty&quot;)</span>
+<span class="nc" id="L159">                .state(&quot;AP&quot;)</span>
+<span class="nc" id="L160">                .country(&quot;India&quot;).build();</span>
+
+    }
+
+    private UserRegistration getRegisteredUserDetails() {
+
+<span class="nc" id="L166">        return UserRegistration.builder()</span>
+<span class="nc" id="L167">                .fullName(&quot;Venkatesh Kokkanti&quot;)</span>
+<span class="nc" id="L168">                .userName(&quot;venkat123&quot;)</span>
+<span class="nc" id="L169">                .password(&quot;venkat123&quot;)</span>
+<span class="nc" id="L170">                .email(&quot;Venkat12@gmail.com&quot;)</span>
+<span class="nc" id="L171">                .dob(new Date(System.currentTimeMillis()))</span>
+<span class="nc" id="L172">                .accountType(&quot;Saving&quot;)</span>
+<span class="nc" id="L173">                .panCardNumber(&quot;FPMPK8869T&quot;)</span>
+<span class="nc" id="L174">                .contactNumber(&quot;9876543234&quot;)</span>
+<span class="nc" id="L175">                .address(&quot;Rayachoty&quot;)</span>
+<span class="nc" id="L176">                .state(&quot;AP&quot;)</span>
+<span class="nc" id="L177">                .country(&quot;India&quot;).build();</span>
+    }
+
+    private SignIn getLoginData() {
+<span class="nc" id="L181">        return new SignIn(&quot;venkat&quot;, &quot;venkat123&quot;);</span>
+    }
+
+    private UpdateAccountDetails getUpdateAccountDetails() {
+<span class="nc" id="L185">        return UpdateAccountDetails.builder()</span>
+<span class="nc" id="L186">                .accountNumber(&quot;12131&quot;)</span>
+<span class="nc" id="L187">                .fullName(&quot;Venkatesh&quot;)</span>
+<span class="nc" id="L188">                .password(&quot;Venkatesh123&quot;)</span>
+<span class="nc" id="L189">                .address(&quot;Rayachoty,Madanapalli Raod&quot;)</span>
+<span class="nc" id="L190">                .state(&quot;AP&quot;)</span>
+<span class="nc" id="L191">                .country(&quot;India&quot;)</span>
+<span class="nc" id="L192">                .contactNumber(&quot;9898989891&quot;)</span>
+<span class="nc" id="L193">                .build();</span>
+    }
+
+    private UserLoanDto getLoanDetailsInput() {
+<span class="nc" id="L197">        return new UserLoanDto(&quot;1213&quot;,</span>
+<span class="nc" id="L198">                &quot;HomeLoan&quot;, 1000.0,</span>
+<span class="nc" id="L199">                new Date(System.currentTimeMillis()),</span>
+<span class="nc" id="L200">                10.0,</span>
+<span class="nc" id="L201">                2);</span>
+    }
+
+    private LoanDetails getLoanDetails(){
+<span class="nc" id="L205">        return LoanDetails.builder()</span>
+<span class="nc" id="L206">                .loadId(1)</span>
+<span class="nc" id="L207">                .accountNumber(&quot;12131212&quot;)</span>
+<span class="nc" id="L208">                .loanType(&quot;HomeLoan&quot;)</span>
+<span class="nc" id="L209">                .loanAmount(10000.0)</span>
+<span class="nc" id="L210">                .loanAppliedDate(new Date())</span>
+<span class="nc" id="L211">                .roi(10.0)</span>
+<span class="nc" id="L212">                .durationOfLoan(1)</span>
+<span class="nc" id="L213">                .emi(10000L)</span>
+<span class="nc" id="L214">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -42,9 +42,9 @@ public class BankController {
 
 
     @PostMapping("/applyLoan")
-    public ResponseEntity<List<LoanDetails>> applyLoan(@RequestBody UserLoanDto userLoan){
-        var loanDetails = bankServiceImpl.applyForLoan(userLoan);
-        return new ResponseEntity<>(loanDetails,HttpStatus.OK);
+    public ResponseEntity<String> applyLoan(@RequestBody UserLoanDto userLoan){
+        var loanDetailsStatusMessage = bankServiceImpl.applyForLoan(userLoan);
+        return new ResponseEntity<>(loanDetailsStatusMessage,HttpStatus.OK);
     }
 
     @GetMapping("/loans/{accountNumber}")

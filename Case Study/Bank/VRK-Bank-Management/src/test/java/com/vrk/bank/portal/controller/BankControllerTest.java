@@ -79,7 +79,7 @@ class BankControllerTest {
     @Test
     void applyLoanTest() {
         when(bankServiceImpl.applyForLoan(any()))
-                .thenReturn(new ArrayList<>());
+                .thenReturn("Approved Loan.");
 
         mockMvc.perform(post("/applyLoan")
                 .contentType(MediaType.APPLICATION_JSON)

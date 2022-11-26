@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankControllerTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">VRK_Bank_Management$All_in_VRK_Bank_Management.exec</a> &gt; <a href="index.source.html" class="el_package">com.vrk.bank.portal.controller</a> &gt; <span class="el_source">BankControllerTest.java</span></div><h1>BankControllerTest.java</h1><pre class="source lang-java linenums">package com.vrk.bank.portal.controller;
+
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vrk.bank.portal.entity.UserRegistration;
+import com.vrk.bank.portal.model.NewUserData;
+import com.vrk.bank.portal.model.SignIn;
+import com.vrk.bank.portal.model.UpdateAccountDetails;
+import com.vrk.bank.portal.model.UserLoanDto;
+import com.vrk.bank.portal.service.IBankService;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@WebMvcTest(BankController.class)
+<span class="nc" id="L29">class BankControllerTest {</span>
+
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private IBankService bankServiceImpl;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+<span class="nc" id="L39">    @SneakyThrows</span>
+    @Test
+    void createNewUserTest() {
+<span class="nc" id="L42">        when(bankServiceImpl.createNewUserAccount(any()))</span>
+<span class="nc" id="L43">                .thenReturn(getRegisteredUserDetails());</span>
+
+<span class="nc" id="L45">        mockMvc.perform(post(&quot;/newUserAccount&quot;)</span>
+<span class="nc" id="L46">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L47">                .content(objectMapper.writeValueAsString(getNewAccountUserData())))</span>
+<span class="nc" id="L48">                .andExpect(status().isCreated());</span>
+<span class="nc" id="L49">    }</span>
+
+
+<span class="nc" id="L52">    @SneakyThrows</span>
+    @Test
+    void userSignTest() {
+<span class="nc" id="L55">        when(bankServiceImpl.validateAndGetUser(any()))</span>
+<span class="nc" id="L56">                .thenReturn(getRegisteredUserDetails());</span>
+
+<span class="nc" id="L58">        mockMvc.perform(post(&quot;/login&quot;)</span>
+<span class="nc" id="L59">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L60">                .content(objectMapper.writeValueAsString(getLoginData())))</span>
+<span class="nc" id="L61">                .andExpect(status().isOk());</span>
+<span class="nc" id="L62">    }</span>
+
+<span class="nc" id="L64">    @SneakyThrows</span>
+    @Test
+    void updateUserAccountDetailsTest() {
+<span class="nc" id="L67">        when(bankServiceImpl.updateAccountDetails(any()))</span>
+<span class="nc" id="L68">                .thenReturn(getRegisteredUserDetails());</span>
+
+
+<span class="nc" id="L71">        mockMvc.perform(put(&quot;/update/accountDetails&quot;)</span>
+<span class="nc" id="L72">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L73">                .content(objectMapper.writeValueAsString(getUpdateAccountDetails())))</span>
+<span class="nc" id="L74">                .andExpect(status().isOk());</span>
+<span class="nc" id="L75">    }</span>
+
+
+<span class="nc" id="L78">    @SneakyThrows</span>
+    @Test
+    void applyLoanTest() {
+<span class="nc" id="L81">        when(bankServiceImpl.applyForLoan(any()))</span>
+<span class="nc" id="L82">                .thenReturn(&quot;Approved Loan.&quot;);</span>
+
+<span class="nc" id="L84">        mockMvc.perform(post(&quot;/applyLoan&quot;)</span>
+<span class="nc" id="L85">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="nc" id="L86">                .content(objectMapper.writeValueAsString(getLoanDetailsInput())))</span>
+<span class="nc" id="L87">                .andExpect(status().isOk());</span>
+<span class="nc" id="L88">    }</span>
+
+<span class="nc" id="L90">    @SneakyThrows</span>
+    @Test
+    void getAllAppliedLoansTest() {
+<span class="nc" id="L93">        when(bankServiceImpl.getAppliedLoanDetails(any()))</span>
+<span class="nc" id="L94">                .thenReturn(new ArrayList&lt;&gt;());</span>
+
+<span class="nc" id="L96">        mockMvc.perform(get(&quot;/loans/1&quot;)</span>
+<span class="nc" id="L97">                .contentType(MediaType.APPLICATION_JSON))</span>
+<span class="nc" id="L98">                .andExpect(status().isOk());</span>
+<span class="nc" id="L99">    }</span>
+
+    private NewUserData getNewAccountUserData() {
+
+<span class="nc" id="L103">        return NewUserData.builder()</span>
+<span class="nc" id="L104">                .fullName(&quot;Venkatesh Kokkanti&quot;)</span>
+<span class="nc" id="L105">                .userName(&quot;venkat123&quot;)</span>
+<span class="nc" id="L106">                .password(&quot;password&quot;)</span>
+<span class="nc" id="L107">                .email(&quot;Venkat12@gmail.com&quot;)</span>
+<span class="nc" id="L108">                .dob(new Date(System.currentTimeMillis()))</span>
+<span class="nc" id="L109">                .accountType(&quot;Saving&quot;)</span>
+<span class="nc" id="L110">                .panCardNumber(&quot;FPMPK8869T&quot;)</span>
+<span class="nc" id="L111">                .contactNumber(&quot;9876543234&quot;)</span>
+<span class="nc" id="L112">                .address(&quot;Rayachoty&quot;)</span>
+<span class="nc" id="L113">                .state(&quot;AP&quot;)</span>
+<span class="nc" id="L114">                .country(&quot;India&quot;).build();</span>
+
+    }
+
+    private UserRegistration getRegisteredUserDetails() {
+
+<span class="nc" id="L120">        return UserRegistration.builder()</span>
+<span class="nc" id="L121">                .fullName(&quot;Venkatesh Kokkanti&quot;)</span>
+<span class="nc" id="L122">                .userName(&quot;venkat123&quot;)</span>
+<span class="nc" id="L123">                .password(&quot;password&quot;)</span>
+<span class="nc" id="L124">                .email(&quot;Venkat12@gmail.com&quot;)</span>
+<span class="nc" id="L125">                .dob(new Date(System.currentTimeMillis()))</span>
+<span class="nc" id="L126">                .accountType(&quot;Saving&quot;)</span>
+<span class="nc" id="L127">                .panCardNumber(&quot;FPMPK8869T&quot;)</span>
+<span class="nc" id="L128">                .contactNumber(&quot;9876543234&quot;)</span>
+<span class="nc" id="L129">                .address(&quot;Rayachoty&quot;)</span>
+<span class="nc" id="L130">                .state(&quot;AP&quot;)</span>
+<span class="nc" id="L131">                .country(&quot;India&quot;).build();</span>
+    }
+
+    private SignIn getLoginData(){
+<span class="nc" id="L135">        return  new SignIn(&quot;venkat&quot;,&quot;venkat12&quot;);</span>
+    }
+
+    private UpdateAccountDetails getUpdateAccountDetails(){
+<span class="nc" id="L139">        return UpdateAccountDetails.builder()</span>
+<span class="nc" id="L140">                .accountNumber(&quot;12131&quot;)</span>
+<span class="nc" id="L141">                .fullName(&quot;Venkatesh&quot;)</span>
+<span class="nc" id="L142">                .password(&quot;Venkatesh123&quot;)</span>
+<span class="nc" id="L143">                .address(&quot;Rayachoty,Madanapalli Raod&quot;)</span>
+<span class="nc" id="L144">                .state(&quot;AP&quot;)</span>
+<span class="nc" id="L145">                .country(&quot;India&quot;)</span>
+<span class="nc" id="L146">                .contactNumber(&quot;9898989891&quot;)</span>
+<span class="nc" id="L147">                .build();</span>
+    }
+
+    private UserLoanDto getLoanDetailsInput() {
+<span class="nc" id="L151">        return new UserLoanDto(&quot;1213&quot;,</span>
+<span class="nc" id="L152">                &quot;HomeLoan&quot;,1000.0,</span>
+<span class="nc" id="L153">                 new Date(System.currentTimeMillis()),</span>
+<span class="nc" id="L154">                10.0,</span>
+<span class="nc" id="L155">                2);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

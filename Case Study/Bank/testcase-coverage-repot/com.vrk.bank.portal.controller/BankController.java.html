@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">VRK_Bank_Management$All_in_VRK_Bank_Management.exec</a> &gt; <a href="index.source.html" class="el_package">com.vrk.bank.portal.controller</a> &gt; <span class="el_source">BankController.java</span></div><h1>BankController.java</h1><pre class="source lang-java linenums">package com.vrk.bank.portal.controller;
+
+import com.vrk.bank.portal.entity.LoanDetails;
+import com.vrk.bank.portal.entity.UserRegistration;
+import com.vrk.bank.portal.model.NewUserData;
+import com.vrk.bank.portal.model.SignIn;
+import com.vrk.bank.portal.model.UpdateAccountDetails;
+import com.vrk.bank.portal.model.UserLoanDto;
+import com.vrk.bank.portal.service.IBankService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@CrossOrigin(&quot;*&quot;)
+@RestController
+<span class="fc" id="L19">@RequiredArgsConstructor</span>
+public class BankController {
+
+    private final IBankService bankServiceImpl;
+
+    @PostMapping(&quot;/newUserAccount&quot;)
+    public ResponseEntity&lt;UserRegistration&gt; createNewUser(@RequestBody NewUserData newUserData){
+<span class="fc" id="L26">        var user = bankServiceImpl.createNewUserAccount(newUserData);</span>
+<span class="fc" id="L27">        return new ResponseEntity&lt;&gt;(user, HttpStatus.CREATED);</span>
+    }
+
+    @PostMapping(&quot;/login&quot;)
+    public ResponseEntity&lt;UserRegistration&gt; userSign(@RequestBody SignIn signIn){
+<span class="fc" id="L32">        var persistedUser = bankServiceImpl.validateAndGetUser(signIn);</span>
+<span class="fc" id="L33">        return new ResponseEntity&lt;&gt;(persistedUser, HttpStatus.OK);</span>
+    }
+
+
+    @PutMapping(&quot;/update/accountDetails&quot;)
+    public ResponseEntity&lt;UserRegistration&gt; updateUserAccountDetails(@RequestBody UpdateAccountDetails accountDetails){
+<span class="fc" id="L39">        var updatedUserData = bankServiceImpl.updateAccountDetails(accountDetails);</span>
+<span class="fc" id="L40">        return  new ResponseEntity&lt;&gt;(updatedUserData,HttpStatus.OK);</span>
+    }
+
+
+    @PostMapping(&quot;/applyLoan&quot;)
+    public ResponseEntity&lt;?&gt; applyLoan(@RequestBody UserLoanDto userLoan){
+<span class="fc" id="L46">        var loanDetails = bankServiceImpl.applyForLoan(userLoan);</span>
+<span class="fc" id="L47">        return new ResponseEntity&lt;&gt;(loanDetails,HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/loans/{accountNumber}&quot;)
+    public ResponseEntity&lt;List&lt;LoanDetails&gt;&gt; getAllAppliedLoans(@PathVariable String accountNumber){
+<span class="fc" id="L52">        var allAppliedLoanDetails = bankServiceImpl.getAppliedLoanDetails(accountNumber);</span>
+<span class="fc" id="L53">        return new ResponseEntity&lt;&gt;(allAppliedLoanDetails,HttpStatus.OK);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

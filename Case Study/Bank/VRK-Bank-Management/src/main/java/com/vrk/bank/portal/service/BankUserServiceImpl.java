@@ -26,7 +26,8 @@ import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 @Slf4j
 public class BankUserServiceImpl implements IBankService {
-
+    public static final String APPLIED_LOAN_SUCCESSFULLY = "User Applied Loan Successfully..!";
+    public static final String APPLIED_LOAN_SUCCESSFULLY_1 = "User Applied Loan Successfully..!";
 
     private final UserRegistryRepository userRegistryRepository;
     private final LoanRepository loanRepository;
@@ -34,7 +35,10 @@ public class BankUserServiceImpl implements IBankService {
     @Transactional
     @Override
     public UserRegistration createNewUserAccount(NewUserData newUserData) {
+
         log.debug(" Entered into BankUserServiceImpl::createNewUserAccount method");
+
+
 
         var existedUser = userRegistryRepository.loadUserByUserNameAndEmail(newUserData.getUserName(), newUserData.getEmail());
         validateNewUserInput(newUserData.getUserName(), newUserData.getEmail(), existedUser);
@@ -85,7 +89,7 @@ public class BankUserServiceImpl implements IBankService {
 
     @Transactional
     @Override
-    public List<LoanDetails> applyForLoan(UserLoanDto userLoan) {
+    public String applyForLoan(UserLoanDto userLoan) {
         log.info("Entered Into BankUserServiceImpl::applyForLoan method");
 
         var monthlyEmiValue = validateAndUpdateMonthlyEmi(userLoan);
@@ -96,10 +100,7 @@ public class BankUserServiceImpl implements IBankService {
         var issuedLoanDetails = loanRepository.save(loanDetails);
         log.info("Loan has been applied and approved for accountNumber :" + issuedLoanDetails.getAccountNumber());
 
-        var existedLoanDetails = loanRepository.fetchByAccountNumber(userLoan.getAccountNumber());
-
-        log.info("User Applied Loan Successfully..!");
-        return existedLoanDetails;
+        return APPLIED_LOAN_SUCCESSFULLY;
     }
 
     @Override
