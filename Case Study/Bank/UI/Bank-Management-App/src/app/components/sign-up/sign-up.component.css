@@ -5,8 +5,9 @@
     position: absolute;
     top: 15%;
     left: 30%;
-    background: hsla(205,46%,30%,1);
-    background: linear-gradient(90deg,hsla(205,46%,30%,1) 0%,hsla(260,29%,36%,1)100%);
+    background: transparent;
+    background: rgba(36, 95, 122, .9);
+  
 }
 
 label{

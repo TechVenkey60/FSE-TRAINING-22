@@ -7,14 +7,15 @@
     position: absolute;
     top: 15%;
     left: 30%;
-    background: rgb(245, 152, 191);
+    background: transparent;
+    background: rgb(0, 0, 0,.5);
 }
 
 label{
-    color: #ffff;
+    color: #ffffff;
 }
 .card h1, h6{
-    color: #ffff;
+    color: #ffffff;
 }
 
 button{
@@ -25,4 +26,12 @@ button{
 a{
     color: #ffff;  
     padding-top: 25px;
+}
+
+
+body{
+    background-image: url('../../../images/login-bg-image.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
 }
