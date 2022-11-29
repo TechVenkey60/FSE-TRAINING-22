@@ -16,11 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.vrk.bank.portal.service.BankUserServiceImpl.APPLIED_LOAN_SUCCESSFULLY;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -172,7 +170,7 @@ class BankUserServiceImplTest {
                 .accountType("Saving")
                 .panCardNumber("FPMPK8869T")
                 .contactNumber("9876543234")
-                .address("Rayachoty")
+                .address("Rayachoty,")
                 .state("AP")
                 .country("India").build();
     }

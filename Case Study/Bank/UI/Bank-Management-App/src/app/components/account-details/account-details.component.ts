@@ -24,9 +24,12 @@ export class AccountDetailsComponent implements OnInit {
     this.user = this.userService.getUserData();
     this.updatedUserData = this.userService.getUserData();
     
-    if(this.updatedUserData === null){
+    if(this.updatedUserData !== null){
           this.hasAccountData = true;
     }
+
+    console.log(this.userService.getDataFromSession());
+    
 
      this.accountDetailsForm = this.formBuilder.group({
       accountNumber:['',[Validators.required]], 

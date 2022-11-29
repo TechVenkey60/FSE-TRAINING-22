@@ -4,8 +4,6 @@ server:
   port: 9966
 
 spring:
-  profiles:
-    active: dev
   datasource:
     url: jdbc:mysql://localhost:3306/vrk-bank?useSSL=false
     username: root
@@ -24,10 +22,3 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
     resources:
       static-locations: classpath:/webapp/
-
-logging:
-  level:
-    org:
-      springframework:
-        web: ERROR
-    com: DEBUG

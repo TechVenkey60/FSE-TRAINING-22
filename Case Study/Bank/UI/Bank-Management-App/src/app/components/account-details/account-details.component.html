@@ -8,30 +8,8 @@
 </head>
 <body>
     
-    <nav class="navbar navbar-expand-lg bg-info">
-        <div class="container-fluid">
-          <a class="navbar-brand text-white" href="#">VRK Bank</a>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active text-white" routerLink="/home" aria-current="page" >Home</a>
-              </li>
-          
-                <li class="nav-item">
-                  <a class="nav-link active text-white" routerLink="/loanDetails" aria-current="page" >Loan Details</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link active text-white" routerLink="/updateAccount" aria-current="page" >Account Details</a>
-                  </li>
-            
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-
-    <div class="container">
+    <app-navbar></app-navbar>
+  <div class="container">
          <div class="header-title mt-5 mb-3">
             <h4 class="text-primary">Account Details</h4>
          </div>
@@ -213,9 +191,9 @@
     </div>
 
 
-    <div class="d-flex justify-content-center" *ngIf="hasAccountData">
+    <!-- <div class="d-flex justify-content-center" *ngIf="!hasAccountData">
         <strong class="text-danger text-center">No Account Details Available...</strong>
-    </div>
+    </div> -->
 
     
    

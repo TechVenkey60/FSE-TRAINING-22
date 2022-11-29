@@ -8,6 +8,13 @@ const APPLY_FOR_LOAN ="http://localhost:9966/api/vrk/bank/applyLoan";
 const USER_LOAN_DETAILS = "http://localhost:9966/api/vrk/bank/loans/";
 const UPDATE_ACCOUNT_DETAILS = "http://localhost:9966/api/vrk/bank/update/accountDetails";
 
+
+const AWS_LOGIN_URL = "https://0hds0sbd2l.execute-api.ap-northeast-1.amazonaws.com/dev/signin";
+const AWS_CREATE_NEW_USER_URL = "https://0hds0sbd2l.execute-api.ap-northeast-1.amazonaws.com/dev";
+const AWS_APPLY_FOR_LOAN ="https://0hds0sbd2l.execute-api.ap-northeast-1.amazonaws.com/dev/applyloan";
+const AWS_USER_LOAN_DETAILS = "https://0hds0sbd2l.execute-api.ap-northeast-1.amazonaws.com/dev/";
+const AWS_UPDATE_ACCOUNT_DETAILS = "https://0hds0sbd2l.execute-api.ap-northeast-1.amazonaws.com/dev/";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,10 +55,19 @@ export class BankServiceService {
   }
 
   public isUserLoggedIn(){
-    if(this.user.userName !== null) {
-        return true;
+    if(this.user === 'undefined') {
+        return false;
     }
-    return false;
+    return true;
   }
+
+  public storeDataInSession(){
+    localStorage.setItem("user",JSON.stringify(this.getUserData()));
+  }
+
+  public getDataFromSession(){
+    return localStorage.getItem("user");
+  }
+
 
 }

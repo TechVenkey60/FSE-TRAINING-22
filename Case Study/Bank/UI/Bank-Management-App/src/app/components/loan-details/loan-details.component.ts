@@ -26,6 +26,15 @@ export class LoanDetailsComponent implements OnInit {
     this.user = this.userService.getUserData();
     this.accountNumber = this.user.accountNumber;
 
+    localStorage.setItem("accountNumber",JSON.stringify(this.user));
+
+    this.accountNumber = localStorage.getItem("accountNumber");
+    console.log( this.accountNumber);
+
+    console.log(this.userService.getDataFromSession());
+    
+    
+
     this.getAllLoanDetails();
        
     this.loanForm = this.formBuilder.group({

@@ -90,7 +90,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>VRK-Bank-Management</finalName>
+		<finalName>VRK-Bank-Management-Service</finalName>
 	</build>
 
 </project>

@@ -17,12 +17,16 @@
             <a class="nav-link active text-white" routerLink="/home" aria-current="page" >Home</a>
           </li>
         
+          <li class="nav-item"  >
+            <a class="nav-link active text-white" routerLink="/loanDetails" aria-current="page" >Loan Details</a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link active text-white" routerLink="/updateAccount" aria-current="page" >Account Details</a>
+            </li>
+            
         </ul>
-        <div class="d-flex">
-          <button  routerLink="/login" *ngIf="isUserLoggedIn" class="btn btn-success text-white me-2" type="submit">Login</button>
-          <button  routerLink="/register"*ngIf="isUserLoggedIn"  class="btn btn-danger text-white me-1" type="submit">Register</button>
-          <button  routerLink="/login" *ngIf="isUserLoggedOut" class="btn btn-dark btn-outline-success text-white me-2" type="submit">LogOut</button>
-        </div>
+       
       </div>
     </div>
   </nav>

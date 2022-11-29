@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -27,18 +26,13 @@ import static java.util.Objects.nonNull;
 @Slf4j
 public class BankUserServiceImpl implements IBankService {
     public static final String APPLIED_LOAN_SUCCESSFULLY = "User Applied Loan Successfully..!";
-    public static final String APPLIED_LOAN_SUCCESSFULLY_1 = "User Applied Loan Successfully..!";
-
     private final UserRegistryRepository userRegistryRepository;
     private final LoanRepository loanRepository;
 
     @Transactional
     @Override
     public UserRegistration createNewUserAccount(NewUserData newUserData) {
-
         log.debug(" Entered into BankUserServiceImpl::createNewUserAccount method");
-
-
 
         var existedUser = userRegistryRepository.loadUserByUserNameAndEmail(newUserData.getUserName(), newUserData.getEmail());
         validateNewUserInput(newUserData.getUserName(), newUserData.getEmail(), existedUser);
@@ -49,7 +43,6 @@ public class BankUserServiceImpl implements IBankService {
         var persistedUser = userRegistryRepository.save(userRegistration);
 
         log.debug("Existed from BankUserServiceImpl::createNewUserAccount method");
-
         return persistedUser;
     }
 
@@ -111,13 +104,14 @@ public class BankUserServiceImpl implements IBankService {
         return existedLoanDetails;
     }
 
-
     private void validateNewUserInput(String userName, String email, UserRegistration existedUser) {
         if (nonNull(existedUser)) {
             if (userName.equalsIgnoreCase(existedUser.getUserName())) {
                 log.debug("UserName is already available..");
                 throw new InvalidDataException(String.format("UserName: %s is already available..", userName));
-            } else if (email.equalsIgnoreCase(existedUser.getEmail())) {
+            }
+
+            if (email.equalsIgnoreCase(existedUser.getEmail())) {
                 log.debug("Email is already available..");
                 throw new InvalidDataException(String.format("Email: %s is already available..", email));
             }
@@ -126,7 +120,6 @@ public class BankUserServiceImpl implements IBankService {
 
     private void mapInputDataToEntity(UserRegistration userRegistration,
                                       NewUserData newUserData) {
-
         userRegistration.setFullName(newUserData.getFullName());
         userRegistration.setUserName(newUserData.getUserName());
         userRegistration.setPassword(newUserData.getPassword());
@@ -142,30 +135,13 @@ public class BankUserServiceImpl implements IBankService {
     }
 
     private String generateNewAccountNumber() {
-        var localDateTime = LocalDateTime.now();
-
-        int year = localDateTime.getYear();
-        int monthValue = localDateTime.getMonthValue();
-        int dayOfMonth = localDateTime.getDayOfMonth();
-        int hour = localDateTime.getHour();
-        int minute = localDateTime.getMinute();
-        int second = localDateTime.getSecond();
-
         StringBuilder builder = new StringBuilder();
-        builder.append("30")
-                .append(year)
-                .append(monthValue)
-                .append(dayOfMonth)
-                .append(hour)
-                .append(minute)
-                .append(second);
-
+        builder.append("223").append(System.currentTimeMillis());
         return builder.toString();
     }
 
     private void mapAccountDetailsToEntity(UserRegistration existedUser,
                                            UpdateAccountDetails accountDetails) {
-
         existedUser.setFullName(accountDetails.getFullName());
         existedUser.setPassword(accountDetails.getPassword());
         existedUser.setEmail(accountDetails.getEmail());
@@ -188,7 +164,6 @@ public class BankUserServiceImpl implements IBankService {
 
     private void mapLoanDetailsToEntity(LoanDetails loanDetails,
                                         UserLoanDto userLoan) {
-
         loanDetails.setAccountNumber(userLoan.getAccountNumber());
         loanDetails.setLoanType(userLoan.getLoanType());
         loanDetails.setLoanAmount(userLoan.getLoanAmount());

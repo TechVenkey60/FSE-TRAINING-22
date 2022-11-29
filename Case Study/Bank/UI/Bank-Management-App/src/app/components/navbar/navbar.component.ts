@@ -9,11 +9,15 @@ import { BankServiceService } from 'src/services/bank-service.service';
 })
 export class NavbarComponent implements OnInit {
 
-  isUserLoggedIn:boolean = true;
-  isUserLoggedOut:boolean = false;
   constructor() { }
 
   ngOnInit(): void {
   }
+
+
+
+
+
+
 
 }
