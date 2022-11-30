@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   errorMessage:any;
   loginFailedError:any;
   isLoginFailed=false;
+  localData:any;
+  localRes:any;
 
   constructor(private formBuilder : FormBuilder,
     private router : Router,private userService : BankServiceService) { }
@@ -26,6 +28,13 @@ export class LoginComponent implements OnInit {
       userName:['',[Validators.required]],
       password:['',[Validators.required,Validators.minLength(8)]]
     })
+
+    this.localData = localStorage.getItem('user');
+    
+   console.log(this.localData);
+   this.localRes = JSON.parse(this.localData);
+    console.log(this.localRes.userName);
+    
   }
 
   loginUser(){
@@ -34,6 +43,12 @@ export class LoginComponent implements OnInit {
       return
     }
     
+
+    localStorage.setItem('user',JSON.stringify(this.loginForm.value));
+
+   
+    
+
     this.userService.userSignIn(this.loginForm.value)
     .subscribe((data:any) => {
       this.loggedInUser = data;
