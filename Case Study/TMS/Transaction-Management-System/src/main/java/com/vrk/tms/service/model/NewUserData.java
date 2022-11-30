@@ -22,4 +22,5 @@ public class NewUserData {
     private String address;
     private String state;
     private String country;
+    private Double balance;
 }

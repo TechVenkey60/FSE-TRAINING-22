@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
@@ -83,8 +85,7 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
     public String validateAnsSaveTransaction(TransactionInput transactionInput) {
         log.info("Entered into TransactionBankUserServiceImpl::validateAnsSaveTransaction method");
 
-        var receiverAccountData = transactionRepository.getDetailsByAccountNumber(transactionInput.getReceiverAccountNumber());
-        var senderAccountData = transactionRepository.getDetailsByAccountNumber(transactionInput.getAccountNumber());
+        var receiverAccountData = userRegistryRepository.getUserByAccountNumber(transactionInput.getReceiverAccountNumber());
 
         if(isNull(receiverAccountData)){
             throw new DataNotFoundException("Receiver Account Details Not Found..",404);
@@ -94,18 +95,31 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
             throw new InvalidDataException("Insufficient Funds Transfer Found...");
         }
 
+        var senderAccountData = userRegistryRepository.getUserByAccountNumber(transactionInput.getAccountNumber());
+
         TransactionDetails transactionDetails = new TransactionDetails();
         mapTransactionDataToEntity(transactionDetails,transactionInput);
 
         var persistedTransaction = transactionRepository.save(transactionDetails);
-        receiverAccountData.setBalance(receiverAccountData.getBalance()+persistedTransaction.getTrxAmount());
+        receiverAccountData.setBalance((receiverAccountData.getBalance()+persistedTransaction.getTrxAmount()));
         userRegistryRepository.saveAndFlush(receiverAccountData);
 
-        senderAccountData.setBalance(senderAccountData.getBalance()-transactionInput.getTrxAmount());
+        senderAccountData.setBalance((senderAccountData.getBalance()-transactionInput.getTrxAmount()));
         userRegistryRepository.saveAndFlush(senderAccountData);
 
         log.info("Amount has been credited to receiver account successfully.");
         return "Amount has been transferred successfully!";
+    }
+
+    @Override
+    public List<TransactionDetails> fetchUserTransactions(String accountNumber, String sortBy) {
+        log.info("Entered into TransactionBankUserServiceImpl::fetchUserTransactions method");
+
+        if("ASC".equals(sortBy)){
+            return transactionRepository.loadTransactionDetailsByAccountNumberInASCOrder(accountNumber);
+        }else {
+            return transactionRepository.loadTransactionDetailsByAccountNumberInASCOrder(accountNumber);
+        }
     }
 
 
@@ -137,6 +151,7 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
         userRegistration.setCountry(newUserData.getCountry());
         userRegistration.setContactNumber(newUserData.getContactNumber());
         userRegistration.setAccountNumber(generateNewAccountNumber());
+        userRegistration.setBalance(newUserData.getBalance());
     }
 
     private String generateNewAccountNumber() {

@@ -50,7 +50,7 @@ public class TransactionController {
     @GetMapping("/user/{accountNumber}")
     public ResponseEntity<List<TransactionDetails>> getTransactionDetails(@PathVariable String accountNumber,
                                                                           @RequestParam(defaultValue = "ASC") String orderBy){
-
-        return  null;
+        var transactionDetails = bankServiceImpl.fetchUserTransactions(accountNumber,orderBy);
+        return  new ResponseEntity<>(transactionDetails,HttpStatus.OK);
     }
 }
