@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "e13f9486-41de-4cce-82bc-7f815b251748",
+		"name": "JWT-Spring-Boo-Security",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create-New-Role",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": {\r\n        \"userName\": \"admin123\",\r\n        \"userFirstName\": \"admin\",\r\n        \"userLastName\": \"admin\",\r\n        \"userPassword\": \"\",\r\n        \"role\": [\r\n            {\r\n                \"roleName\": \"Admin\",\r\n                \"roleDescription\": \"Admin role\"\r\n            }\r\n        ]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9898/registerNewUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"registerNewUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Admin Data",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbjEyMyIsImV4cCI6MTY2ODc4MDI3MCwiaWF0IjoxNjY4NzYyMjY5fQ.Y3Fh_W-nBw-Hv2EHROzvdOcv7sX3ykP7iGs0JWrhlTbhwRB4h5D6PSXPN942fpqvnQWtNzI89dXzozu2RRT69w",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:9898/forAdmin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"forAdmin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9898/api/v1/jwt/userData",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"api",
+						"v1",
+						"jwt",
+						"userData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign-IN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"admin123\",\r\n    \"userPassword\": \"admin@pass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9898/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9898",
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

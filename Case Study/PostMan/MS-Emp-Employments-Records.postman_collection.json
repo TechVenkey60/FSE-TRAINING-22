@@ -1,0 +1,29 @@
+{
+	"info": {
+		"_postman_id": "a3cf7e49-a046-42b8-8f92-9e3dc2aef6af",
+		"name": "MS-Emp-Employments-Records",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Employment Records By  Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9981/records/200",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9981",
+					"path": [
+						"records",
+						"200"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

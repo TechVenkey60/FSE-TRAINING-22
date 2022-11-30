@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "dc332eaf-32b8-4d30-9ddc-9e8ff3e378ac",
+		"name": "Digital Books Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Books With AuthorID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"logo\": \"Avengers\",\r\n    \"title\": \"Avengers Endgame\",\r\n    \"category\": \"Action SF\",\r\n    \"author\": \"Rohitha\",\r\n    \"price\": 3599940.0,\r\n    \"publisher\": \"marvel\",\r\n    \"publishedDate\": \"2009-09-19\",\r\n    \"chapter\": \"chapter1\",\r\n    \"active\": true,\r\n    \"block\":\"no\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://ec2-54-199-226-55.ap-northeast-1.compute.amazonaws.com:9966/api/v1/digitalbooks/author/17/books",
+					"protocol": "http",
+					"host": [
+						"ec2-54-199-226-55",
+						"ap-northeast-1",
+						"compute",
+						"amazonaws",
+						"com"
+					],
+					"port": "9966",
+					"path": [
+						"api",
+						"v1",
+						"digitalbooks",
+						"author",
+						"17",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"logo\": \"SpiderMan\",\r\n    \"title\": \"SpiderMan\",\r\n    \"category\": \"Action\",\r\n    \"author\": \"Venkat\",\r\n    \"price\": 3599940.0,\r\n    \"publisher\": \"marvel\",\r\n    \"publishedDate\": \"2009-09-19\",\r\n    \"chapter\": \"chapter1\",\r\n    \"active\": true,\r\n    \"block\":\"no\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://xa3tf7p2qe.execute-api.ap-northeast-1.amazonaws.com/test/digital-books-service/{authorId}/{bookId}",
+					"protocol": "https",
+					"host": [
+						"xa3tf7p2qe",
+						"execute-api",
+						"ap-northeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"test",
+						"digital-books-service",
+						"{authorId}",
+						"{bookId}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

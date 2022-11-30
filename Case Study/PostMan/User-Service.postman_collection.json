@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "b300d676-9720-4988-bb26-099fc4d14bde",
+		"name": "User-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sign-Up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"Suresh129\",\r\n    \"email\": \"suresh129@gmail.com\",\r\n    \"role\": \"reader\",\r\n    \"password\": \"suresh12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://xa3tf7p2qe.execute-api.ap-northeast-1.amazonaws.com/dev/user-service",
+					"protocol": "https",
+					"host": [
+						"xa3tf7p2qe",
+						"execute-api",
+						"ap-northeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"user-service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign-In",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"rothitha12@gmail.com\",\r\n    \"password\": \"rothitha12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://xa3tf7p2qe.execute-api.ap-northeast-1.amazonaws.com/dev/user-service/user-service-login",
+					"protocol": "https",
+					"host": [
+						"xa3tf7p2qe",
+						"execute-api",
+						"ap-northeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"user-service",
+						"user-service-login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ApiGateWay-New User Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\": \"Venkatesh Kokkanti1\",\r\n    \"userName\": \"Venkey984\",\r\n    \"password\": \"Venkey94\",\r\n    \"email\": \"venkey9834@gmail.com\",\r\n    \"dob\": \"2022-11-23\",\r\n    \"accountType\": \"Saving\",\r\n    \"panCardNumber\": \"FPNPK8977R\",\r\n    \"contactNumber\": \"9876543210\",\r\n    \"address\": \"Rayachoty\",\r\n    \"state\": \"AP\",\r\n    \"country\": \"India\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://0hds0sbd2l.execute-api.ap-northeast-1.amazonaws.com/dev",
+					"protocol": "https",
+					"host": [
+						"0hds0sbd2l",
+						"execute-api",
+						"ap-northeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

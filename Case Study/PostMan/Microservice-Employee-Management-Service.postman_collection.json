@@ -1,0 +1,29 @@
+{
+	"info": {
+		"_postman_id": "6403540c-75c4-484d-af48-bb4e32408d75",
+		"name": "Microservice-Employee-Management-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Employee Details By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9980/getEmployee/200",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9980",
+					"path": [
+						"getEmployee",
+						"200"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
