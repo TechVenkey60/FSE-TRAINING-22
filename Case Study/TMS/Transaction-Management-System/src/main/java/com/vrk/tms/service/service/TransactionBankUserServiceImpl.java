@@ -26,6 +26,8 @@ import static java.util.Objects.nonNull;
 @Slf4j
 public class TransactionBankUserServiceImpl implements ITransactionBankService {
 
+    public static final String CREDITED = "Credited From";
+    public static final String DEBITED = "Debited To";
     private final UserRegistryRepository userRegistryRepository;
     private final TransactionRepository transactionRepository;
 
@@ -97,15 +99,22 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
 
         var senderAccountData = userRegistryRepository.getUserByAccountNumber(transactionInput.getAccountNumber());
 
-        TransactionDetails transactionDetails = new TransactionDetails();
-        mapTransactionDataToEntity(transactionDetails,transactionInput);
+        // Debit
+        var debitTransactionDetails = new TransactionDetails();
+        debitAmountFromSender(debitTransactionDetails,transactionInput,senderAccountData);
+        var persistedSenderTransaction = transactionRepository.save(debitTransactionDetails);
 
-        var persistedTransaction = transactionRepository.save(transactionDetails);
-        receiverAccountData.setBalance((receiverAccountData.getBalance()+persistedTransaction.getTrxAmount()));
-        userRegistryRepository.saveAndFlush(receiverAccountData);
-
-        senderAccountData.setBalance((senderAccountData.getBalance()-transactionInput.getTrxAmount()));
+        senderAccountData.setBalance(persistedSenderTransaction.getAmount());
         userRegistryRepository.saveAndFlush(senderAccountData);
+
+
+        //Credit
+        var creditTransactionDetails = new TransactionDetails();
+        creditAmountToReceiverAccount(creditTransactionDetails,transactionInput,receiverAccountData);
+        var persistedReceiverTransaction = transactionRepository.save(creditTransactionDetails);
+
+        receiverAccountData.setBalance(persistedReceiverTransaction.getAmount());
+        userRegistryRepository.saveAndFlush(receiverAccountData);
 
         log.info("Amount has been credited to receiver account successfully.");
         return "Amount has been transferred successfully!";
@@ -120,6 +129,12 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
         }else {
             return transactionRepository.loadTransactionDetailsByAccountNumberInASCOrder(accountNumber);
         }
+    }
+
+    @Override
+    public UserRegistration fetchUserInfo(String accountNumber) {
+        log.info("Entered into TransactionBankUserServiceImpl::fetchUserInfo method");
+        return userRegistryRepository.getUserByAccountNumber(accountNumber);
     }
 
 
@@ -172,15 +187,32 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
     }
 
 
-    private void mapTransactionDataToEntity(TransactionDetails transactionDetails, TransactionInput transactionInput) {
+    private void debitAmountFromSender(TransactionDetails transactionDetails,
+                                       TransactionInput transactionInput,
+                                       UserRegistration senderAccountData) {
 
         transactionDetails.setAccountNumber(transactionInput.getAccountNumber());
-        transactionDetails.setAmount(transactionInput.getAmount());
+        var amount = senderAccountData.getBalance() - transactionInput.getTrxAmount();
+        transactionDetails.setAmount(amount);
         transactionDetails.setTrxAmount(transactionInput.getTrxAmount());
-        transactionDetails.setTrxType(transactionInput.getTrxType());
+        transactionDetails.setTrxType(DEBITED);
         transactionDetails.setReceiverAccountNumber(transactionInput.getReceiverAccountNumber());
         transactionDetails.setDate(transactionInput.getDate());
-        transactionDetails.setStatus("Transferred");
+        transactionDetails.setStatus(DEBITED);
 
+    }
+
+    private void creditAmountToReceiverAccount(TransactionDetails transactionDetails,
+                                               TransactionInput transactionInput,
+                                               UserRegistration receiverAccountData) {
+
+        transactionDetails.setAccountNumber(transactionInput.getReceiverAccountNumber());
+        var amount =  receiverAccountData.getBalance() + transactionInput.getTrxAmount();
+        transactionDetails.setAmount(amount);
+        transactionDetails.setTrxAmount(transactionInput.getTrxAmount());
+        transactionDetails.setTrxType(CREDITED);
+        transactionDetails.setReceiverAccountNumber(transactionInput.getAccountNumber());
+        transactionDetails.setDate(transactionInput.getDate());
+        transactionDetails.setStatus(CREDITED);
     }
 }

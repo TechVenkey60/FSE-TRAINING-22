@@ -1,0 +1,29 @@
+.card{
+    border: none;
+    width: 600px;
+    min-height: 450px;
+    max-height: 550px;
+    padding: 45px;
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    background: transparent;
+    background: rgba(241, 234, 234, 0.5);
+}
+
+label{
+    color: #000000;
+}
+.card h1, h6{
+    color: #000000;
+}
+
+button{
+   box-sizing: 20px;
+   border-radius: 100px;
+}
+
+a{
+    color: rgb(10, 10, 10);  
+    padding-top: 25px;
+}

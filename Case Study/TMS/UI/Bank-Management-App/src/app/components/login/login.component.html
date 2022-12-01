@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+</head>
+<body>
+   
+
+    
+  <app-navbar></app-navbar>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="text-center">
+                        <h1>Login</h1>
+                        <img src="https://th.bing.com/th/id/R.4362365699fbc24a47b05de3e8e1d84a?rik=yFr5JgKOPmZRHw&riu=http%3a%2f%2fbxvpn.com%2fimages%2fuserIcon.png&ehk=L8rUr4VsQBoCAro1%2fMdJoRnyJSfAyKe3HWu3fZc1CLk%3d&risl=&pid=ImgRaw&r=0" style="height: 50px; width: 100px;" class="bg-light">
+                        <h6>Please enter userName & password !!</h6>
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="isLoginFailed">
+                        <strong>{{loginFailedError}}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+                        <div class="mb-2 mt-3">
+                            <label for="userName" class="form-label">User Name:</label>
+                            <input formControlName ="userName" type="text" [ngClass] = "{'is-invalid':submitted}" class="form-control" placeholder="Enter userName">
+                          
+                            <div *ngIf="submitted && loginForm.controls['userName']" class="text-danger">
+                                <div *ngIf="submitted && loginForm.hasError('required','userName')">
+                                    *Email is required.
+                                </div>
+                            </div>
+
+                        </div>
+                          <div class="mb-2">
+                            <label for="pwd" class="form-label">Password:</label>
+                            <input formControlName ="password" type="password" [ngClass] = "{'is-invalid':submitted}" class="form-control" placeholder="Enter password"> 
+                            <div *ngIf="submitted && loginForm.controls['password']" class="text-danger">
+                                <div *ngIf="submitted && loginForm.hasError('required','password')">
+                                    *Password is required.
+                                </div>
+                            </div>
+                        </div>
+                          <div class="d-grid button">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                          </div>
+                    </form>
+                  
+                        <a routerLink="/register">Don't have an account? Click here to Signup!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

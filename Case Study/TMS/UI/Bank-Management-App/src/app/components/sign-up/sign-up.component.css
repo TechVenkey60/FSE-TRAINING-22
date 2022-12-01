@@ -1,0 +1,28 @@
+.card{
+    border: none;
+    width: 600px;
+    padding: 45px;
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    background: transparent;
+    background: rgba(196, 186, 186, 0.9);
+  
+}
+
+label{
+    color: rgb(32, 32, 32);
+}
+.card h3, h6{
+    color: rgb(12, 11, 11);
+}
+
+a{
+    color: rgb(10, 10, 10);  
+    padding-top: 10px;
+}
+
+button{
+    box-sizing: 20px;
+    border-radius: 100px;
+ }

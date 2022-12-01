@@ -49,8 +49,14 @@ public class TransactionController {
 
     @GetMapping("/user/{accountNumber}")
     public ResponseEntity<List<TransactionDetails>> getTransactionDetails(@PathVariable String accountNumber,
-                                                                          @RequestParam(defaultValue = "ASC") String orderBy){
-        var transactionDetails = bankServiceImpl.fetchUserTransactions(accountNumber,orderBy);
+                                                                          @RequestParam(defaultValue = "ASC") String sortBy){
+        var transactionDetails = bankServiceImpl.fetchUserTransactions(accountNumber,sortBy);
+        return  new ResponseEntity<>(transactionDetails,HttpStatus.OK);
+    }
+
+    @GetMapping("/registered/{accountNumber}")
+    public ResponseEntity<UserRegistration> getRegisteredUserDetails(@PathVariable String accountNumber){
+        var transactionDetails = bankServiceImpl.fetchUserInfo(accountNumber);
         return  new ResponseEntity<>(transactionDetails,HttpStatus.OK);
     }
 }

@@ -15,4 +15,6 @@ public interface ITransactionBankService {
     UserRegistration updateAccountDetails(UpdateAccountDetails accountDetails);
     String validateAnsSaveTransaction(TransactionInput transactionInput);
     List<TransactionDetails> fetchUserTransactions(String accountNumber, String orderBy);
+
+    UserRegistration fetchUserInfo(String accountNumber);
 }

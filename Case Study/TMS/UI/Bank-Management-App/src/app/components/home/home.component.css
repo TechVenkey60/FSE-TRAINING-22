@@ -1,0 +1,22 @@
+.container{
+    height: 80px;
+    text-align: center;
+    border-radius: 25px;
+    background: transparent;
+    background: rgb(0,0,0,.3);
+    margin-top: 20px;
+}
+
+h1{
+    text-align: center;
+    padding-top: 20px;
+    color: rgb(248, 249, 250);
+    font-weight: bold;
+}
+
+body{
+    background-image: url('../../../images/1000-Bank.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}

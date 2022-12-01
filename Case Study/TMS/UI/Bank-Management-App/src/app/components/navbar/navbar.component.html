@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NavBar</title>
+</head>
+<body>
+  
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="#">VRK Bank</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-white" routerLink="/home" aria-current="page" >Home</a>
+          </li>
+        
+          <li class="nav-item"  >
+            <a class="nav-link active text-white" *ngIf="isUserLoggedIn()" routerLink="/loanDetails" aria-current="page" >Loan Details</a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link active text-white" *ngIf="isUserLoggedIn()" routerLink="/updateAccount" aria-current="page" >Account Details</a>
+            </li>
+            
+        </ul>
+       
+        <div class="d-flex">
+          <button type="button" *ngIf="! isUserLoggedIn()" class="btn btn-success me-1" routerLink="/login">Login</button>
+          <button type = "button" *ngIf="! isUserLoggedIn()"  class="btn btn-danger me-1" routerLink="/register">Register</button>
+          <button type="button" *ngIf="isUserLoggedIn()" class="btn btn-secondary" (click)="userLogout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>
