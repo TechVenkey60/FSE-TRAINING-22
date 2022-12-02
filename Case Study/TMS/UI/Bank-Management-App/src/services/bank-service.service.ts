@@ -67,7 +67,6 @@ export class BankServiceService {
   }
 
 
-
   public isUserLoggedIn():boolean{
     if(this.getDataFromSession()){
         return true;

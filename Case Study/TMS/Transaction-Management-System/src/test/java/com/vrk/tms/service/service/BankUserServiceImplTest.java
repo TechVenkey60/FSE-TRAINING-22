@@ -1,11 +1,14 @@
 package com.vrk.tms.service.service;
 
+import com.vrk.tms.service.entity.TransactionDetails;
 import com.vrk.tms.service.entity.UserRegistration;
 import com.vrk.tms.service.handlers.DataNotFoundException;
 import com.vrk.tms.service.handlers.InvalidDataException;
 import com.vrk.tms.service.model.NewUserData;
 import com.vrk.tms.service.model.SignIn;
+import com.vrk.tms.service.model.TransactionInput;
 import com.vrk.tms.service.model.UpdateAccountDetails;
+import com.vrk.tms.service.repository.TransactionRepository;
 import com.vrk.tms.service.repository.UserRegistryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,10 +16,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,6 +31,8 @@ class BankUserServiceImplTest {
     private TransactionBankUserServiceImpl bankUserService;
     @Mock
     private UserRegistryRepository userRegistryRepository;
+    @Mock
+    private TransactionRepository transactionRepository;
 
 
     @Test
@@ -118,6 +125,61 @@ class BankUserServiceImplTest {
         assertThrows(DataNotFoundException.class, () -> bankUserService.updateAccountDetails(updatedUserData));
     }
 
+
+    @Test
+    void validateAnsSaveTransactionTest() {
+        when(userRegistryRepository.getUserByAccountNumber(any()))
+                .thenReturn(getRegisteredUserDetails());
+
+        when(transactionRepository.save(any())).thenReturn(getTransactionDetails());
+        when(userRegistryRepository.saveAndFlush(any())).thenReturn(getRegisteredUserDetails());
+
+        var status = bankUserService.validateAnsSaveTransaction(getTransactionInput());
+        assertNotNull(status);
+    }
+
+    @Test
+    void validateAnsSaveTransactionTest_No_ReceiverAccount() {
+        when(userRegistryRepository.getUserByAccountNumber(any()))
+                .thenReturn(null);
+
+       var input = getTransactionInput();
+       assertThrows(DataNotFoundException.class, () -> bankUserService.validateAnsSaveTransaction(input));
+    }
+
+    @Test
+    void validateAnsSaveTransactionTest_Insufficient_Amount() {
+        when(userRegistryRepository.getUserByAccountNumber(any()))
+                .thenReturn(getRegisteredUserDetails());
+
+        var transactionInput = getTransactionInput();
+        transactionInput.setTrxAmount(2000000.0);
+        assertThrows(InvalidDataException.class, () -> bankUserService.validateAnsSaveTransaction(transactionInput));
+    }
+
+    @Test
+    void fetchUserInfoTest() {
+        when(userRegistryRepository.getUserByAccountNumber(any()))
+                .thenReturn(getRegisteredUserDetails());
+
+        var expectedData = bankUserService.fetchUserInfo("1213121213");
+        assertNotNull(expectedData);
+    }
+
+    @Test
+    void fetchUserTransactionsTest_In_ASC_Order() {
+        when(transactionRepository.loadTransactionDetailsByAccountNumberInASCOrder(any()))
+                .thenReturn(new ArrayList<>());
+        assertNotNull(bankUserService.fetchUserTransactions("392734923","ASC"));
+    }
+
+    @Test
+    void fetchUserTransactionsTest_In_DESC_Order() {
+        when(transactionRepository.loadTransactionDetailsByAccountNumberInDESCOrder(any())).thenReturn(new ArrayList<>());
+        assertNotNull(bankUserService.fetchUserTransactions("2374878343","DESC"));
+
+    }
+
     private NewUserData getNewAccountUserData() {
 
         return NewUserData.builder()
@@ -148,7 +210,9 @@ class BankUserServiceImplTest {
                 .contactNumber("9876543234")
                 .address("Rayachoty,")
                 .state("AP")
-                .country("India").build();
+                .country("India")
+                .balance(5000.0)
+                .build();
     }
 
     private SignIn getLoginData() {
@@ -165,5 +229,24 @@ class BankUserServiceImplTest {
                 .country("India")
                 .contactNumber("9898989891")
                 .build();
+    }
+
+    private TransactionInput getTransactionInput(){
+        return new TransactionInput("12121",2000.0,"debit",200.0,"212121",new Date());
+    }
+
+
+    private TransactionDetails getTransactionDetails(){
+       var transactionDetails = new TransactionDetails();
+       transactionDetails.setTransactionId(1);
+       transactionDetails.setAccountNumber("12131212");
+       transactionDetails.setAmount(3000.0);
+       transactionDetails.setTrxType("Debit");
+       transactionDetails.setTrxAmount(2000.0);
+       transactionDetails.setReceiverAccountNumber("121121312");
+       transactionDetails.setDate(new Date());
+       transactionDetails.setStatus("Debited");
+
+       return transactionDetails;
     }
 }

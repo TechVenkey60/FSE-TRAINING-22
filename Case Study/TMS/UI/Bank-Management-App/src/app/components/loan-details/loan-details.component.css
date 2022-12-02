@@ -3,3 +3,13 @@
     background-color: rgb(230, 245, 245);
     padding: 10px;
 }
+
+.account-balance{
+    background-color: rgb(170, 218, 218);
+    height: 150px;
+    width: 400px;
+    max-width: 550px;
+    border-radius: 30px;
+    margin-left: 395px;
+    background-color: #be0e5a;
+}

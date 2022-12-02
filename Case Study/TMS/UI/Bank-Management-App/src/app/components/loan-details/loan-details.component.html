@@ -13,10 +13,11 @@
         <h2 class="text-center text-success" style="text-decoration: underline;">Transaction Summary</h2>
     </div>
 
-    <div class="text-center">
-      <h3>Full Name : {{user.fullName}}</h3>
-       <h3>Avaialbe Balance: {{balance | currency:'INR'}}</h3>
+    <div class="account-balance mt-2">
+      <p class="fw-bold text-center text-light" style="padding-top: 35px; font-size: large;">AccountHolderName: &nbsp;<span class="text-light fw-normal text-capitalize"> {{user.fullName }}</span> </p> 
+      <p class="fw-bold text-start text-light" style="padding-left: 48px; font-size: large;">Available Balance: &nbsp;&nbsp;<span class="text-light fw-normal">{{balance | currency:'INR'}}</span></p> 
     </div>
+
 
     <div class="container mt-3 ">
         <div class="d-flex justify-content-end">
@@ -118,7 +119,6 @@
         </div>
       </div>
 
-
         <div class="text-center mt-4">
             <table class="table table-striped table-hover table-bordered">
                 <thead class="text-primary">
@@ -146,7 +146,7 @@
                 <tbody>
                   <tr *ngFor="let loanInfo of loanDetails">
                     <td>{{loanInfo.trxAmount | currency:'INR'}}</td>
-                    <td>{{ loanInfo.trxType  | uppercase}}</td>
+                    <td>{{ loanInfo.trxType  | titlecase}}</td>
                     <td>{{ loanInfo.receiverAccountNumber }}</td>         
                     <td>{{ loanInfo.date}}</td>
                     <td>{{ loanInfo.amount | currency:'INR'}}</td>
@@ -156,9 +156,9 @@
         </div>
 
         <div class="d-flex justify-content-center" *ngIf="hasTableData">
-            <strong class="text-danger text-center">No Loan Details Avaialbe..</strong>
+            <strong class="text-danger text-center">No Transaction Details Avaialbe..</strong>
         </div>
-  
+
 
 </body>
 </html>

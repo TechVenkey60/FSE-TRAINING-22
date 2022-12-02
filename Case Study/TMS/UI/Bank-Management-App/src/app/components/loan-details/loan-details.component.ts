@@ -24,6 +24,12 @@ export class LoanDetailsComponent implements OnInit {
     private router : Router) { }
 
   ngOnInit(): void {
+
+    
+   if(!this.userService.isUserLoggedIn()){
+       this.router.navigate(['/login']);
+    }
+  
     
     let data:any = this.userService.getDataFromSession();
     this.user = JSON.parse(data);
@@ -101,18 +107,16 @@ export class LoanDetailsComponent implements OnInit {
   }
 
 
-
+  
 
   sortData(e:any){
-     const sortValue = e.target.value;
-     if('ASC' === sortValue){
-       console.log("ASC Order");
-       this.userService.sortTransactionDetails(this.accountNumber,"ASC");
+       this.userService.sortTransactionDetails(this.accountNumber,e.target.value)
+                        .subscribe(data => {
+                          this.loans = data;
+                          this.loanDetails = JSON.parse(this.loans);
+                        }, error => {
+                            console.log(error.error);
+                        });
      }
-     if('DESC' === sortValue){
-       console.log("DESC Order");
-    }
-     
-  }
 
 }

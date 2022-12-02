@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vrk.tms.service.entity.UserRegistration;
 import com.vrk.tms.service.model.NewUserData;
 import com.vrk.tms.service.model.SignIn;
+import com.vrk.tms.service.model.TransactionInput;
 import com.vrk.tms.service.model.UpdateAccountDetails;
 import com.vrk.tms.service.service.ITransactionBankService;
 import lombok.SneakyThrows;
@@ -15,12 +16,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import static com.vrk.tms.service.service.TransactionBankUserServiceImpl.AMOUNT_HAS_BEEN_TRANSFERRED_SUCCESSFULLY;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TransactionController.class)
@@ -72,6 +74,44 @@ class TransactionControllerTest {
                 .andExpect(status().isOk());
     }
 
+
+    @SneakyThrows
+    @Test
+    void saveUserTransactionTest() {
+        when(bankServiceImpl.validateAnsSaveTransaction(any()))
+                .thenReturn(AMOUNT_HAS_BEEN_TRANSFERRED_SUCCESSFULLY);
+
+        mockMvc.perform(post("/save/transaction")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(getTransactionInput())))
+                .andExpect(status().isOk());
+    }
+
+
+    @SneakyThrows
+    @Test
+    void getTransactionDetailsTest() {
+        when(bankServiceImpl.fetchUserTransactions(any(),any()))
+                .thenReturn(new ArrayList<>());
+
+        mockMvc.perform(get("/user/{accountNumber}","121121")
+                .queryParam("sortBy","ASC")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+
+    @SneakyThrows
+    @Test
+    void getRegisteredUserDetailsTest() {
+        when(bankServiceImpl.fetchUserInfo(any()))
+                .thenReturn(getRegisteredUserDetails());
+
+        mockMvc.perform(get("/registered/{accountNumber}","121121")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
     private NewUserData getNewAccountUserData() {
         return NewUserData.builder()
                 .fullName("Venkatesh Kokkanti")
@@ -118,5 +158,9 @@ class TransactionControllerTest {
                 .country("India")
                 .contactNumber("9898989891")
                 .build();
+    }
+
+    private TransactionInput getTransactionInput(){
+        return new TransactionInput("12121",2000.0,"debit",200.0,"212121",new Date());
     }
 }

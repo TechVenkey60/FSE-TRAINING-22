@@ -28,6 +28,9 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
 
     public static final String CREDITED = "Credited From";
     public static final String DEBITED = "Debited To";
+    public static final String AMOUNT_HAS_BEEN_TRANSFERRED_SUCCESSFULLY = "Amount has been transferred successfully!";
+
+
     private final UserRegistryRepository userRegistryRepository;
     private final TransactionRepository transactionRepository;
 
@@ -117,17 +120,17 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
         userRegistryRepository.saveAndFlush(receiverAccountData);
 
         log.info("Amount has been credited to receiver account successfully.");
-        return "Amount has been transferred successfully!";
+        return AMOUNT_HAS_BEEN_TRANSFERRED_SUCCESSFULLY;
     }
 
     @Override
     public List<TransactionDetails> fetchUserTransactions(String accountNumber, String sortBy) {
         log.info("Entered into TransactionBankUserServiceImpl::fetchUserTransactions method");
 
-        if("ASC".equals(sortBy)){
+        if("ASC".equalsIgnoreCase(sortBy)){
             return transactionRepository.loadTransactionDetailsByAccountNumberInASCOrder(accountNumber);
         }else {
-            return transactionRepository.loadTransactionDetailsByAccountNumberInASCOrder(accountNumber);
+            return transactionRepository.loadTransactionDetailsByAccountNumberInDESCOrder(accountNumber);
         }
     }
 

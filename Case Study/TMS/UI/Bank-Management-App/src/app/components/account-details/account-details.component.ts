@@ -21,6 +21,11 @@ export class AccountDetailsComponent implements OnInit {
     private router : Router) { }
 
   ngOnInit(): void {
+
+    if(!this.userService.isUserLoggedIn()){
+      this.router.navigate(['/login']);
+    }
+    
     let data:any = this.userService.getDataFromSession();
     this.user = JSON.parse(data);
     this.updatedUserData = JSON.parse(data);
