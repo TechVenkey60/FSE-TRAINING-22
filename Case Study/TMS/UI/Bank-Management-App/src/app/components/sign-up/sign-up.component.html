@@ -82,6 +82,18 @@
                           </div>
 
 
+                          
+                        <div  class= "mb-2 mt-2">
+                            <label for="balance" class="form-label">Enter Amount:</label>
+                            <input formControlName="balance" type="number" class="form-control" [ngClass]="{'is-invalid':submitted}" placeholder="Enter Amount">
+                            <div *ngIf="submitted && signUpForm.controls['balance']" class="text-danger">
+                                <div *ngIf="submitted && signUpForm.hasError('required','balance')">
+                                    *Enter Amount required.
+                                </div>
+                            </div>  
+                        </div>
+
+
                           <div  class= "mb-2 mt-2">
                             <label for="dob" class="form-label">Date Of Birth:</label>
                             <input formControlName="dob" type="date" class="form-control" [ngClass]="{'is-invalid':submitted}" placeholder="Enter Date of birth">

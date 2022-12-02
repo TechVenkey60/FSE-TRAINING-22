@@ -19,6 +19,7 @@ export class LoanDetailsComponent implements OnInit {
   hasTableData=true;
   loggedInUser:any;
   balance:any;
+  debit:string="Debit";
   
   constructor(private userService : BankServiceService,private formBuilder : FormBuilder,
     private router : Router) { }

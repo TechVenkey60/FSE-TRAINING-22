@@ -33,7 +33,7 @@
           <div class="modal-content">
       
             <!-- Modal Header -->
-            <div class="modal-header bg-danger d-flex justify-content-center">
+            <div class="modal-header bg-primary d-flex justify-content-center">
               <h4 class="modal-title text-light ">Enter Loan Details</h4>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -76,7 +76,7 @@
 
                     <div class="mb-1">
                         <label for="trxType" class="form-label">Transaction Type:</label>
-                        <input formControlName ="trxType" type="text"  class="form-control" value="DEBIT" placeholder="Enter Transaction Type">
+                        <input formControlName ="trxType" type="text"  class="form-control" [(ngModel)]=debit placeholder="Enter Transaction Type">
                       
                         <div *ngIf="submitted && transferForm.controls['trxType']" class="text-danger">
                             <div *ngIf="submitted && transferForm.hasError('required','trxType')">
@@ -108,7 +108,7 @@
                         </div>
 
                         <div class="d-flex flex-row-reverse mt-3">
-                            <button type="submit" class="btn btn-danger btn-lg me-3">Apply</button>
+                            <button type="submit" class="btn btn-primary rounded-pill btn-lg me-3 rounded">Transfer</button>
                           </div>
                     </div>
                     
@@ -135,6 +135,7 @@
 
                 <thead class="text-primary">
                   <tr>
+                    <th scope="col">Transaction Id</th>
                     <th scope="col">Transaction Amount</th>
                     <th scope="col">Transaction Type</th>
                     <th scope="col">AccountNumber</th>                    
@@ -145,6 +146,7 @@
 
                 <tbody>
                   <tr *ngFor="let loanInfo of loanDetails">
+                    <td>{{"Tranx1122" + loanInfo.transactionId}}</td>
                     <td>{{loanInfo.trxAmount | currency:'INR'}}</td>
                     <td>{{ loanInfo.trxType  | titlecase}}</td>
                     <td>{{ loanInfo.receiverAccountNumber }}</td>         

@@ -25,4 +25,3 @@ logging:
   level:
     org.springframework: ERROR
     com.vrk.tms.service: DEBUG
-    org.hibernate: INFO

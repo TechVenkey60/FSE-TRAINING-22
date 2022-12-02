@@ -31,6 +31,7 @@ export class SignUpComponent implements OnInit {
       accountType:['',[Validators.required]],
       panCardNumber:['',[Validators.required]],
       contactNumber:['',[Validators.required]],
+      balance:['',[Validators.required]],
       address:['',[Validators.required]],
       state:['',[Validators.required]],
       country:['',[Validators.required]]
