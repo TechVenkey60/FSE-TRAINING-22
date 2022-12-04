@@ -20,6 +20,8 @@ export class LoanDetailsComponent implements OnInit {
   loggedInUser:any;
   balance:any;
   debit:string="Debit";
+  receiverError:any;
+  errorMessage:any;
   
   constructor(private userService : BankServiceService,private formBuilder : FormBuilder,
     private router : Router) { }
@@ -67,8 +69,10 @@ export class LoanDetailsComponent implements OnInit {
           this.getUserDetails();
           this.transferForm.reset();
         }, error => {
-          console.log(error.error);
-        })
+          this.receiverError = error.error;
+          this.errorMessage = JSON.parse(this.receiverError);
+          alert(this.errorMessage.message);
+        });
   }
 
 
@@ -89,7 +93,9 @@ export class LoanDetailsComponent implements OnInit {
        this.hasTableData = false;
      }
     },error => {
-      console.log(error.error);
+    console.log(error.error);
+    
+      
     });
 
   }
