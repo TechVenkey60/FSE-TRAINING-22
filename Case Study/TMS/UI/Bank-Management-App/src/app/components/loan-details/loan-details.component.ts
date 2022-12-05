@@ -63,7 +63,7 @@ export class LoanDetailsComponent implements OnInit {
 
     this.userService.applyForLoan(this.transferForm.value)
         .subscribe(data => {
-          alert("Loan Applied Successfully...");
+          alert("Amount has been sent successfully...");
           this.getAllLoanDetails();
           
           this.getUserDetails();

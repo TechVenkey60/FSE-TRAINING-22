@@ -15,7 +15,7 @@ public class TmsDBConfig {
 
     @Bean
     public DataSource getDataSource(DbConfigProperties configProperties){
-        log.debug("Creating the DataSource For Connection");
+        log.info("Creating the DataSource For Connection...");
         return DataSourceBuilder.create()
                 .url(configProperties.getUrl())
                 .username(configProperties.getUserName())

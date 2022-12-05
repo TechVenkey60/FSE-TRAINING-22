@@ -1,0 +1,330 @@
+swagger: '2.0'
+info:
+  description: Tracking User Account and Transaction Details.
+  version: '1.0'
+  title: Transaction Management System
+  termsOfService: https://www.tms.com/
+  contact:
+    name: Venkatesh Kokkanti
+    url: https://www.tms.in/
+    email: venkat123@gmail.com
+host: localhost:9966
+tags:
+  - name: transaction-controller
+    description: Transaction Controller
+paths:
+  /api/vrk/tms/login:
+    post:
+      tags:
+        - transaction-controller
+      summary: userSign
+      operationId: userSignUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: signIn
+          description: signIn
+          required: true
+          schema:
+            $ref: '#/definitions/SignIn'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserRegistration'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/vrk/tms/newUserAccount:
+    post:
+      tags:
+        - transaction-controller
+      summary: createNewUser
+      operationId: createNewUserUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: newUserData
+          description: newUserData
+          required: true
+          schema:
+            $ref: '#/definitions/NewUserData'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserRegistration'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/vrk/tms/registered/{accountNumber}:
+    get:
+      tags:
+        - transaction-controller
+      summary: getRegisteredUserDetails
+      operationId: getRegisteredUserDetailsUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: accountNumber
+          in: path
+          description: accountNumber
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserRegistration'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/vrk/tms/save/transaction:
+    post:
+      tags:
+        - transaction-controller
+      summary: saveUserTransaction
+      operationId: saveUserTransactionUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: transactionInput
+          description: transactionInput
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionInput'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/vrk/tms/update/accountDetails:
+    put:
+      tags:
+        - transaction-controller
+      summary: updateUserAccountDetails
+      operationId: updateUserAccountDetailsUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: accountDetails
+          description: accountDetails
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateAccountDetails'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserRegistration'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /api/vrk/tms/user/{accountNumber}:
+    get:
+      tags:
+        - transaction-controller
+      summary: getTransactionDetails
+      operationId: getTransactionDetailsUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: accountNumber
+          in: path
+          description: accountNumber
+          required: true
+          type: string
+        - name: sortBy
+          in: query
+          description: sortBy
+          required: false
+          type: string
+          default: ASC
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TransactionDetails'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+definitions:
+  NewUserData:
+    type: object
+    properties:
+      accountType:
+        type: string
+      address:
+        type: string
+      balance:
+        type: number
+        format: double
+      contactNumber:
+        type: string
+      country:
+        type: string
+      dob:
+        type: string
+        format: date-time
+      email:
+        type: string
+      fullName:
+        type: string
+      panCardNumber:
+        type: string
+      password:
+        type: string
+      state:
+        type: string
+      userName:
+        type: string
+    title: NewUserData
+  SignIn:
+    type: object
+    properties:
+      password:
+        type: string
+      userName:
+        type: string
+    title: SignIn
+  TransactionDetails:
+    type: object
+    properties:
+      accountNumber:
+        type: string
+      amount:
+        type: number
+        format: double
+      date:
+        type: string
+        format: date-time
+      receiverAccountNumber:
+        type: string
+      status:
+        type: string
+      transactionId:
+        type: integer
+        format: int32
+      trxAmount:
+        type: number
+        format: double
+      trxType:
+        type: string
+    title: TransactionDetails
+  TransactionInput:
+    type: object
+    properties:
+      accountNumber:
+        type: string
+      amount:
+        type: number
+        format: double
+      date:
+        type: string
+        format: date-time
+      receiverAccountNumber:
+        type: string
+      trxAmount:
+        type: number
+        format: double
+      trxType:
+        type: string
+    title: TransactionInput
+  UpdateAccountDetails:
+    type: object
+    properties:
+      accountNumber:
+        type: string
+      address:
+        type: string
+      contactNumber:
+        type: string
+      country:
+        type: string
+      email:
+        type: string
+      fullName:
+        type: string
+      password:
+        type: string
+      state:
+        type: string
+    title: UpdateAccountDetails
+  UserRegistration:
+    type: object
+    properties:
+      accountNumber:
+        type: string
+      accountType:
+        type: string
+      address:
+        type: string
+      balance:
+        type: number
+        format: double
+      contactNumber:
+        type: string
+      country:
+        type: string
+      dob:
+        type: string
+        format: date-time
+      email:
+        type: string
+      fullName:
+        type: string
+      panCardNumber:
+        type: string
+      password:
+        type: string
+      registrationId:
+        type: integer
+        format: int32
+      state:
+        type: string
+      userName:
+        type: string
+    title: UserRegistration

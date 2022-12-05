@@ -102,7 +102,6 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
 
         var senderAccountData = userRegistryRepository.getUserByAccountNumber(transactionInput.getAccountNumber());
 
-        // Debit
         var debitTransactionDetails = new TransactionDetails();
         debitAmountFromSender(debitTransactionDetails,transactionInput,senderAccountData);
         var persistedSenderTransaction = transactionRepository.save(debitTransactionDetails);
@@ -111,7 +110,6 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
         userRegistryRepository.saveAndFlush(senderAccountData);
 
 
-        //Credit
         var creditTransactionDetails = new TransactionDetails();
         creditAmountToReceiverAccount(creditTransactionDetails,transactionInput,receiverAccountData);
         var persistedReceiverTransaction = transactionRepository.save(creditTransactionDetails);
@@ -144,12 +142,12 @@ public class TransactionBankUserServiceImpl implements ITransactionBankService {
     private void validateNewUserInput(String userName, String email, UserRegistration existedUser) {
         if (nonNull(existedUser)) {
             if (userName.equalsIgnoreCase(existedUser.getUserName())) {
-                log.debug("UserName is already available..");
+                log.error("UserName is already available..");
                 throw new InvalidDataException(String.format("UserName: %s is already available..", userName));
             }
 
             if (email.equalsIgnoreCase(existedUser.getEmail())) {
-                log.debug("Email is already available..");
+                log.error("Email is already available..");
                 throw new InvalidDataException(String.format("Email: %s is already available..", email));
             }
         }
