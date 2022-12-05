@@ -7,6 +7,7 @@ import com.vrk.tms.service.model.SignIn;
 import com.vrk.tms.service.model.TransactionInput;
 import com.vrk.tms.service.model.UpdateAccountDetails;
 import com.vrk.tms.service.service.ITransactionBankService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class TransactionController {
     private final ITransactionBankService bankServiceImpl;
 
     @PostMapping("/newUserAccount")
+
     public ResponseEntity<UserRegistration> createNewUser(@RequestBody NewUserData newUserData){
 
         log.info("Entered Into TransactionController::createNewUser method.");

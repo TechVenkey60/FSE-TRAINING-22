@@ -30,33 +30,33 @@ export class BankServiceService {
   constructor(private httpClient : HttpClient) { }
 
   userSignIn(loginData: any) {
-    return this.httpClient.post(AWS_LOGIN_URL,loginData,{responseType:'text' as 'json'});
+    return this.httpClient.post(LOGIN_URL,loginData,{responseType:'text' as 'json'});
   }
 
   userSignUp(newUserData: any) {
-    return this.httpClient.post(AWS_CREATE_NEW_USER_URL,newUserData,{responseType:'text' as 'json'});
+    return this.httpClient.post(CREATE_NEW_USER_URL,newUserData,{responseType:'text' as 'json'});
   }
 
   applyForLoan(loanInfo: any) {
-    return this.httpClient.post(AWS_APPLY_FOR_LOAN,loanInfo,{responseType:'text' as 'json'});
+    return this.httpClient.post(APPLY_FOR_LOAN,loanInfo,{responseType:'text' as 'json'});
   }
 
 
   getAppliedLoanDetails(accountNumber: any) {
-    return this.httpClient.get(AWS_USER_LOAN_DETAILS+accountNumber,{responseType:'text' as 'json'});
+    return this.httpClient.get(USER_LOAN_DETAILS+accountNumber,{responseType:'text' as 'json'});
   }
 
   editAccountDetails(userAccountDetails: any) {
-    return this.httpClient.put(AWS_UPDATE_ACCOUNT_DETAILS,userAccountDetails,{responseType:'text' as 'json'});
+    return this.httpClient.put(UPDATE_ACCOUNT_DETAILS,userAccountDetails,{responseType:'text' as 'json'});
   }
 
 
   getUserDetails(accountNumber: any) {
-    return this.httpClient.get(AWS_USER_DETAILS+accountNumber,{responseType:'text' as 'json'});
+    return this.httpClient.get(USER_DETAILS+accountNumber,{responseType:'text' as 'json'});
   }
 
   sortTransactionDetails(accountNumber: any, sortBy: string) {
-    return this.httpClient.get(AWS_GET_USER_TRANSACTION_DETAILS+accountNumber+"?sortBy="+sortBy,{responseType:'text' as 'json'});
+    return this.httpClient.get(GET_USER_TRANSACTION_DETAILS+accountNumber+"?sortBy="+sortBy,{responseType:'text' as 'json'});
   }
 
   public storeUserData(userData:any){
