@@ -14,10 +14,16 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     format-sql: true
   batch:
     initialize-schema: ALWAYS
     job:
       enabled: false
+
+
+logging:
+  level:
+    org.springframework: ERROR
+    com.spring.batch.service: DEBUG

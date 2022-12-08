@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CUSTOMER")
+@Table(name = "CUSTOMER_INFO")
 @Setter
 @Getter
 @AllArgsConstructor
@@ -19,9 +19,11 @@ import javax.persistence.Table;
 public class Customer {
 
     @Id
-    @GeneratedValue
     private Integer id;
     private String firstName;
     private String lastName;
+    private String email;
     private String gender;
+    private String country;
+    private String phone;
 }

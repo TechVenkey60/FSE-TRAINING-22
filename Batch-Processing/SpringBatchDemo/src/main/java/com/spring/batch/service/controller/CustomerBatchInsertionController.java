@@ -1,5 +1,6 @@
 package com.spring.batch.service.controller;
 
+import com.spring.batch.service.config.advice.annotation.TrackExecutionTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -19,6 +20,7 @@ public class CustomerBatchInsertionController {
     private final JobLauncher jobLauncher;
     private final Job job;
 
+    @TrackExecutionTime
     @GetMapping("/importData")
     public void insertCustomerDataToDb(){
 
