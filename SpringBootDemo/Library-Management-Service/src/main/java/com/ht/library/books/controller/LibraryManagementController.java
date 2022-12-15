@@ -3,7 +3,6 @@ package com.ht.library.books.controller;
 import com.ht.library.books.entity.Book;
 import com.ht.library.books.handlers.InvalidDataException;
 import com.ht.library.books.model.BookStatusUpdate;
-import com.ht.library.books.model.LibraryBooksResponse;
 import com.ht.library.books.service.ILibraryManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.ht.library.books.util.LibraryAppConstants.PLEASE_PROVIDE_EITHER_TRUE_OR_FALSE_VALUE_ONLY;
 import static com.ht.library.books.util.ValidationUtil.validateBookStatusChange;
@@ -42,6 +42,12 @@ public class LibraryManagementController {
         return new ResponseEntity<>(libraryManagementService.updateBookById(book, bookId), HttpStatus.OK);
     }
 
+    @PatchMapping("/update/{bookId}")
+    public ResponseEntity<Book> updateBookData(@PathVariable Integer bookId,
+                                               @RequestBody Map<String, Object> fields) {
+        return new ResponseEntity<>(libraryManagementService.validateAndUpdateBookById(fields, bookId), HttpStatus.OK);
+    }
+
     @CrossOrigin("http://localhost:4200")
     @GetMapping("/read/{bookId}")
     public ResponseEntity<Book> fetchBookById(@PathVariable Integer bookId) {
@@ -67,6 +73,9 @@ public class LibraryManagementController {
 
         return new ResponseEntity<>(libraryManagementService.updateBookAvailabilityStatus(bookStatusUpdate, bookId), HttpStatus.OK);
     }
+
+
+
 
 
     @DeleteMapping("/remove/{bookId}")

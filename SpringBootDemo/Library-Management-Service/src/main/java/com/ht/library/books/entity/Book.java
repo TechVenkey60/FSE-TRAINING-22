@@ -1,10 +1,15 @@
 package com.ht.library.books.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@DynamicInsert
+@DynamicUpdate
 public class Book {
 
     @Id
